@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Car age:</strong>
+  <%= @setting.car_age %>
+</p>
+
+<p>
+  <strong>Km max:</strong>
+  <%= @setting.km_max %>
+</p>
+
+<p>
+  <strong>Km min:</strong>
+  <%= @setting.km_min %>
+</p>
+
+<p>
+  <strong>Month max:</strong>
+  <%= @setting.month_max %>
+</p>
+
+<p>
+  <strong>Month min:</strong>
+  <%= @setting.month_min %>
+</p>
+
+<p>
+  <strong>Car type:</strong>
+  <%= @setting.car_type %>
+</p>
+
+<%= link_to 'Edit', edit_setting_path(@setting) %> |
+<%= link_to 'Back', settings_path %>

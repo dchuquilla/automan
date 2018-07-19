@@ -1,0 +1,47 @@
+<%= form_with(model: setting, local: true) do |form| %>
+  <% if setting.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(setting.errors.count, "error") %> prohibited this setting from being saved:</h2>
+
+      <ul>
+      <% setting.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :car_age %>
+    <%= form.number_field :car_age %>
+  </div>
+
+  <div class="field">
+    <%= form.label :km_max %>
+    <%= form.number_field :km_max %>
+  </div>
+
+  <div class="field">
+    <%= form.label :km_min %>
+    <%= form.number_field :km_min %>
+  </div>
+
+  <div class="field">
+    <%= form.label :month_max %>
+    <%= form.number_field :month_max %>
+  </div>
+
+  <div class="field">
+    <%= form.label :month_min %>
+    <%= form.number_field :month_min %>
+  </div>
+
+  <div class="field">
+    <%= form.label :car_type %>
+    <%= form.text_field :car_type %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
