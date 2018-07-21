@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  plate: MyString
+  brand: MyString
+  model: MyString
+  current_km: 9.99
+  car_type: MyString
+  week_km: 9.99
+  owner: one
+
+two:
+  plate: MyString
+  brand: MyString
+  model: MyString
+  current_km: 9.99
+  car_type: MyString
+  week_km: 9.99
+  owner: two
