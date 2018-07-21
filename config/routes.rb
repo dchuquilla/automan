@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :cost_details
   resources :maintenance_histories
   resources :cars
   resources :owners

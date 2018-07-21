@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Cost type:</strong>
+  <%= @cost_detail.cost_type %>
+</p>
+
+<p>
+  <strong>Cost:</strong>
+  <%= @cost_detail.cost %>
+</p>
+
+<p>
+  <strong>Provider:</strong>
+  <%= @cost_detail.provider %>
+</p>
+
+<p>
+  <strong>Maintenance history:</strong>
+  <%= @cost_detail.maintenance_history %>
+</p>
+
+<%= link_to 'Edit', edit_cost_detail_path(@cost_detail) %> |
+<%= link_to 'Back', cost_details_path %>
