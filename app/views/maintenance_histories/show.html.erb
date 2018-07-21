@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @maintenance_history.status %>
+</p>
+
+<p>
+  <strong>Estimated km:</strong>
+  <%= @maintenance_history.estimated_km %>
+</p>
+
+<p>
+  <strong>Scheduled date:</strong>
+  <%= @maintenance_history.scheduled_date %>
+</p>
+
+<p>
+  <strong>Review km:</strong>
+  <%= @maintenance_history.review_km %>
+</p>
+
+<p>
+  <strong>Review date:</strong>
+  <%= @maintenance_history.review_date %>
+</p>
+
+<p>
+  <strong>Provider:</strong>
+  <%= @maintenance_history.provider %>
+</p>
+
+<p>
+  <strong>Cost:</strong>
+  <%= @maintenance_history.cost %>
+</p>
+
+<p>
+  <strong>Notified:</strong>
+  <%= @maintenance_history.notified %>
+</p>
+
+<p>
+  <strong>Car:</strong>
+  <%= @maintenance_history.car %>
+</p>
+
+<%= link_to 'Edit', edit_maintenance_history_path(@maintenance_history) %> |
+<%= link_to 'Back', maintenance_histories_path %>

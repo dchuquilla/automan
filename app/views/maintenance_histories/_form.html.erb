@@ -1,0 +1,62 @@
+<%= form_with(model: maintenance_history, local: true) do |form| %>
+  <% if maintenance_history.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(maintenance_history.errors.count, "error") %> prohibited this maintenance_history from being saved:</h2>
+
+      <ul>
+      <% maintenance_history.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.text_field :status %>
+  </div>
+
+  <div class="field">
+    <%= form.label :estimated_km %>
+    <%= form.text_field :estimated_km %>
+  </div>
+
+  <div class="field">
+    <%= form.label :scheduled_date %>
+    <%= form.datetime_select :scheduled_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :review_km %>
+    <%= form.text_field :review_km %>
+  </div>
+
+  <div class="field">
+    <%= form.label :review_date %>
+    <%= form.datetime_select :review_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :provider %>
+    <%= form.text_area :provider %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cost %>
+    <%= form.text_field :cost %>
+  </div>
+
+  <div class="field">
+    <%= form.label :notified %>
+    <%= form.check_box :notified %>
+  </div>
+
+  <div class="field">
+    <%= form.label :car_id %>
+    <%= form.text_field :car_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

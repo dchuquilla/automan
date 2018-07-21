@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  status: MyString
+  estimated_km: 9.99
+  scheduled_date: 2018-07-21 15:18:44
+  review_km: 9.99
+  review_date: 2018-07-21 15:18:44
+  provider: MyText
+  cost: 9.99
+  notified: false
+  car: one
+
+two:
+  status: MyString
+  estimated_km: 9.99
+  scheduled_date: 2018-07-21 15:18:44
+  review_km: 9.99
+  review_date: 2018-07-21 15:18:44
+  provider: MyText
+  cost: 9.99
+  notified: false
+  car: two

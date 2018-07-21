@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :maintenance_histories
   resources :cars
   resources :owners
   resources :settings
