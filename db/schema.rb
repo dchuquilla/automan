@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_21_204121) do
+ActiveRecord::Schema.define(version: 2018_07_31_143148) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,12 +55,14 @@ ActiveRecord::Schema.define(version: 2018_07_21_204121) do
   end
 
   create_table "owners", force: :cascade do |t|
-    t.string "name"
-    t.string "last_name"
+    t.string "name", null: false
+    t.string "last_name", null: false
     t.string "cel_phone"
-    t.boolean "agreement_terms"
+    t.boolean "agreement_terms", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email", null: false
+    t.index ["email"], name: "index_owners_on_email", unique: true
   end
 
   create_table "settings", force: :cascade do |t|

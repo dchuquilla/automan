@@ -1,0 +1,11 @@
+* Debido a que se hace uso de Ruby on Rails es necesario crear todo en inglés.
+
+Tablas
+  * cars -> Auto
+  * owners -> Propietarios
+  * maintenance_history -> Historial de mantenimientos
+  * cost_details -> Detalle de costos
+  * settings -> Configuraciones
+
+* El script fue generado con Valentina Studio.
+* Se incluye funcion y trigger para calcular y ajustar el kilometraje semanal
