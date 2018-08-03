@@ -440,3 +440,45 @@ ALTER TABLE ONLY public.cost_details
 -- PostgreSQL database dump complete
 --
 
+
+
+
+
+
+
+
+
+
+
+
+CREATE OR REPLACE FUNCTION public.tg_kilometraje_semanal()
+ RETURNS trigger
+ LANGUAGE plpgsql
+AS $function$
+  DECLARE delta_horas numeric;
+  DECLARE delta_km numeric;
+  DECLARE km_semanal numeric;
+  DECLARE nuevo_update Timestamp Without Time Zone;
+  DECLARE antiguo_update Timestamp Without Time Zone;
+  DECLARE nuevo_km_actual numeric;
+  DECLARE antiguo_km_actual numeric;
+BEGIN
+  nuevo_update = NEW.updated_at;
+  antiguo_update = OLD.updated_at;
+  nuevo_km_actual = NEW.current_km;
+  antiguo_km_actual = OLD.current_km;
+  SELECT EXTRACT(EPOCH FROM nuevo_update-antiguo_update)/3600 INTO delta_horas;
+  delta_km = nuevo_km_actual - antiguo_km_actual;
+  if (delta_horas > 0) && (NEW.current_km != OLD.current_km) then
+    km_semanal = (delta_km/delta_horas)*168;
+    update cars set week_km = km_semanal where id = OLD.id;
+  end if;
+  return NEW;
+END
+$function$
+
+
+
+
+
+CREATE TRIGGER "procesarCambiosKmActual" AFTER UPDATE ON public.cars FOR EACH ROW EXECUTE PROCEDURE tg_kilometraje_semanal()
