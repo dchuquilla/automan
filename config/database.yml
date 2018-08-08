@@ -17,15 +17,18 @@
 default: &default
   adapter: postgresql
   encoding: UTF8
-  user: postgres
-  port: 5433
+  # user: postgres
+  port: 5432
+  host: ec2-54-243-235-153.compute-1.amazonaws.com
+  database: da5o8diaj47q2f
+  user: lgiihovsucecaa
+  password: 200179f5506cfb252aa3acce06de0a24e290dd259d00db06703913b84e607a22
   # For details on connection pooling, see Rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
-  database: automan_development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -82,6 +85,6 @@ test:
 #
 production:
   <<: *default
-  database: automan_production
-  username: automan
-  password: <%= ENV['AUTOMAN_DATABASE_PASSWORD'] %>
+  # database: automan_production
+  # username: automan
+  # password: <%= ENV['AUTOMAN_DATABASE_PASSWORD'] %>
