@@ -7,8 +7,8 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # 15-08-2018
-	Setting.create(maintenance_type: "Cambio de bandas", car_age: 1,  car_type: "Liviano", km_max: 50000, km_min: 40000, month_max: 30, month_min: 24)
 	Setting.create(maintenance_type: "Cambio de bandas", car_age: 0,  car_type: "Liviano", km_max: 50000, km_min: 40000, month_max: 30, month_min: 24)
+	Setting.create(maintenance_type: "Cambio de bandas", car_age: 1,  car_type: "Liviano", km_max: 50000, km_min: 40000, month_max: 30, month_min: 24)
 	Setting.create(maintenance_type: "Cambio de bandas", car_age: 2,  car_type: "Liviano", km_max: 50000, km_min: 40000, month_max: 30, month_min: 24)
 	Setting.create(maintenance_type: "Cambio de bandas", car_age: 3,  car_type: "Liviano", km_max: 50000, km_min: 40000, month_max: 30, month_min: 24)
 	Setting.create(maintenance_type: "Cambio de bandas", car_age: 4,  car_type: "Liviano", km_max: 50000, km_min: 40000, month_max: 30, month_min: 24)
