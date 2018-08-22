@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'landing/index'
+	root "landing#index"
   resources :cost_details
   resources :maintenance_histories
   resources :cars

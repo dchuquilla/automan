@@ -6,10 +6,12 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag params[:controller] %>
   </head>
 
   <body>
     <%= yield %> <!-- modelo donde se unifica el modelo del controladr y la vista -->
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag params[:controller] %>
   </body>
 </html>

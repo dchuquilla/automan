@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Automan</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag params[:controller] %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag params[:controller], 'data-turbolinks-track': 'reload'  %>
+  </head>
+
+  <body>
+    <div id="main">
+      <div id="header">
+        <div class="row-1">
+          <div class="fleft"><a href="#"><%= image_tag('logo.png') %></a></div>
+          <div class="fright">
+            <ul>
+              <li><a href="#"><%= image_tag('icon1-act.gif') %></a></li>
+              <li><a href="#"><%= image_tag('icon2.gif') %></a></li>
+              <li><a href="#"><%= image_tag('icon3.gif') %></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="left">
+            <ul>
+              <li><a href="index.html" class="active"><span>inicio</span></a></li>
+              <li><a href="about-us.html"><span>Registrar</span></a></li>
+              <li><a href="articles.html"><span>Agenda</span></a></li>
+              <li><a href="contact-us.html"><span>contáctenos</span></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="row-3">
+          <div class="inside">
+            <h2>Agenda de mantenimientos</h2>
+          </div>
+        </div>
+        <div class="extra"><%= image_tag('header-img.png') %></div>
+      </div>
+      <div id="content">
+        <%= yield %> <!-- modelo donde se unifica el modelo del controladr y la vista -->
+      </div>
+      <div id="footer">
+        <div class="footer-nav">
+          <div class="left">
+            <ul>
+              <li><a href="#">Inicio</a></li>
+              <li><a href="#">Registrar</a></li>
+              <li><a href="#">Agenda</a></li>
+              <li><a href="#">Contáctenos</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footerlink">
+          <p class="lf">Copyright &copy; <%= DateTime.now.year%> <a href="#">Automan</a> - Derechos reservados</p>
+          <p class="rf">Diseñado por <a href="http://www.templatemonster.com/">TemplateMonster</a></p>
+          <div style="clear:both;"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
