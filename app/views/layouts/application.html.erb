@@ -1,17 +1,71 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html class="no-js" lang="en">
   <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Automan</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= stylesheet_link_tag params[:controller] %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css' rel='stylesheet' type='text/css'>
   </head>
 
   <body>
-    <%= yield %> <!-- modelo donde se unifica el modelo del controladr y la vista -->
+    <div class="off-canvas-wrapper">
+      <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+        <div class="off-canvas position-left reveal-for-medium" id="my-info" data-off-canvas data-position="left">
+          <div class="row column">
+            <br>
+            <%= image_tag('logo.png') %>
+            <% if user_signed_in? %>
+              <ul class="vertical menu drilldown" data-drilldown>
+                <% if current_user.owner.nil? %>
+                  <li><%= link_to("Crear Propietario", new_owner_path) %></li>
+                <% else %>
+                  <li><%= link_to("Editar propietario", edit_owner_path(current_user.owner)) %></li>
+                  <li>
+                    <a href="#">Autos</a>
+                    <ul class="menu vertical nested">
+                      <li><%= link_to("Mis autos", cars_path) %></li>
+                      <li><%= link_to("Agregar auto", new_car_path) %></li>
+                    </ul>
+                  </li>
+                  <% if cookies[:selected_car_id].present? %>
+                    <li>
+                      <a href="#"><%= @car.plate %></a>
+                      <ul class="menu vertical nested">
+                        <li><%= link_to("Mantenimientos Pendientes", maintenance_histories_path(filtro: "pendientes")) %></li>
+                        <li><%= link_to("Mantenimientos Atrasados", maintenance_histories_path(filtro: "atrasados")) %></li>
+                        <li><%= link_to("Todos", new_car_path) %></li>
+                      </ul>
+                    </li>
+                  <% end %>
+                <% end %>
+              </ul>
+            <% end %>
+          </div>
+        </div>
+        <div class="off-canvas-content" data-off-canvas-content>
+          <div class="title-bar hide-for-large">
+            <div class="title-bar-left">
+              <button class="menu-icon" type="button" data-open="my-info"></button>
+              <span class="title-bar-title">Automan</span>
+            </div>
+          </div>
+          <div class="callout primary">
+            <div class="row column">
+              <p class="notice"><%= notice %></p>
+              <p class="alert"><%= alert %></p>
+            </div>
+          </div>
+          <%= yield %> <!-- modelo donde se unifica el modelo del controladr y la vista -->
+        </div>
+      </div>
+    </div>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag params[:controller] %>
+    <script>
+      $(document).foundation();
+    </script>
   </body>
 </html>

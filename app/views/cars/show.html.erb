@@ -1,39 +1,29 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Plate:</strong>
-  <%= @car.plate %>
-</p>
-
-<p>
-  <strong>Brand:</strong>
-  <%= @car.brand %>
-</p>
-
-<p>
-  <strong>Model:</strong>
-  <%= @car.model %>
-</p>
-
-<p>
-  <strong>Current km:</strong>
-  <%= @car.current_km %>
-</p>
-
-<p>
-  <strong>Car type:</strong>
-  <%= @car.car_type %>
-</p>
-
-<p>
-  <strong>Week km:</strong>
-  <%= @car.week_km %>
-</p>
-
-<p>
-  <strong>Owner:</strong>
-  <%= @car.owner %>
-</p>
-
-<%= link_to 'Edit', edit_car_path(@car) %> |
-<%= link_to 'Back', cars_path %>
+<div class="row column">
+  <p id="notice"><%= notice %></p>
+  <p>
+    <strong>Placa:</strong>
+    <%= @car.plate %>
+  </p>
+  <p>
+    <strong>Marca:</strong>
+    <%= @car.brand %>
+  </p>
+  <p>
+    <strong>Modelo:</strong>
+    <%= @car.model %>
+  </p>
+  <p>
+    <strong>KM Actuak:</strong>
+    <%= @car.current_km %>
+  </p>
+  <p>
+    <strong>KM Semanal:</strong>
+    <%= @car.week_km %>
+  </p>
+  <p>
+    <strong>Tipo:</strong>
+    <%= @car.car_type %>
+  </p>
+  <%= link_to 'Editar', edit_car_path(@car) %> |
+  <%= link_to 'Ver todos', cars_path %>
+</div>

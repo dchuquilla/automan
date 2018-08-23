@@ -1,15 +1,24 @@
 class CarsController < ApplicationController
-  before_action :set_car, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :set_car, only: [:show, :select, :edit, :update, :destroy]
 
   # GET /cars
   # GET /cars.json
   def index
-    @cars = Car.all
+    cookies.delete :selected_car_id
+    @cars = Car.where("owner_id = ?", current_user.owner.id)
   end
 
   # GET /cars/1
   # GET /cars/1.json
   def show
+  end
+
+  # GET /cars/1
+  # GET /cars/1.json
+  def select
+    cookies[:selected_car_id] = @car.id
+    redirect_to maintenance_histories_path
   end
 
   # GET /cars/new
@@ -25,7 +34,7 @@ class CarsController < ApplicationController
   # POST /cars.json
   def create
     @car = Car.new(car_params)
-
+    @car.owner_id = current_user.owner.id
     respond_to do |format|
       if @car.save
         format.html { redirect_to @car, notice: 'Car was successfully created.' }
@@ -64,7 +73,10 @@ class CarsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_car
-      @car = Car.find(params[:id])
+      @car = Car.where("id = ? AND owner_id = ?", params[:id], current_user.owner.id).last
+      unless @car.present?
+        not_found
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

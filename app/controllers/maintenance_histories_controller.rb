@@ -1,4 +1,6 @@
 class MaintenanceHistoriesController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_car_with_cookies
   before_action :set_maintenance_history, only: [:show, :edit, :update, :destroy]
 
   # GET /maintenance_histories

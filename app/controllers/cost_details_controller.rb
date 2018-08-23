@@ -1,4 +1,5 @@
 class CostDetailsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_cost_detail, only: [:show, :edit, :update, :destroy]
 
   # GET /cost_details

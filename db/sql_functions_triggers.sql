@@ -1,6 +1,8 @@
 -- Crear funcion de trigger
-CREATE OR REPLACE FUNCTION tg_kilometraje_semanal() RETURNS trigger AS
-$$
+CREATE OR REPLACE FUNCTION tg_kilometraje_semanal()
+ RETURNS trigger
+ LANGUAGE plpgsql
+AS $function$
   DECLARE delta_horas numeric;
   DECLARE delta_km numeric;
   DECLARE km_semanal numeric;
@@ -21,7 +23,7 @@ BEGIN
   end if;
   return NEW;
 END
-$$ language 'plpgsql';
+$function$
 
 
 -- Crear triggers con metodo creado
@@ -30,12 +32,29 @@ CREATE TRIGGER "procesarCambiosKmActual"
     FOR EACH ROW 
       EXECUTE PROCEDURE tg_kilometraje_semanal();
 
--- Insertos de prueba
--- Insercion en Propietarios
-INSERT INTO "owners" ( "agreement_terms", "cel_phone", "created_at", "last_name", "name", "updated_at") 
-VALUES (TRUE , '0992582045', now(), 'Dario', 'Chuquilla', now() );
--- Isercion en autos
-INSERT INTO "cars" ( "brand", "car_type", "created_at", "current_km", "model", "owner_id", "plate", "updated_at", "week_km", "year") 
-VALUES ( 'BMW', 'auto', now(), 149756, 'CX350', 1, 'PMN0876', now(), 250, 2005);
--- Actualizar Km, permita que pasen al menos un par de horas
-UPDATE "cars" SET "current_km" = 149793, "updated_at" = now()  + interval '1.9 hour'  WHERE "id" = 1;
+CREATE OR REPLACE FUNCTION tg_mantenimientos_basicos()
+ RETURNS trigger
+ LANGUAGE plpgsql
+AS $function$
+  DECLARE i settings%rowtype;
+  DECLARE contador integer;
+  DECLARE edad integer;
+  DECLARE km_estimado integer;
+  DECLARE mes_estimado integer;
+  DECLARE fecha_estimada Timestamp Without Time Zone;
+  DECLARE tipo varchar(255);
+BEGIN
+  SELECT date_part('year', now()) - NEW.year INTO edad;
+  FOR i IN SELECT * FROM settings WHERE car_age = edad AND car_type = NEW.car_type LOOP
+    -- Obtener un numero aleatorio de un rango, meses y Km.
+    SELECT floor(random() * (i.km_max-i.km_min+1) + i.km_min)::int + NEW.km_actual INTO km_estimado;
+    SELECT floor(random() * (i.month_max-i.month_min+1) + i.month_min)::int INTO mes_estimado;
+    -- generar fecha furtura aproximanda de mantenimiento.
+    SELECT now() + mes_estimado * interval '1 month' into fecha_estimada;
+    INSERT INTO maintenance_histories ( car_id, maintenance_type, estimated_km, notified, scheduled_date, status, created_at, updated_at) VALUES ( NEW.id, i.maintenance_type, km_estimado, FALSE, fecha_estimada, 'Pendiente', now(), now());
+  END LOOP;
+  return NEW;
+END
+$function$
+
+CREATE TRIGGER "crearMantenimientoBasicos" AFTER INSERT ON cars FOR EACH ROW EXECUTE PROCEDURE tg_mantenimientos_basicos();

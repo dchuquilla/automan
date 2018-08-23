@@ -1,24 +1,19 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @owner.name %>
-</p>
-
-<p>
-  <strong>Last name:</strong>
-  <%= @owner.last_name %>
-</p>
-
-<p>
-  <strong>Cel phone:</strong>
-  <%= @owner.cel_phone %>
-</p>
-
-<p>
-  <strong>Agreement terms:</strong>
-  <%= @owner.agreement_terms %>
-</p>
-
-<%= link_to 'Edit', edit_owner_path(@owner) %> |
-<%= link_to 'Back', owners_path %>
+<div class="row column">
+  <p>
+    <strong>Nombre:</strong>
+    <%= @owner.name %>
+  </p>
+  <p>
+    <strong>Apellido:</strong>
+    <%= @owner.last_name %>
+  </p>
+  <p>
+    <strong>Celular:</strong>
+    <%= @owner.cel_phone %>
+  </p>
+  <p>
+    <strong>Usuario:</strong>
+    <%= @owner.email %>
+  </p>
+  <%= link_to 'Editar', edit_owner_path(@owner) %>
+</div>

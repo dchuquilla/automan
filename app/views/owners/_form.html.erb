@@ -12,26 +12,26 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
+    <%= form.label :name, "Nombre" %>
     <%= form.text_field :name %>
   </div>
 
   <div class="field">
-    <%= form.label :last_name %>
+    <%= form.label :last_name, "Apellido" %>
     <%= form.text_field :last_name %>
   </div>
 
   <div class="field">
-    <%= form.label :cel_phone %>
+    <%= form.label :cel_phone, "Celular" %>
     <%= form.text_field :cel_phone %>
   </div>
 
   <div class="field">
-    <%= form.label :agreement_terms %>
+    <%= form.label :agreement_terms, "Acepto los términos de uso del sistema." %>
     <%= form.check_box :agreement_terms %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Guardar" %>
   </div>
 <% end %>

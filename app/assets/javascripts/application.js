@@ -13,3 +13,6 @@
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
+//= require foundation/jquery
+//= require foundation/what-input
+//= require foundation/foundation

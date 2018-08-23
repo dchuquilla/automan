@@ -1,4 +1,5 @@
 class OwnersController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_owner, only: [:show, :edit, :update, :destroy]
 
   # GET /owners
@@ -25,7 +26,8 @@ class OwnersController < ApplicationController
   # POST /owners.json
   def create
     @owner = Owner.new(owner_params)
-
+    @owner.user_id = current_user.id
+    @owner.email = current_user.email
     respond_to do |format|
       if @owner.save
         format.html { redirect_to @owner, notice: 'Owner was successfully created.' }

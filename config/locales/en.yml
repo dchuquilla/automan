@@ -30,4 +30,24 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world dario"
+  activerecord:
+    errors:
+      messages:
+        blank: "es requerido"
+    models:
+      user:
+        one: Usuario
+        other: Usuarios
+      car:
+        one: Auto
+        other: Autos
+    attributes:
+      user:
+        password: "Clave"
+      car:
+        plate: "Placa"
+        brand: "Marca"
+        model: "Modelo"
+        current_km: "KM Actual"
+        week_km: "KM Semanal"
+        car_type: "Tipo"
