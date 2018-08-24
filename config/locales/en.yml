@@ -41,6 +41,9 @@ en:
       car:
         one: Auto
         other: Autos
+      maintenance_history:
+        one: Mantenimiento
+        other: Mantenimientos
     attributes:
       user:
         password: "Clave"
@@ -52,3 +55,14 @@ en:
         week_km: "KM Semanal"
         car_type: "Tipo"
         year: "Año"
+      maintenance_history:
+        status: "Estado"
+        estimated_km: "KM Estimado"
+        scheduled_date: "Fecha Agendada"
+        review_km: "KM Revisión"
+        review_date: "Fecha Revisión"
+        provider: "Proveedor"
+        cost: "Costo"
+        notified: "Notificado"
+        car_id: "Auto"
+        maintenance_type: "Tipo"

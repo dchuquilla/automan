@@ -1,11 +1,11 @@
 class CarsController < ApplicationController
   before_action :authenticate_user!
+  before_action :clean_car_selection_cookie, only: [:index, :destroy]
   before_action :set_car, only: [:show, :select, :edit, :update, :destroy]
 
   # GET /cars
   # GET /cars.json
   def index
-    cookies.delete :selected_car_id
     @cars = Car.where("owner_id = ?", current_user.owner.id)
   end
 

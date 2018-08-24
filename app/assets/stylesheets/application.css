@@ -11,6 +11,7 @@
  * It is generally better to create a new file per style scope.
  *
  *= require foundation/foundation
+ *= require datepick/jquery.datepick
  *= require_self
  */
 .row.column {
@@ -18,4 +19,9 @@
 }
 .drilldown a {
   background: transparent;
+}
+.datepick-month-header{
+  select {
+    width: 45%;
+  }
 }

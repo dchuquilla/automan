@@ -29,6 +29,10 @@ class ApplicationController < ActionController::Base
     render file: "#{Rails.root}/public/404", status: :not_found
   end
 
+  def clean_car_selection_cookie
+    cookies.delete :selected_car_id
+  end
+
   protected
     def after_sign_in_path_for(resource)
       cars_path

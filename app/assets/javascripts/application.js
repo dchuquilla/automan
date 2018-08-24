@@ -16,3 +16,5 @@
 //= require foundation/jquery
 //= require foundation/what-input
 //= require foundation/foundation
+//= require datepick/jquery.plugin.min
+//= require datepick/jquery.datepick

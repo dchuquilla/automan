@@ -35,6 +35,7 @@
                     <li>
                       <a href="#"><%= @car_selected.plate %></a>
                       <ul class="menu vertical nested">
+                        <li><%= link_to 'Detalles', car_path(@car_selected) %></li>
                         <li><%= link_to("Mantenimientos Pendientes", maintenance_histories_path(filtro: "Pendiente")) %></li>
                         <li><%= link_to("Mantenimientos Atrasados", maintenance_histories_path(filtro: "Atrasado")) %></li>
                         <li><%= link_to("Mantenimientos completados", maintenance_histories_path(filtro: "Completado")) %></li>
@@ -69,5 +70,6 @@
     <script>
       $(document).foundation();
     </script>
+    <%= yield :late_javascripts  %>
   </body>
 </html>
