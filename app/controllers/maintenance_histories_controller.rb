@@ -1,12 +1,15 @@
 class MaintenanceHistoriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_car_with_cookies
   before_action :set_maintenance_history, only: [:show, :edit, :update, :destroy]
 
   # GET /maintenance_histories
   # GET /maintenance_histories.json
   def index
-    @maintenance_histories = MaintenanceHistory.all
+    if params[:filtro]
+      @maintenance_histories = MaintenanceHistory.where("car_id = ?", @car_selected.id).where("status = ?", params[:filtro])
+    else
+      @maintenance_histories = MaintenanceHistory.where("car_id = ?", @car_selected.id)
+    end
   end
 
   # GET /maintenance_histories/1
@@ -21,6 +24,10 @@ class MaintenanceHistoriesController < ApplicationController
 
   # GET /maintenance_histories/1/edit
   def edit
+  end
+
+  # GET /maintenance_histories/1/edit
+  def review
   end
 
   # POST /maintenance_histories

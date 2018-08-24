@@ -33,15 +33,17 @@
                   </li>
                   <% if cookies[:selected_car_id].present? %>
                     <li>
-                      <a href="#"><%= @car.plate %></a>
+                      <a href="#"><%= @car_selected.plate %></a>
                       <ul class="menu vertical nested">
-                        <li><%= link_to("Mantenimientos Pendientes", maintenance_histories_path(filtro: "pendientes")) %></li>
-                        <li><%= link_to("Mantenimientos Atrasados", maintenance_histories_path(filtro: "atrasados")) %></li>
-                        <li><%= link_to("Todos", new_car_path) %></li>
+                        <li><%= link_to("Mantenimientos Pendientes", maintenance_histories_path(filtro: "Pendiente")) %></li>
+                        <li><%= link_to("Mantenimientos Atrasados", maintenance_histories_path(filtro: "Atrasado")) %></li>
+                        <li><%= link_to("Mantenimientos completados", maintenance_histories_path(filtro: "Completado")) %></li>
+                        <li><%= link_to("Todos", maintenance_histories_path) %></li>
                       </ul>
                     </li>
                   <% end %>
                 <% end %>
+                <li><%= link_to "Salir", destroy_user_session_path, method: :delete %></li>
               </ul>
             <% end %>
           </div>

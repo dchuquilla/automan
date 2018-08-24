@@ -1,6 +1,6 @@
-<h1>Editing Maintenance History</h1>
-
-<%= render 'form', maintenance_history: @maintenance_history %>
-
-<%= link_to 'Show', @maintenance_history %> |
-<%= link_to 'Back', maintenance_histories_path %>
+<div class="row column">
+  <h1>Editar manteimineto</h1>
+  <%= render 'form', maintenance_history: @maintenance_history, edit_only: true %>
+  <%= link_to 'Detalles', @maintenance_history %> |
+  <%= link_to 'Ver todos', maintenance_histories_path %>
+</div>

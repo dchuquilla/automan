@@ -25,5 +25,7 @@
     <%= @car.car_type %>
   </p>
   <%= link_to 'Editar', edit_car_path(@car) %> |
-  <%= link_to 'Ver todos', cars_path %>
+  <%= link_to 'Ver todos', cars_path %> | 
+  <%= link_to 'Seleccionar', select_car_path(@car) %> | 
+  <%= link_to 'Eliminar', @car, method: :delete, data: { confirm: 'Are you sure?' } %>
 </div>

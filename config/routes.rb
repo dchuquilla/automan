@@ -2,7 +2,11 @@ Rails.application.routes.draw do
   root "landing#index"
   devise_for :users
   resources :cost_details
-  resources :maintenance_histories
+  resources :maintenance_histories do
+    member do
+      get 'review'
+    end
+  end
   resources :cars do 
     member do
       get 'select'

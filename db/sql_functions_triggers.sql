@@ -47,7 +47,7 @@ BEGIN
   SELECT date_part('year', now()) - NEW.year INTO edad;
   FOR i IN SELECT * FROM settings WHERE car_age = edad AND car_type = NEW.car_type LOOP
     -- Obtener un numero aleatorio de un rango, meses y Km.
-    SELECT floor(random() * (i.km_max-i.km_min+1) + i.km_min)::int + NEW.km_actual INTO km_estimado;
+    SELECT floor(random() * (i.km_max-i.km_min+1) + i.km_min)::int + NEW.current_km INTO km_estimado;
     SELECT floor(random() * (i.month_max-i.month_min+1) + i.month_min)::int INTO mes_estimado;
     -- generar fecha furtura aproximanda de mantenimiento.
     SELECT now() + mes_estimado * interval '1 month' into fecha_estimada;

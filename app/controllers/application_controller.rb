@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_action :set_car_with_cookies
   before_action :complete_owner
   def complete_owner
     if user_signed_in? && (params[:controller].downcase != 'owners' && params[:action].downcase != "new")
@@ -10,10 +11,11 @@ class ApplicationController < ActionController::Base
 
   def set_car_with_cookies
     if cookies[:selected_car_id].present?
-      @car = Car.where("id = ? AND owner_id = ?", cookies[:selected_car_id], current_user.owner.id).last
-    end
-    unless @car.present?
-      not_found
+      @car_selected = Car.where("id = ? AND owner_id = ?", cookies[:selected_car_id], current_user.owner.id).last
+      unless @car_selected.present?
+        Rails.logger.info "Auto no encotrado con cookie"
+        not_found
+      end
     end
   end
 
@@ -26,4 +28,9 @@ class ApplicationController < ActionController::Base
   def render_404
     render file: "#{Rails.root}/public/404", status: :not_found
   end
+
+  protected
+    def after_sign_in_path_for(resource)
+      cars_path
+    end
 end

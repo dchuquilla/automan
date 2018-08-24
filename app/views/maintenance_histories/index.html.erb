@@ -1,43 +1,49 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Maintenance Histories</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Status</th>
-      <th>Estimated km</th>
-      <th>Scheduled date</th>
-      <th>Review km</th>
-      <th>Review date</th>
-      <th>Provider</th>
-      <th>Cost</th>
-      <th>Notified</th>
-      <th>Car</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @maintenance_histories.each do |maintenance_history| %>
+<div class="row column">
+  <p id="notice"><%= notice %></p>
+  <h1>Mantenimientos</h1>
+  <table>
+    <thead>
       <tr>
-        <td><%= maintenance_history.status %></td>
-        <td><%= maintenance_history.estimated_km %></td>
-        <td><%= maintenance_history.scheduled_date %></td>
-        <td><%= maintenance_history.review_km %></td>
-        <td><%= maintenance_history.review_date %></td>
-        <td><%= maintenance_history.provider %></td>
-        <td><%= maintenance_history.cost %></td>
-        <td><%= maintenance_history.notified %></td>
-        <td><%= maintenance_history.car %></td>
-        <td><%= link_to 'Show', maintenance_history %></td>
-        <td><%= link_to 'Edit', edit_maintenance_history_path(maintenance_history) %></td>
-        <td><%= link_to 'Destroy', maintenance_history, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if params[:filtro].nil? %>
+          <th>Estado</th>
+        <% end %>
+        <th>Tipo</th>
+        <th>Póximo KM</th>
+        <th>Fecha Estimada</th>
+        <% if params[:filtro] == "Completado" %>
+          <th>KM Revisión</th>
+          <th>Fecha Revisión</th>
+          <th>Proveedor</th>
+          <th>Costo</th>
+        <% end %>
+        <th>Notificado?</th>
+        <th colspan="4"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Maintenance History', new_maintenance_history_path %>
+    </thead>
+    <tbody>
+      <% @maintenance_histories.each do |maintenance_history| %>
+        <tr>
+          <% if params[:filtro].nil? %>
+            <td><%= maintenance_history.status %></td>
+          <% end %>
+          <td><%= maintenance_history.maintenance_type %></td>
+          <td><%= maintenance_history.estimated_km %></td>
+          <td><%= maintenance_history.scheduled_date.strftime("%d/%m/%Y") %></td>
+          <% if params[:filtro] == "Completado" %>
+            <td><%= maintenance_history.review_km %></td>
+            <td><%= maintenance_history.review_date %></td>
+            <td><%= maintenance_history.provider %></td>
+            <td><%= maintenance_history.cost %></td>
+          <% end %>
+          <td><%= maintenance_history.notified ? 'Si' : 'No' %></td>
+          <td><%= link_to 'Revisión', review_maintenance_history_path(maintenance_history) %></td>
+          <td><%= link_to 'Detalles', maintenance_history_path(maintenance_history) %></td>
+          <td><%= link_to 'Editar', edit_maintenance_history_path(maintenance_history) %></td>
+          <td><%= link_to 'Eliminar', maintenance_history, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <br>
+  <%= link_to 'Agregar mantenimiento', new_maintenance_history_path %>
+</div>
