@@ -12,13 +12,15 @@
  *
  *= require foundation/foundation
  *= require datepick/jquery.datepick
+ *= require jquery.auto-complete
  *= require_self
  */
 .row.column {
   padding: 0 1rem;
 }
+.drilldown .is-drilldown-submenu,
 .drilldown a {
-  background: transparent;
+  background: #e6e6e6;
 }
 .datepick-month-header{
   select {

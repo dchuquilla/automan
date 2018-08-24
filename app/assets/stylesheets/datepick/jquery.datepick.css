@@ -136,6 +136,9 @@ button.datepick-cmd {
 	border: none;
 	font-size: 100%;
 }
+.datepick-month-header select {
+	width: 45%;
+}
 .datepick-month-header input {
 	position: absolute;
 	display: none;

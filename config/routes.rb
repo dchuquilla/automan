@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   devise_for :users
   resources :cost_details
   resources :maintenance_histories do
+    collection do
+      get 'types', format: 'json'
+    end
     member do
       get 'review'
     end

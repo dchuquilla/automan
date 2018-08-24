@@ -14,7 +14,7 @@
   <body>
     <div class="off-canvas-wrapper">
       <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
-        <div class="off-canvas position-left reveal-for-medium" id="my-info" data-off-canvas data-position="left">
+        <div class="off-canvas position-left reveal-for-large" id="my-info" data-off-canvas>
           <div class="row column">
             <br>
             <%= image_tag('logo.png') %>
@@ -35,7 +35,8 @@
                     <li>
                       <a href="#"><%= @car_selected.plate %></a>
                       <ul class="menu vertical nested">
-                        <li><%= link_to 'Detalles', car_path(@car_selected) %></li>
+                        <li><%= link_to 'Detalles de auto', car_path(@car_selected) %></li>
+                        <li><%= link_to("Agendar manteminieto", new_maintenance_history_path) %></li>
                         <li><%= link_to("Mantenimientos Pendientes", maintenance_histories_path(filtro: "Pendiente")) %></li>
                         <li><%= link_to("Mantenimientos Atrasados", maintenance_histories_path(filtro: "Atrasado")) %></li>
                         <li><%= link_to("Mantenimientos completados", maintenance_histories_path(filtro: "Completado")) %></li>
@@ -58,10 +59,13 @@
           </div>
           <div class="callout primary">
             <div class="row column">
-              <p class="notice"><%= notice %></p>
-              <p class="alert"><%= alert %></p>
+              <% if cookies[:selected_car_id].present? %>
+                <h1><%= @car_selected.plate %> <span class="current_km">KM Actual: <%= @car_selected.current_km %></span> <span class="week_km">KM Promedio: <%= @car_selected.week_km %></span></h1>
+              <% end %>
             </div>
           </div>
+          <p class="notice"><%= notice %></p>
+          <p class="alert"><%= alert %></p>
           <%= yield %> <!-- modelo donde se unifica el modelo del controladr y la vista -->
         </div>
       </div>

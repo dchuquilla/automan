@@ -1,7 +1,7 @@
 <div class="row column">
   <p id="notice"><%= notice %></p>
   <h1>Mantenimientos</h1>
-  <table>
+  <table class="responsive-card-table unstriped">
     <thead>
       <tr>
         <% if params[:filtro].nil? %>
@@ -24,22 +24,22 @@
       <% @maintenance_histories.each do |maintenance_history| %>
         <tr>
           <% if params[:filtro].nil? %>
-            <td><%= maintenance_history.status %></td>
+            <td data-label="Estado"><%= maintenance_history.status %></td>
           <% end %>
-          <td><%= maintenance_history.maintenance_type %></td>
-          <td><%= maintenance_history.estimated_km %></td>
-          <td><%= maintenance_history.scheduled_date.strftime("%d/%m/%Y") %></td>
+          <td data-label="Tipo"><%= maintenance_history.maintenance_type %></td>
+          <td data-label="Póximo KM"><%= maintenance_history.estimated_km %></td>
+          <td data-label="Fecha Estimada"><%= maintenance_history.scheduled_date.strftime("%d/%m/%Y") if maintenance_history.scheduled_date.present? %></td>
           <% if params[:filtro] == "Completado" %>
-            <td><%= maintenance_history.review_km %></td>
-            <td><%= maintenance_history.review_date %></td>
-            <td><%= maintenance_history.provider %></td>
-            <td><%= maintenance_history.cost %></td>
+            <td data-label="KM Revisión"><%= maintenance_history.review_km %></td>
+            <td data-label="Fecha Revisión"><%= maintenance_history.review_date %></td>
+            <td data-label="Proveedor"><%= maintenance_history.provider %></td>
+            <td data-label="Costo"><%= maintenance_history.cost %></td>
           <% end %>
-          <td><%= maintenance_history.notified ? 'Si' : 'No' %></td>
+          <td data-label="Notificado?"><%= maintenance_history.notified ? 'Si' : 'No' %></td>
           <td><%= link_to 'Revisión', review_maintenance_history_path(maintenance_history) %></td>
           <td><%= link_to 'Detalles', maintenance_history_path(maintenance_history) %></td>
           <td><%= link_to 'Editar', edit_maintenance_history_path(maintenance_history) %></td>
-          <td><%= link_to 'Eliminar', maintenance_history, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Eliminar', maintenance_history, method: :delete, data: { confirm: '¿Está seguro?' } %></td>
         </tr>
       <% end %>
     </tbody>

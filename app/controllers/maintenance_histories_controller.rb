@@ -1,6 +1,7 @@
 class MaintenanceHistoriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_maintenance_history, only: [:show, :edit, :update, :destroy]
+  before_action :maintenance_status
+  before_action :set_maintenance_history, only: [:show, :edit, :review, :update, :destroy]
 
   # GET /maintenance_histories
   # GET /maintenance_histories.json
@@ -9,6 +10,15 @@ class MaintenanceHistoriesController < ApplicationController
       @maintenance_histories = MaintenanceHistory.where("car_id = ?", @car_selected.id).where("status = ?", params[:filtro])
     else
       @maintenance_histories = MaintenanceHistory.where("car_id = ?", @car_selected.id)
+    end
+  end
+
+  def types
+    q_term = "#{params[:q]}"
+    types = MaintenanceHistory.distinct.select('maintenance_type').where("maintenance_type ~* ?", q_term).map(&:maintenance_type)
+    respond_to do |format|
+      format.json { render json: types.to_json }
+      format.html { render text: "no aplica"}
     end
   end
 
@@ -26,7 +36,7 @@ class MaintenanceHistoriesController < ApplicationController
   def edit
   end
 
-  # GET /maintenance_histories/1/edit
+  # GET /maintenance_histories/1/review
   def review
   end
 
@@ -34,7 +44,7 @@ class MaintenanceHistoriesController < ApplicationController
   # POST /maintenance_histories.json
   def create
     @maintenance_history = MaintenanceHistory.new(maintenance_history_params)
-
+    @maintenance_history.car_id = @car_selected.id
     respond_to do |format|
       if @maintenance_history.save
         format.html { redirect_to @maintenance_history, notice: 'Maintenance history was successfully created.' }
@@ -49,6 +59,7 @@ class MaintenanceHistoriesController < ApplicationController
   # PATCH/PUT /maintenance_histories/1
   # PATCH/PUT /maintenance_histories/1.json
   def update
+    @maintenance_history.car_id = @car_selected.id
     respond_to do |format|
       if @maintenance_history.update(maintenance_history_params)
         format.html { redirect_to @maintenance_history, notice: 'Maintenance history was successfully updated.' }
@@ -70,6 +81,10 @@ class MaintenanceHistoriesController < ApplicationController
     end
   end
 
+  def maintenance_status
+    @maintenance_status = ["Pendiente", "Completado", "Expirado"]
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_maintenance_history
@@ -78,6 +93,6 @@ class MaintenanceHistoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def maintenance_history_params
-      params.require(:maintenance_history).permit(:status, :estimated_km, :scheduled_date, :review_km, :review_date, :provider, :cost, :notified, :car_id)
+      params.require(:maintenance_history).permit(:status, :estimated_km, :scheduled_date, :review_km, :review_date, :provider, :cost, :notified)
     end
 end

@@ -11,8 +11,12 @@
   <% end %>
   
   <div class="field">
+    <%= form.label :maintenance_type %>
+    <%= form.text_field :maintenance_type %>
+  </div>
+  <div class="field">
     <%= form.label :status %>
-    <%= form.text_field :status %>
+    <%= form.select :status, @maintenance_status %>
   </div>
   <div class="field">
     <%= form.label :estimated_km %>
@@ -46,18 +50,21 @@
     <%= form.label :notified %>
     <%= form.check_box :notified %>
   </div>
-  <div class="field">
-    <%= form.label :car_id %>
-    <%= form.text_field :car_id %>
-  </div>
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Guardar" %>
   </div>
 <% end %>
 
 <% content_for :late_javascripts do %>
   <script type="text/javascript">
     $(function() {
+      $('#maintenance_history_maintenance_type').autoComplete({
+        source: function(term, response){
+          try { xhr.abort(); } catch(e){}
+          $.getJSON('<%= types_maintenance_histories_path %>', { q: term }, function(data){ response(data); });
+        }
+      });
+      $('#l10nPicker').datepick($.extend({pickerClass: 'date_pick'}, $.datepick.regionalOptions['es']));
       $('.date_pick').datepick({
         dateFormat: 'dd/mm/yyyy'
       });

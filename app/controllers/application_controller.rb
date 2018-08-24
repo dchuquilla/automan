@@ -37,4 +37,10 @@ class ApplicationController < ActionController::Base
     def after_sign_in_path_for(resource)
       cars_path
     end
+  private
+    # Overwriting the sign_out redirect path method
+    def after_sign_out_path_for(resource_or_scope)
+      clean_car_selection_cookie
+      root_path
+    end
 end
