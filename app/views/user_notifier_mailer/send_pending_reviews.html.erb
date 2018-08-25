@@ -1,0 +1,75 @@
+<container>
+  <row>
+    <columns small="12" large="12">
+      <h2>Mantenimientos pendientes</h2>
+    </columns>
+  </row>
+  <row>
+    <columns small="12" large="12">
+      <p>Muy buenos días <%= @user.owner.name %> <%= @user.owner.last_name %>!</p>
+    </columns>
+  </row>
+  <row>
+    <columns small="12" large="12">
+      <p>Tiene mantenimiento pendientes que pronto deben ser realizados y requieren de su atención</p>
+    </columns>
+  </row>
+  <row>
+    <columns small="12" large="12">
+      <callout class="primary">
+      <row>
+        <columns small="12">
+          <% @cars.each do |car| %>
+            <table>
+              <thead>
+                <tr>
+                  <th>Auto: <%= car.plate %></th>
+                </tr>
+              </thead>
+              <tbody>
+                  <table cellspacing="2" border="1">
+                    <thead>
+                      <tr>
+                        <th>Estado</th>
+                        <th>Tipo</th>
+                        <th>KM Estimado</th>
+                        <th>Fecha agendada</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% car.maintenance_histories.where("status = 'Pendiente'").each do |maintenance_history| %>
+                        <tr>
+                          <td><%= maintenance_history.status %></td>
+                          <td><%= maintenance_history.maintenance_type %></td>
+                          <td><%= maintenance_history.estimated_km %></td>
+                          <td><%= maintenance_history.scheduled_date.strftime("%d/%m/%Y") %></td>
+                          <td><%= link_to "Detalles", maintenance_history_url(maintenance_history) %></td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+              </tbody>
+            </table>
+          <% end %>
+        </columns>
+      </row>
+    </callout>
+    </columns>
+  </row>
+  <row>
+    <columns small="12" large="12">
+      <p>Acuda a los mantenimientos para mantener su inversion protegida.</p>
+    </columns>
+  </row>
+  <row>
+    <columns small="12" large="12">
+      <p>Atentamente,</p>
+    </columns>
+  </row>
+  <row>
+    <columns small="12" large="12">
+      <p>Automan</p>
+    </columns>
+  </row>
+</container>

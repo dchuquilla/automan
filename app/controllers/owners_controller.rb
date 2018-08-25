@@ -30,6 +30,7 @@ class OwnersController < ApplicationController
     @owner.email = current_user.email
     respond_to do |format|
       if @owner.save
+        UserNotifierMailer.send_signup_email(current_user).deliver
         format.html { redirect_to @owner, notice: 'Owner was successfully created.' }
         format.json { render :show, status: :created, location: @owner }
       else
