@@ -1,0 +1,3 @@
+namespace :automan do
+  
+end
