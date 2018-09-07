@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_23_045602) do
+ActiveRecord::Schema.define(version: 2018_09_07_000720) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,7 +52,9 @@ ActiveRecord::Schema.define(version: 2018_08_23_045602) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "maintenance_type"
+    t.bigint "user_car_setting_id"
     t.index ["car_id"], name: "index_maintenance_histories_on_car_id"
+    t.index ["user_car_setting_id"], name: "index_maintenance_histories_on_user_car_setting_id"
   end
 
   create_table "owners", force: :cascade do |t|
@@ -79,6 +81,15 @@ ActiveRecord::Schema.define(version: 2018_08_23_045602) do
     t.string "maintenance_type"
   end
 
+  create_table "user_car_settings", force: :cascade do |t|
+    t.integer "car_id"
+    t.integer "km_estimated"
+    t.integer "month_estimated"
+    t.string "maintenance_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -103,4 +114,5 @@ ActiveRecord::Schema.define(version: 2018_08_23_045602) do
   add_foreign_key "cars", "owners"
   add_foreign_key "cost_details", "maintenance_histories"
   add_foreign_key "maintenance_histories", "cars"
+  add_foreign_key "maintenance_histories", "user_car_settings"
 end
