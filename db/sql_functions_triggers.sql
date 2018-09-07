@@ -62,11 +62,12 @@ END
 $function$
 CREATE TRIGGER "crearMantenimientoBasicos" AFTER INSERT ON cars FOR EACH ROW EXECUTE PROCEDURE tg_mantenimientos_basicos();
 
+-- Gestion de manteminientos recurrentes
 CREATE OR REPLACE FUNCTION tg_mantenimientos_recurrentes()
  RETURNS trigger
  LANGUAGE plpgsql
 AS $function$
-  DECLARE i settings%rowtype;
+  DECLARE i user_car_settings%rowtype;
   DECLARE contador integer;
   DECLARE edad integer;
   DECLARE km_estimado integer;
@@ -74,9 +75,13 @@ AS $function$
   DECLARE fecha_estimada Timestamp Without Time Zone;
   DECLARE tipo varchar(255);
 BEGIN
-  if NEW.status = 'Completado' then
-    SELECT floor(random() * (i.km_max-i.km_min+1) + i.km_min)::int + NEW.current_km INTO km_estimado;
+  if NEW.status = 'Completado' AND NEW.status <> OLD.status then
+    SELECT * FROM user_car_settings where id = NEW.user_car_setting_id INTO i;
+    SELECT NEW.review_km + i.km_estimated INTO km_estimado;
+    SELECT NEW.review_date + i.month_estimated * interval '1 month' into fecha_estimada;
     INSERT INTO maintenance_histories ( car_id, maintenance_type, estimated_km, notified, scheduled_date, status, created_at, updated_at) VALUES ( NEW.car_id, NEW.maintenance_type, km_estimado, FALSE, fecha_estimada, 'Pendiente', now(), now());
   end if;
+  return NEW;
 END
 $function$
+CREATE TRIGGER "crearMantenimientoRecurrentes" AFTER UPDATE ON maintenance_histories FOR EACH ROW EXECUTE PROCEDURE tg_mantenimientos_recurrentes();
