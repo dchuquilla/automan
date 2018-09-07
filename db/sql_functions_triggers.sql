@@ -85,3 +85,25 @@ BEGIN
 END
 $function$
 CREATE TRIGGER "crearMantenimientoRecurrentes" AFTER UPDATE ON maintenance_histories FOR EACH ROW EXECUTE PROCEDURE tg_mantenimientos_recurrentes();
+
+-- Gestion de KM Actual
+CREATE OR REPLACE FUNCTION tg_actualizar_recorrido()
+ RETURNS trigger
+ LANGUAGE plpgsql
+AS $function$
+  DECLARE i user_car_settings%rowtype;
+  DECLARE contador integer;
+  DECLARE edad integer;
+  DECLARE km_estimado integer;
+  DECLARE mes_estimado integer;
+  DECLARE fecha_estimada Timestamp Without Time Zone;
+  DECLARE tipo varchar(255);
+BEGIN
+  if NEW.current_km <> OLD.current_km then
+    if NEW.current_km > OLD.current_km then
+      
+    end
+  end if;
+  return NEW;
+END
+$function$
