@@ -17,7 +17,7 @@ BEGIN
   antiguo_km_actual = OLD.current_km;
   SELECT EXTRACT(EPOCH FROM nuevo_update-antiguo_update)/3600 INTO delta_horas;
   delta_km = nuevo_km_actual - antiguo_km_actual;
-  if (delta_horas > 0) && (NEW.current_km != OLD.current_km) then
+  if (delta_horas > 0) AND (NEW.current_km <> OLD.current_km) then
     km_semanal = (delta_km/delta_horas)*168;
     update cars set week_km = km_semanal where id = OLD.id;
   end if;
@@ -86,24 +86,3 @@ END
 $function$
 CREATE TRIGGER "crearMantenimientoRecurrentes" AFTER UPDATE ON maintenance_histories FOR EACH ROW EXECUTE PROCEDURE tg_mantenimientos_recurrentes();
 
--- Gestion de KM Actual
-CREATE OR REPLACE FUNCTION tg_actualizar_recorrido()
- RETURNS trigger
- LANGUAGE plpgsql
-AS $function$
-  DECLARE i user_car_settings%rowtype;
-  DECLARE contador integer;
-  DECLARE edad integer;
-  DECLARE km_estimado integer;
-  DECLARE mes_estimado integer;
-  DECLARE fecha_estimada Timestamp Without Time Zone;
-  DECLARE tipo varchar(255);
-BEGIN
-  if NEW.current_km <> OLD.current_km then
-    if NEW.current_km > OLD.current_km then
-      
-    end
-  end if;
-  return NEW;
-END
-$function$
