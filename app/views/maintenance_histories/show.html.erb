@@ -1,49 +1,71 @@
-<p id="notice"><%= notice %></p>
+<div class="row column">
+  <h1>
+    <%= @maintenance_history.maintenance_type %>
+  </h1>
 
-<p>
-  <strong>Status:</strong>
-  <%= @maintenance_history.status %>
-</p>
+  <p>
+    <strong>Estado:</strong>
+    <%= @maintenance_history.status %>
+  </p>
 
-<p>
-  <strong>Estimated km:</strong>
-  <%= @maintenance_history.estimated_km %>
-</p>
+  <p>
+    <strong>Km Estimado:</strong>
+    <%= @maintenance_history.estimated_km.round %>
+  </p>
 
-<p>
-  <strong>Scheduled date:</strong>
-  <%= @maintenance_history.scheduled_date %>
-</p>
+  <p>
+    <strong>Fecha Agenda:</strong>
+    <%= @maintenance_history.scheduled_date.strftime(DATE_FORMAT) %>
+  </p>
 
-<p>
-  <strong>Review km:</strong>
-  <%= @maintenance_history.review_km %>
-</p>
+  <p>
+    <strong>Km Revisión:</strong>
+    <%= @maintenance_history.review_km.round if @maintenance_history.review_km.present? %>
+  </p>
 
-<p>
-  <strong>Review date:</strong>
-  <%= @maintenance_history.review_date %>
-</p>
+  <p>
+    <strong>Fecha Revisión:</strong>
+    <%= @maintenance_history.review_date.strftime(DATE_FORMAT) if @maintenance_history.review_date.present?%>
+  </p>
 
-<p>
-  <strong>Provider:</strong>
-  <%= @maintenance_history.provider %>
-</p>
+  <p>
+    <strong>Proveedor:</strong>
+    <%= @maintenance_history.provider %>
+  </p>
 
-<p>
-  <strong>Cost:</strong>
-  <%= @maintenance_history.cost %>
-</p>
+  <p>
+    <strong>Costo:</strong>
+    <%= @maintenance_history.cost %>
+  </p>
 
-<p>
-  <strong>Notified:</strong>
-  <%= @maintenance_history.notified %>
-</p>
+  <p>
+    <strong>Notified:</strong>
+    <%= @maintenance_history.notified ? 'Si' : 'No'%>
+  </p>
 
-<p>
-  <strong>Car:</strong>
-  <%= @maintenance_history.car %>
-</p>
+  <%= link_to 'Editar', edit_maintenance_history_path(@maintenance_history) %> |
+  <%= link_to 'Ver Todos', maintenance_histories_path %>
+</div>
 
-<%= link_to 'Edit', edit_maintenance_history_path(@maintenance_history) %> |
-<%= link_to 'Back', maintenance_histories_path %>
+<% if @maintenance_history.user_car_setting.km_estimated.nil? || @maintenance_history.user_car_setting.month_estimated.nil? %>
+  <div class="row column">
+    <h2>Configuración pendiente</h2>
+    <p>Usted ha creado un nuevo tipo de mantenimiento, por favor complete la configuración, esta información servirá para agendar nuevos mantenimientos de este tipo.</p>
+    <div class="row column">
+      <%= form_for @maintenance_history.user_car_setting, url: {action: "update"} do |form| %>
+        <div class="field">
+          <%= form.label :km_estimated %>
+          <%= form.text_field :km_estimated %>
+        </div>
+        <div class="field">
+          <%= form.label :month_estimated %>
+          <% if form.object.month_estimated.present? %>
+            <%= form.text_field :month_estimated, value: form.object.month_estimated.strftime(DATE_FORMAT), class: "date_pick" %>
+          <% else %>
+            <%= form.text_field :month_estimated, class: "date_pick" %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

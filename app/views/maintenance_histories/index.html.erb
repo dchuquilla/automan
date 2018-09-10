@@ -28,7 +28,7 @@
           <% end %>
           <td data-label="Tipo"><%= maintenance_history.maintenance_type %></td>
           <td data-label="Póximo KM"><%= maintenance_history.estimated_km %></td>
-          <td data-label="Fecha Estimada"><%= maintenance_history.scheduled_date.strftime("%d/%m/%Y") if maintenance_history.scheduled_date.present? %></td>
+          <td data-label="Fecha Estimada"><%= maintenance_history.scheduled_date.strftime(DATE_FORMAT) if maintenance_history.scheduled_date.present? %></td>
           <% if params[:filtro] == "Completado" %>
             <td data-label="KM Revisión"><%= maintenance_history.review_km %></td>
             <td data-label="Fecha Revisión"><%= maintenance_history.review_date %></td>

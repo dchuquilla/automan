@@ -93,6 +93,6 @@ class MaintenanceHistoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def maintenance_history_params
-      params.require(:maintenance_history).permit(:status, :estimated_km, :scheduled_date, :review_km, :review_date, :provider, :cost, :notified)
+      params.require(:maintenance_history).permit(:status, :estimated_km, :scheduled_date, :review_km, :review_date, :provider, :cost, :notified, :maintenance_type)
     end
 end

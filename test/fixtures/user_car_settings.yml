@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  car: one
+  km_estimated: 1
+  month_estimated: 1
+  maintenance_type: MyString
+
+two:
+  car: two
+  km_estimated: 1
+  month_estimated: 1
+  maintenance_type: MyString

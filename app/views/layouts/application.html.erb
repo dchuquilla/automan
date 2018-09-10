@@ -60,7 +60,7 @@
           <div class="callout primary">
             <div class="row column">
               <% if cookies[:selected_car_id].present? %>
-                <h1><%= @car_selected.plate %> <span class="current_km">KM Actual: <%= @car_selected.current_km %></span> <span class="week_km">KM Promedio: <%= @car_selected.week_km %></span></h1>
+                <h1><%= @car_selected.plate.upcase %> - <small class="current_km">KM Actual: <%= @car_selected.current_km.round %></small> / <small class="week_km">KM Promedio: <%= @car_selected.week_km.round %></small></h1>
               <% end %>
             </div>
           </div>
