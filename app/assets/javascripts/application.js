@@ -18,4 +18,5 @@
 //= require foundation/foundation
 //= require datepick/jquery.plugin.min
 //= require datepick/jquery.datepick
+//= require datepick/jquery.datepick-es
 //= require jquery.auto-complete

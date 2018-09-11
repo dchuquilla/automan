@@ -1,0 +1,19 @@
+<%= form_with(model: car, local: true) do |form| %>
+  <% if car.errors.any? %>
+    <div id="error_explanation">
+      <h2>Debe corregir los siguientes errores:</h2>
+      <ul>
+      <% car.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :current_km, "KM Actual*" %>
+    <%= form.number_field :current_km, step: 1, value: form.object.current_km.present? ? form.object.current_km.round : '' %>
+  </div>
+  <div class="actions">
+    <%= form.submit "Guardar" %>
+  </div>
+<% end %>

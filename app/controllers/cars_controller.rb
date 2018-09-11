@@ -1,7 +1,7 @@
 class CarsController < ApplicationController
   before_action :authenticate_user!
   before_action :clean_car_selection_cookie, only: [:index, :destroy]
-  before_action :set_car, only: [:show, :select, :edit, :update, :destroy]
+  before_action :set_car, only: [:show, :select, :edit, :update_current_km, :update, :destroy]
 
   # GET /cars
   # GET /cars.json
@@ -28,6 +28,10 @@ class CarsController < ApplicationController
 
   # GET /cars/1/edit
   def edit
+  end
+
+  # GET /cars/1/edit
+  def update_current_km
   end
 
   # POST /cars

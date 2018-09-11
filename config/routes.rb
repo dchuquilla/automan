@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :cars do 
     member do
       get 'select'
+      get 'update_current_km'
     end
   end
   resources :owners, except: [:index]

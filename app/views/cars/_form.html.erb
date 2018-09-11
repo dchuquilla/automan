@@ -23,7 +23,7 @@
   </div>
   <div class="field">
     <%= form.label :year, "Año*" %>
-    <%= form.text_field :year %>
+    <%= form.number_field :year, strep: 1 %>
   </div>
   <div class="field">
     <% types_list = ["Liviano", "Camion", "Camioneta", "Autobus", "Motocicleta"] %>
@@ -32,11 +32,11 @@
   </div>
   <div class="field">
     <%= form.label :current_km, "KM Actual*" %>
-    <%= form.text_field :current_km %>
+    <%= form.number_field :current_km, strep: 1, value: form.object.current_km.present? ? form.object.current_km.round : '' %>
   </div>
   <div class="field">
     <%= form.label :week_km, "KM Semanal*" %>
-    <%= form.text_field :week_km %>
+    <%= form.number_field :week_km, strep: 1, value: form.object.week_km.present? ? form.object.week_km.round : '' %>
   </div>
   <div class="actions">
     <%= form.submit "Guardar" %>

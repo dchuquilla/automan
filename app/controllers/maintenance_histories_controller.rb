@@ -30,6 +30,7 @@ class MaintenanceHistoriesController < ApplicationController
   # GET /maintenance_histories/new
   def new
     @maintenance_history = MaintenanceHistory.new
+    
   end
 
   # GET /maintenance_histories/1/edit
@@ -38,6 +39,9 @@ class MaintenanceHistoriesController < ApplicationController
 
   # GET /maintenance_histories/1/review
   def review
+    car = @maintenance_history.car
+    @maintenance_history.review_km = car.current_km
+    @maintenance_history.review_date = DateTime.now
   end
 
   # POST /maintenance_histories

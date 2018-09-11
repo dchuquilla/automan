@@ -1,10 +1,10 @@
 <% content_for :late_javascripts do %>
   <script type="text/javascript">
     $(function() {
-      $('#l10nPicker').datepick($.extend({pickerClass: 'date_pick'}, $.datepick.regionalOptions['es']));
-      $('.date_pick').datepick({
-        dateFormat: 'dd/mm/yyyy'
-      });
+      $('.date_pick').datepick($.extend({ 
+        altFormat: 'dd/mm/yyyy'}, 
+        $.datepick.regionalOptions['es'])
+      ); 
     });
   </script>
 <% end %>

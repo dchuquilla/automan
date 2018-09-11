@@ -20,27 +20,27 @@
   </div>
   <div class="field">
     <%= form.label :estimated_km %>
-    <%= form.number_field :estimated_km, step: 1, value: form.object.estimated_km.present? ? form.object.estimated_km.round : '' %>
+    <%= form.text_field :estimated_km %>
   </div>
   <div class="field">
     <%= form.label :scheduled_date %>
     <% if form.object.scheduled_date.present? %>
-      <%= form.text_field :scheduled_date, value: form.object.scheduled_date.present? ? form.object.scheduled_date.strftime(DATE_FORMAT) : '', class: "date_pick" %>
+      <%= form.text_field :scheduled_date, value: form.object.scheduled_date.strftime(DATE_FORMAT), class: "date_pick" %>
     <% else %>
-      <%= form.text_field :scheduled_date, class: "date_pick" %>
+      <%= form.date_field :scheduled_date, class: "date_pick" %>
     <% end %>
   </div>
   <div class="field">
     <%= form.label :review_km %>
-    <%= form.number_field :review_km, step: 1, value: form.object.review_km.present? ? form.object.review_km.round : '' %>
+    <%= form.text_field :review_km %>
   </div>
   <div class="field">
     <%= form.label :review_date %>
-    <%= form.text_field :review_date, value: form.object.review_date.present? ? form.object.review_date.strftime(DATE_FORMAT) : '', class: "date_pick" %>
+    <%= form.date_field :review_date, class: "date_pick" %>
   </div>
   <div class="field">
     <%= form.label :provider %>
-    <%= form.text_field :provider %>
+    <%= form.text_area :provider %>
   </div>
   <div class="field">
     <%= form.label :cost %>

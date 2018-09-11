@@ -33,7 +33,9 @@
                   </li>
                   <% if cookies[:selected_car_id].present? %>
                     <li>
-                      <a href="#"><%= @car_selected.plate %></a>
+                      <a href="#">
+                        <%= @car_selected.plate %>
+                      </a>
                       <ul class="menu vertical nested">
                         <li><%= link_to 'Detalles de auto', car_path(@car_selected) %></li>
                         <li><%= link_to("Agendar manteminieto", new_maintenance_history_path) %></li>
@@ -60,7 +62,10 @@
           <div class="callout primary">
             <div class="row column">
               <% if cookies[:selected_car_id].present? %>
-                <h1><%= @car_selected.plate.upcase %> - <small class="current_km">KM Actual: <%= @car_selected.current_km.round %></small> / <small class="week_km">KM Promedio: <%= @car_selected.week_km.round %></small></h1>
+                <h1>
+                  <%= link_to @car_selected.plate.upcase, edit_car_path(@car_selected) %> - 
+                  <small class="current_km">KM Actual: <%= link_to @car_selected.current_km.round, update_current_km_car_path(@car_selected) %></small> / 
+                  <small class="week_km">KM Promedio: <%= @car_selected.week_km.round %></small></h1>
               <% end %>
             </div>
           </div>
