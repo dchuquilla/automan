@@ -25,7 +25,7 @@ class RunSqlScripts < ActiveRecord::Migration[5.2]
               "   end if; "\
               "   return NEW; "\
               " END "\
-              " $function$ "\
+              " $function$; "\
               " -- Crear triggers con metodo creado "\
               " CREATE TRIGGER procesarCambiosKmActual  "\
               "   AFTER UPDATE ON cars  "\
@@ -61,7 +61,7 @@ class RunSqlScripts < ActiveRecord::Migration[5.2]
               "   END LOOP; "\
               "   return NEW; "\
               " END "\
-              " $function$ "\
+              " $function$; "\
               " CREATE TRIGGER crearMantenimientoBasicos AFTER INSERT ON cars FOR EACH ROW EXECUTE PROCEDURE tg_mantenimientos_basicos(); "\
 
               " -- Gestion de manteminientos recurrentes "\
@@ -85,7 +85,7 @@ class RunSqlScripts < ActiveRecord::Migration[5.2]
               "   end if; "\
               "   return NEW; "\
               " END "\
-              " $function$ "\
+              " $function$; "\
               " CREATE TRIGGER crearMantenimientoRecurrentes AFTER UPDATE ON maintenance_histories FOR EACH ROW EXECUTE PROCEDURE tg_mantenimientos_recurrentes(); "\
 
     execute raw_sql
