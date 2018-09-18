@@ -22,7 +22,7 @@
           <td data-label="Tipo"><%= car.car_type %></td>
           <td data-label="Km Actual"><%= car.current_km.round %></td>
           <td data-label="Km semanal"><%= car.week_km.round %></td>
-          <td><%= link_to 'Seleccionar', select_car_path(car) %></td>
+          <td><%= link_to 'Mantenimientos', select_car_path(car) %></td>
           <td><%= link_to 'Detalles', car %></td>
           <td><%= link_to 'Editar', edit_car_path(car) %></td>
           <td><%= link_to 'Eliminar', car, method: :delete, data: { confirm: '¿Está seguro?' } %></td>
