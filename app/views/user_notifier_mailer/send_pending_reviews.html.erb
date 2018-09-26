@@ -1,75 +1,158 @@
-<container>
-  <row>
-    <columns small="12" large="12">
-      <h2>Mantenimientos pendientes</h2>
-    </columns>
-  </row>
-  <row>
-    <columns small="12" large="12">
-      <p>Muy buenos días <%= @user.owner.name %> <%= @user.owner.last_name %>!</p>
-    </columns>
-  </row>
-  <row>
-    <columns small="12" large="12">
-      <p>Tiene mantenimiento pendientes que pronto deben ser realizados y requieren de su atención</p>
-    </columns>
-  </row>
-  <row>
-    <columns small="12" large="12">
-      <callout class="primary">
-      <row>
-        <columns small="12">
-          <% @cars.each do |car| %>
-            <table>
-              <thead>
-                <tr>
-                  <th>Auto: <%= car.plate %></th>
-                </tr>
-              </thead>
-              <tbody>
-                  <table cellpadding="2" border="1">
-                    <thead>
-                      <tr>
-                        <th>Estado</th>
-                        <th>Tipo</th>
-                        <th>KM Estimado</th>
-                        <th>Fecha agendada</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <% car.maintenance_histories.where("status = 'Pendiente'").each do |maintenance_history| %>
-                        <tr>
-                          <td><%= maintenance_history.status %></td>
-                          <td><%= maintenance_history.maintenance_type %></td>
-                          <td><%= maintenance_history.estimated_km %></td>
-                          <td><%= maintenance_history.scheduled_date.strftime(DATE_FORMAT) %></td>
-                          <td><%= link_to "Detalles", maintenance_history_url(maintenance_history) %></td>
-                        </tr>
-                      <% end %>
-                    </tbody>
-                  </table>
-              </tbody>
-            </table>
-          <% end %>
-        </columns>
-      </row>
-    </callout>
-    </columns>
-  </row>
-  <row>
-    <columns small="12" large="12">
-      <p>Acuda a los mantenimientos para mantener su inversion protegida.</p>
-    </columns>
-  </row>
-  <row>
-    <columns small="12" large="12">
-      <p>Atentamente,</p>
-    </columns>
-  </row>
-  <row>
-    <columns small="12" large="12">
-      <p>Automan</p>
-    </columns>
-  </row>
-</container>
+<table align="center" class="wrapper header float-center">
+  <tr><td class="wrapper-inner">
+      <table align="center" class="container">
+        <tbody>
+          <tr><td><table class="row collapse">
+                <tbody>
+                  <tr><th class="small-6 large-6 columns first">
+                      <table>
+                        <tr><th>
+                            <%= image_tag('logo.png') %>
+                          </th></tr>
+                      </table>
+                    </th>
+                    <th class="small-6 large-6 columns last">
+                      <table>
+                        <tr><th>
+                            <p class="text-right"></p>
+                          </th></tr>
+                      </table>
+                    </th></tr>
+                </tbody>
+              </table>
+            </td></tr>
+        </tbody>
+      </table>
+    </td></tr>
+</table>
+
+<table align="center" class="container float-center">
+  <tbody>
+    <tr><td><table class="spacer">
+          <tbody>
+            <tr><td height="16px" style="font-size:16px;line-height:16px;">&#xA0;</td></tr>
+          </tbody>
+        </table> 
+
+        <table class="row">
+          <tbody>
+            <tr><th class="small-12 large-12 columns first last">
+                <table>
+                  <tr><th>
+                      <h1>Muy buen día <%= @user.owner.name %><%= @user.owner.last_name %>!</h1>
+                      <p class="lead">Tiene mantenimientos pendientes que requieren de su atención.</p>
+                      <table class="callout">
+                        <tr><th class="callout-inner primary">
+                            <% @cars.each do |car| %>
+                              <table>
+                                <thead>
+                                  <tr><th>Auto: <%= car.plate %>
+                                    </th></tr>
+                                </thead>
+                                <tbody>
+                                  <tr><td><table>
+                                        <thead>
+                                          <tr><th>Estado</th>
+                                            <th>Tipo</th>
+                                            <th>KM Estimado</th>
+                                            <th>Fecha agendada</th>
+                                            <th>
+                                            </th></tr>
+                                        </thead>
+                                        <tbody>
+                                          <% car.maintenance_histories.where("status = 'Pendiente'").each do |maintenance_history| %>
+                                          <tr><td><%= maintenance_history.status %></td>
+                                            <td><%= maintenance_history.maintenance_type %></td>
+                                            <td><%= maintenance_history.estimated_km %></td>
+                                            <td><%= maintenance_history.scheduled_date.strftime(DATE_FORMAT) %></td>
+                                            <td><%= link_to "Detalles", maintenance_history_url(maintenance_history) %>
+                                            </td></tr>
+                                          <% end %>
+                                        </tbody>
+                                      </table>
+                                    </td></tr>
+                                </tbody>
+                              </table>
+                            <% end %>
+                          </th>
+                          <th class="expander">
+                          </th></tr>
+                      </table>
+                      <p>Acuda a los oportunamente mantenimientos para mantener su inversión protegida.</p>
+                    </th>
+                    <th class="expander">
+                    </th></tr>
+                </table>
+              </th></tr>
+          </tbody>
+        </table>
+        <table class="wrapper secondary" align="center">
+          <tr><td class="wrapper-inner">
+
+              <table class="spacer">
+                <tbody>
+                  <tr><td height="16px" style="font-size:16px;line-height:16px;">&#xA0;</td></tr>
+                </tbody>
+              </table> 
+
+              <table class="row">
+                <tbody>
+                  <tr><th class="small-12 large-6 columns first">
+                      <table>
+                        <tr><th>
+                            <h5>Contáctenos:</h5>
+                            <table class="button facebook expand">
+                              <tr><td><table>
+                                    <tr><td><center data-parsed="">
+                                          <a href="http://zurb.com" align="center" class="float-center">Facebook</a>
+                                        </center>
+                                      </td></tr>
+                                  </table></td>
+                                <td class="expander">
+                                </td></tr>
+                            </table>
+                            <table class="button twitter expand">
+                              <tr><td><table>
+                                    <tr><td><center data-parsed="">
+                                          <a href="http://zurb.com" align="center" class="float-center">Twitter</a>
+                                        </center>
+                                      </td></tr>
+                                  </table></td>
+                                <td class="expander">
+                                </td></tr>
+                            </table>
+                            <table class="button google expand">
+                              <tr><td><table>
+                                    <tr><td><center data-parsed="">
+                                          <a href="http://zurb.com" align="center" class="float-center">Google+</a>
+                                        </center>
+                                      </td></tr>
+                                  </table></td>
+                                <td class="expander">
+                                </td></tr>
+                            </table>
+                          </th></tr>
+                      </table>
+                    </th>
+                    <th class="small-12 large-6 columns last">
+                      <table>
+                        <tr><th>
+                            <h5>Información de contacto:</h5>
+                            <p>Teléfono: 408-341-0600</p>
+                            <p>Email: <a href="mailto:foundation@zurb.com">info@automan-ec.herokuapp.com</a>
+                            </p>
+                          </th></tr>
+                      </table>
+                    </th></tr>
+                </tbody>
+              </table>
+            </td></tr>
+        </table>
+      </td></tr>
+  </tbody>
+</table>
+
+
+
+
+
