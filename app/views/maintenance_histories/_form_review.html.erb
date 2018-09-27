@@ -1,7 +1,7 @@
 <%= form_with(model: maintenance_history, local: true, html: { autocomplete: "off" }) do |form| %>
   <% if maintenance_history.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(maintenance_history.errors.count, "error") %> prohibited this maintenance_history from being saved:</h2>
+      <h2>Se han presentado los siguientes errores</h2>
       <ul>
       <% maintenance_history.errors.full_messages.each do |message| %>
         <li><%= message %></li>

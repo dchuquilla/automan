@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :set_car_with_cookies
   before_action :complete_owner
+
   def complete_owner
     if user_signed_in? && (params[:controller].downcase != 'owners' && params[:action].downcase != "new")
       if current_user.owner.nil?

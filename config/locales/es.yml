@@ -29,7 +29,7 @@
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 
-en:
+es:
   activerecord:
     success:
       messages:
@@ -55,6 +55,9 @@ en:
       maintenance_history:
         one: Mantenimiento
         other: Mantenimientos
+      user_car_setting:
+        one: Configuración de Mantenimiento
+        other: Configuraciones de Mantenimiento
       owner:
         one: Propietario
         other: Propietarios

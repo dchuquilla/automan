@@ -29,7 +29,7 @@ class CostDetailsController < ApplicationController
 
     respond_to do |format|
       if @cost_detail.save
-        format.html { redirect_to @cost_detail, notice: 'Cost detail was successfully created.' }
+        format.html { redirect_to @cost_detail, notice: 'El detalle de costo fue agregado.' }
         format.json { render :show, status: :created, location: @cost_detail }
       else
         format.html { render :new }
@@ -43,7 +43,7 @@ class CostDetailsController < ApplicationController
   def update
     respond_to do |format|
       if @cost_detail.update(cost_detail_params)
-        format.html { redirect_to @cost_detail, notice: 'Cost detail was successfully updated.' }
+        format.html { redirect_to @cost_detail, notice: 'El detalle de costo fue modificado.' }
         format.json { render :show, status: :ok, location: @cost_detail }
       else
         format.html { render :edit }
@@ -57,7 +57,7 @@ class CostDetailsController < ApplicationController
   def destroy
     @cost_detail.destroy
     respond_to do |format|
-      format.html { redirect_to cost_details_url, notice: 'Cost detail was successfully destroyed.' }
+      format.html { redirect_to cost_details_url, notice: 'El detalle de costo fue eliminado.' }
       format.json { head :no_content }
     end
   end

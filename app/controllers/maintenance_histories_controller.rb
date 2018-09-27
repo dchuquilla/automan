@@ -51,7 +51,7 @@ class MaintenanceHistoriesController < ApplicationController
     @maintenance_history.car_id = @car_selected.id
     respond_to do |format|
       if @maintenance_history.save
-        format.html { redirect_to @maintenance_history, notice: 'Maintenance history was successfully created.' }
+        format.html { redirect_to @maintenance_history, notice: 'El mantenimiento fue creado.' }
         format.json { render :show, status: :created, location: @maintenance_history }
       else
         format.html { render :new }
@@ -66,7 +66,7 @@ class MaintenanceHistoriesController < ApplicationController
     @maintenance_history.car_id = @car_selected.id
     respond_to do |format|
       if @maintenance_history.update(maintenance_history_params)
-        format.html { redirect_to @maintenance_history, notice: 'Maintenance history was successfully updated.' }
+        format.html { redirect_to @maintenance_history, notice: 'El mantenimiento fue modificado.' }
         format.json { render :show, status: :ok, location: @maintenance_history }
       else
         format.html { render :edit }
@@ -80,7 +80,7 @@ class MaintenanceHistoriesController < ApplicationController
   def destroy
     @maintenance_history.destroy
     respond_to do |format|
-      format.html { redirect_to maintenance_histories_url, notice: 'Maintenance history was successfully destroyed.' }
+      format.html { redirect_to maintenance_histories_url, notice: 'El mantenimiento fue eliminado.' }
       format.json { head :no_content }
     end
   end
