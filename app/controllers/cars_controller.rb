@@ -53,6 +53,9 @@ class CarsController < ApplicationController
   # PATCH/PUT /cars/1
   # PATCH/PUT /cars/1.json
   def update
+    if params[:car][:current_km].to_d > @car.current_km
+      params[:car][:km_updated_date] = DateTime.now
+    end
     respond_to do |format|
       if @car.update(car_params)
         format.html { redirect_to @car, notice: 'Su auto fue actualizado.' }
@@ -85,6 +88,6 @@ class CarsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def car_params
-      params.require(:car).permit(:plate, :brand, :model, :current_km, :car_type, :week_km, :owner_id, :year)
+      params.require(:car).permit(:plate, :brand, :model, :current_km, :car_type, :week_km, :owner_id, :year, :km_updated_date)
     end
 end

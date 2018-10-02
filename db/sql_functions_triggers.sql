@@ -11,8 +11,8 @@ AS $function$
   DECLARE nuevo_km_actual numeric;
   DECLARE antiguo_km_actual numeric;
 BEGIN
-  nuevo_update = NEW.updated_at;
-  antiguo_update = OLD.updated_at;
+  nuevo_update = NEW.km_updated_date;
+  antiguo_update = OLD.km_updated_date;
   nuevo_km_actual = NEW.current_km;
   antiguo_km_actual = OLD.current_km;
   SELECT EXTRACT(EPOCH FROM nuevo_update-antiguo_update)/3600 INTO delta_horas;

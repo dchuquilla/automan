@@ -1,50 +1,57 @@
-<div class="row column">
-  <h1>
-    <%= @maintenance_history.maintenance_type %>
-  </h1>
+<div class="row">
+  <div class="columns large-6 small-12">
+    <h2>
+      <%= @maintenance_history.maintenance_type %>
+    </h2>
 
-  <p>
-    <strong>Estado:</strong>
-    <%= @maintenance_history.status %>
-  </p>
+    <p>
+      <strong>Estado:</strong>
+      <%= @maintenance_history.status %>
+    </p>
 
-  <p>
-    <strong>Km Estimado:</strong>
-    <%= @maintenance_history.estimated_km.round %>
-  </p>
+    <p>
+      <strong>Km Estimado:</strong>
+      <%= @maintenance_history.estimated_km.round %>
+    </p>
 
-  <p>
-    <strong>Fecha Agenda:</strong>
-    <%= @maintenance_history.scheduled_date.strftime(DATE_FORMAT) %>
-  </p>
+    <p>
+      <strong>Fecha Agenda:</strong>
+      <%= @maintenance_history.scheduled_date.strftime(DATE_FORMAT) %>
+    </p>
 
-  <p>
-    <strong>Km Revisión:</strong>
-    <%= @maintenance_history.review_km.round if @maintenance_history.review_km.present? %>
-  </p>
+    <p>
+      <strong>Km Revisión:</strong>
+      <%= @maintenance_history.review_km.round if @maintenance_history.review_km.present? %>
+    </p>
 
-  <p>
-    <strong>Fecha Revisión:</strong>
-    <%= @maintenance_history.review_date.strftime(DATE_FORMAT) if @maintenance_history.review_date.present?%>
-  </p>
+    <p>
+      <strong>Fecha Revisión:</strong>
+      <%= @maintenance_history.review_date.strftime(DATE_FORMAT) if @maintenance_history.review_date.present?%>
+    </p>
 
-  <p>
-    <strong>Proveedor:</strong>
-    <%= @maintenance_history.provider %>
-  </p>
+    <p>
+      <strong>Proveedor:</strong>
+      <%= @maintenance_history.provider %>
+    </p>
 
-  <p>
-    <strong>Costo:</strong>
-    <%= @maintenance_history.cost %>
-  </p>
+    <p>
+      <strong>Costo:</strong>
+      <%= @maintenance_history.cost %>
+    </p>
 
-  <p>
-    <strong>Notified:</strong>
-    <%= @maintenance_history.notified ? 'Si' : 'No'%>
-  </p>
+    <p>
+      <strong>Notified:</strong>
+      <%= @maintenance_history.notified ? 'Si' : 'No'%>
+    </p>
 
-  <%= link_to 'Editar', edit_maintenance_history_path(@maintenance_history) %> |
-  <%= link_to 'Ver Todos', maintenance_histories_path %>
+    <%= link_to 'Editar', edit_maintenance_history_path(@maintenance_history), class: "button" %>
+    <%= link_to 'Ver Todos', maintenance_histories_path, class: "hollow button general" %>
+    
+  </div>
+
+  <div class="columns large-6 small-12">
+    <h2>Mantenimiento programado</h2>
+  </div>
 </div>
 
 <% if @maintenance_history.user_car_setting.km_estimated.nil? || @maintenance_history.user_car_setting.month_estimated.nil? %>
@@ -66,7 +73,7 @@
           <% end %>
         </div>
         <div class="actions">
-          <%= form.submit "Guardar" %>
+          <%= form.submit "Guardar", class: "button" %>
         </div>
       <% end %>
     </div>

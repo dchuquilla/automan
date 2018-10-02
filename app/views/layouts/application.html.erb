@@ -64,7 +64,7 @@
               <% if cookies[:selected_car_id].present? %>
                 <h1>
                   <%= link_to @car_selected.plate.upcase, edit_car_path(@car_selected) %> - 
-                  <small class="current_km">KM Actual: <%= link_to @car_selected.current_km.round, update_current_km_car_path(@car_selected) %></small> / 
+                  <small class="current_km">KM Actual: <%= link_to @car_selected.current_km_estimated.round, update_current_km_car_path(@car_selected) %></small> / 
                   <small class="week_km">KM Promedio: <%= @car_selected.week_km.round %></small></h1>
               <% end %>
             </div>

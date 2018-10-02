@@ -20,7 +20,7 @@
           <td data-label="Marca"><%= car.brand %></td>
           <td data-label="Modelo"><%= car.model %></td>
           <td data-label="Tipo"><%= car.car_type %></td>
-          <td data-label="Km Actual"><%= car.current_km.round %></td>
+          <td data-label="Km Actual"><%= car.current_km_estimated.round %></td>
           <td data-label="Km semanal"><%= car.week_km.round %></td>
           <td><%= link_to 'Mantenimientos', select_car_path(car) %></td>
           <td><%= link_to 'Detalles', car %></td>

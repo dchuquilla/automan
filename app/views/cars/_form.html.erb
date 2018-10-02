@@ -32,7 +32,7 @@
   </div>
   <div class="field">
     <%= form.label :current_km, "KM Actual*" %>
-    <%= form.number_field :current_km, strep: 1, value: form.object.current_km.present? ? form.object.current_km.round : '' %>
+    <%= form.number_field :current_km, strep: 1, value: form.object.current_km.present? ? form.object.current_km_estimated.round : '' %>
   </div>
   <div class="field">
     <%= form.label :week_km, "KM Semanal*" %>
