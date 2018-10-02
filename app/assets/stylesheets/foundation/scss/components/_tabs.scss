@@ -1,57 +1,8 @@
-// Foundation for Sites by ZURB
-// foundation.zurb.com
-// Licensed under MIT Open Source
+// Reference:
+// http://www.google.com/design/spec/components/tabs.html
 
-////
-/// @group tabs
-////
-
-/// Default margin of the tab bar.
-/// @type Number
-$tab-margin: 0 !default;
-
-/// Default background color of a tab bar.
-/// @type Color
-$tab-background: $white !default;
-
-/// active background color of a tab bar.
-/// @type Color
-$tab-background-active: $light-gray !default;
-
-/// Default border color of tab content.
-/// @type Color
-$tab-border: $light-gray !default;
-
-/// Default text color for items in a Menu.
-/// @type Color
-$tab-item-color: foreground($tab-background, $primary-color) !default;
-
-/// Default background color on hover for items in a Menu.
-$tab-item-background-hover: $white !default;
-
-/// Default padding of a a tab item.
-/// @type Number
-$tab-item-padding: 1.25rem 1.5rem !default;
-
-/// Maximum number of `expand-n` classes to include in the CSS.
-/// @type Number
-$tab-expand-max: 6 !default;
-
-/// Default background color of tab content.
-/// @type Color
-$tab-content-background: $white !default;
-
-/// Default border color of tab content.
-/// @type Color
-$tab-content-border: $light-gray !default;
-
-/// Default text color of tab content.
-/// @type Color
-$tab-content-color: foreground($tab-background, $primary-color) !default;
-
-/// Default padding for tab content.
-/// @type Number | List
-$tab-content-padding: 1rem !default;
+$tab-background: $primary-color;
+$tab-background-active: $primary-color;
 
 @mixin foundation-tabs {
   .tabs {
@@ -132,6 +83,31 @@ $tab-content-padding: 1rem !default;
 
     &.is-active {
       display: block;
+    }
+  }
+}
+
+// @include foundation-tabs;
+
+.tabs {
+  border: 0;
+  .tabs-title {
+    overflow: hidden;
+    position: relative;
+    a {
+      color: $white;
+      @extend .text-button;
+      padding-top: 1rem;
+      margin-bottom: 0;
+    }
+    &.is-active a {
+      box-shadow: 0 -3px 0 0 $secondary-color inset;
+    }
+    & > a:hover {
+      background: scale-color($primary-color, $lightness: -5%);
+    }
+    .ripple-effect {
+      background-color: map-get($foundation-palette, secondary);
     }
   }
 }

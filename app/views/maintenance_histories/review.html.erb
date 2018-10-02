@@ -1,6 +1,6 @@
 <div class="row column">
   <h1>Revision</h1>
   <%= render 'form_review', maintenance_history: @maintenance_history %>
-  <%= link_to 'Detalles', @maintenance_history %> |
-  <%= link_to 'Ver todos', maintenance_histories_path %>
+  <%= link_to 'Detalles', @maintenance_history, class: "hollow button general" %>
+  <%= link_to 'Ver todos', maintenance_histories_path, class: "hollow button general" %>
 </div>

@@ -27,7 +27,7 @@
     <% if form.object.scheduled_date.present? %>
       <%= form.text_field :scheduled_date, value: form.object.scheduled_date.strftime(DATE_FORMAT), class: "date_pick" %>
     <% else %>
-      <%= form.date_field :scheduled_date, class: "date_pick" %>
+      <%= form.text_field :scheduled_date, class: "date_pick" %>
     <% end %>
   </div>
   <div class="field">
@@ -36,7 +36,7 @@
   </div>
   <div class="field">
     <%= form.label :review_date %>
-    <%= form.date_field :review_date, class: "date_pick" %>
+    <%= form.text_field :review_date, class: "date_pick" %>
   </div>
   <div class="field">
     <%= form.label :provider %>
@@ -51,7 +51,7 @@
     <%= form.check_box :notified %>
   </div>
   <div class="actions">
-    <%= form.submit "Guardar" %>
+    <%= form.submit "Guardar", class: "button" %>
   </div>
 <% end %>
 

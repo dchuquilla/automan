@@ -15,6 +15,9 @@
 //= require turbolinks
 //= require foundation/jquery
 //= require foundation/what-input
+//= require foundation/floating-label
+//= require foundation/ripple
+//= require foundation/switches
 //= require foundation/foundation
 //= require datepick/jquery.plugin.min
 //= require datepick/jquery.datepick

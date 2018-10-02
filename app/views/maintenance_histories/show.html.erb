@@ -1,8 +1,8 @@
 <div class="row">
   <div class="columns large-6 small-12">
-    <h2>
+    <h3>
       <%= @maintenance_history.maintenance_type %>
-    </h2>
+    </h3>
 
     <p>
       <strong>Estado:</strong>
@@ -50,13 +50,13 @@
   </div>
 
   <div class="columns large-6 small-12">
-    <h2>Mantenimiento programado</h2>
+    <h3>Mantenimiento programado</h3>
   </div>
 </div>
 
 <% if @maintenance_history.user_car_setting.km_estimated.nil? || @maintenance_history.user_car_setting.month_estimated.nil? %>
   <div class="row column">
-    <h2>Configuración pendiente</h2>
+    <h3>Configuración pendiente</h3>
     <p>Usted ha creado un nuevo tipo de mantenimiento, por favor complete la configuración, esta información servirá para agendar nuevos mantenimientos de este tipo.</p>
     <div class="row column">
       <%= form_for @maintenance_history.user_car_setting, url: {action: "update"} do |form| %>

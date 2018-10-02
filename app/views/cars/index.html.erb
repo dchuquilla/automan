@@ -10,7 +10,7 @@
         <th>Tipo</th>
         <th>Km Actual</th>
         <th>Km semanal</th>
-        <th colspan="4"></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -22,14 +22,24 @@
           <td data-label="Tipo"><%= car.car_type %></td>
           <td data-label="Km Actual"><%= car.current_km_estimated.round %></td>
           <td data-label="Km semanal"><%= car.week_km.round %></td>
-          <td><%= link_to 'Mantenimientos', select_car_path(car) %></td>
-          <td><%= link_to 'Detalles', car %></td>
-          <td><%= link_to 'Editar', edit_car_path(car) %></td>
-          <td><%= link_to 'Eliminar', car, method: :delete, data: { confirm: '¿Está seguro?' } %></td>
+          <td>
+            <%= link_to select_car_path(car), class: "floating-action button success" do %>
+              <i class="material-icons">folder</i>
+            <% end %>
+            <%= link_to car, class: "floating-action button primary" do %>
+              <i class="material-icons">search</i>
+            <% end %>
+            <%= link_to edit_car_path(car), class: "floating-action button secondary" do %>
+              <i class="material-icons">edit</i>
+            <% end %>
+            <%= link_to car, class: "floating-action button alert", method: :delete, data: { confirm: '¿Está seguro?' } do %>
+              <i class="material-icons">delete</i>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>
   </table>
   <br>
-  <%= link_to 'Agregar auto', new_car_path %>
+  <%= link_to 'Agregar auto', new_car_path, class: "button" %>
 </div>

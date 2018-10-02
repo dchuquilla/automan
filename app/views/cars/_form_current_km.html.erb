@@ -14,6 +14,6 @@
     <%= form.number_field :current_km, step: 1, value: form.object.current_km.present? ? form.object.current_km_estimated.round : '' %>
   </div>
   <div class="actions">
-    <%= form.submit "Guardar" %>
+    <%= form.submit "Guardar", class: "button" %>
   </div>
 <% end %>

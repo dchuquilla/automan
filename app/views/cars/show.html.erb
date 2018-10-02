@@ -23,8 +23,16 @@
     <strong>Tipo:</strong>
     <%= @car.car_type %>
   </p>
-  <%= link_to 'Mantenimientos', select_car_path(@car) %> | 
-  <%= link_to 'Editar', edit_car_path(@car) %> |
-  <%= link_to 'Ver todos', cars_path %> | 
-  <%= link_to 'Eliminar', @car, method: :delete, data: { confirm: '¿Está seguro?' } %>
+  <%= link_to select_car_path(@car), class: "floating-action button success" do %>
+    <i class="material-icons">folder</i>
+  <% end %>
+  <%= link_to @car, class: "floating-action button primary" do %>
+    <i class="material-icons">search</i>
+  <% end %>
+  <%= link_to edit_car_path(@car), class: "floating-action button secondary" do %>
+    <i class="material-icons">edit</i>
+  <% end %>
+  <%= link_to @car, class: "floating-action button alert", method: :delete, data: { confirm: '¿Está seguro?' } do %>
+    <i class="material-icons">delete</i>
+  <% end %>
 </div>

@@ -12,19 +12,23 @@
 // Material Foundation: Global variables and styles
 @import "scss/variables";
 
+@import 'scss/variables';
 @import 'settings';
 @import 'scss/global';
 @import 'foundation';
 @import 'motion-ui/motion-ui';
 
-@import "scss/grid/*";
-@import "scss/typography/*";
-@import "scss/components/label";
-@import "scss/components/progress-bar";
-@import "scss/components/switch";
-@import "scss/components/text-fields";
-@import "scss/components/*";
-@import "scss/components/**/*";
+
+// MIXINS
+@import 
+  "scss/grid/*",
+  "scss/typography/*",
+  "scss/components/label",
+  "scss/components/progress-bar",
+  "scss/components/switch",
+  "scss/components/text-fields",
+  "scss/components/*",
+  "scss/components/**/*";
 
 // @include foundation-global-styles;
 //@include foundation-grid;
@@ -103,3 +107,6 @@
   "scss/components/selection-controls",
   "scss/components/tooltips",
   "scss/components/summary";
+
+// Other utilities
+@import 'responsive_table';

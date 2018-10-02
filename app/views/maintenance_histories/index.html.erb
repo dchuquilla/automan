@@ -16,7 +16,7 @@
           <th>Costo</th>
         <% end %>
         <th>Notificado?</th>
-        <th colspan="4"></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -35,14 +35,24 @@
             <td data-label="Costo"><%= maintenance_history.cost %></td>
           <% end %>
           <td data-label="Notificado?"><%= maintenance_history.notified ? 'Si' : 'No' %></td>
-          <td><%= link_to 'Revisión', review_maintenance_history_path(maintenance_history) %></td>
-          <td><%= link_to 'Detalles', maintenance_history_path(maintenance_history) %></td>
-          <td><%= link_to 'Editar', edit_maintenance_history_path(maintenance_history) %></td>
-          <td><%= link_to 'Eliminar', maintenance_history, method: :delete, data: { confirm: '¿Está seguro?' } %></td>
+          <td>
+            <%= link_to review_maintenance_history_path(maintenance_history), class: "floating-action button success" do %>
+              <i class="material-icons">report</i>
+            <% end %>
+            <%= link_to maintenance_history_path(maintenance_history), class: "floating-action button primary" do %>
+              <i class="material-icons">search</i>
+            <% end %>
+            <%= link_to edit_maintenance_history_path(maintenance_history), class: "floating-action button secondary" do %>
+              <i class="material-icons">edit</i>
+            <% end %>
+            <%= link_to maintenance_history, class: "floating-action button alert", method: :delete, data: { confirm: '¿Está seguro?' } do %>
+              <i class="material-icons">delete</i>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>
   </table>
   <br>
-  <%= link_to 'Agregar mantenimiento', new_maintenance_history_path %>
+  <%= link_to 'Agregar mantenimiento', new_maintenance_history_path, class: "button" %>
 </div>
