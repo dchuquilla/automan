@@ -98,7 +98,7 @@ $maincontent-shadow: 0 0 10px rgba($black, 0.5) !default;
 @mixin off-canvas-base {
   @include disable-mouse-outline;
   position: absolute;
-  background: $offcanvas-background;
+  // background: $offcanvas-background;
   z-index: $offcanvas-zindex;
   max-height: 100%;
   overflow-y: auto;
@@ -111,7 +111,7 @@ $maincontent-shadow: 0 0 10px rgba($black, 0.5) !default;
   $fixed: false
 ) {
   @if $position == left {
-    left: -$size;
+    // left: -$size;
     top: 0;
     width: $size;
   }
