@@ -88,6 +88,11 @@ es:
         month_estimated: "Meses Estimados"
         car_id: "Auto"
         maintenance_type: "Tipo"
+      owner:
+        name: "Nombre"
+        last_name: "Apellido"
+        cel_phone: "Celular"
+        agreement_terms: "Términos de uso"
   car:
     create:
       success: 'Auto creado'
