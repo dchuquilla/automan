@@ -54,7 +54,7 @@
                                             <th></th></tr>
                                         </thead>
                                         <tbody>
-                                          <% car.maintenance_histories.where("status = 'Pendiente'").each do |maintenance_history| %>
+                                          <% car.maintenance_histories.where("status = 'Pendiente'").order("status DESC, scheduled_date ASC").each do |maintenance_history| %>
                                           <tr><td><%= maintenance_history.status %></td>
                                             <td><%= maintenance_history.maintenance_type %></td>
                                             <td><%= maintenance_history.estimated_km %></td>

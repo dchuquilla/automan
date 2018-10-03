@@ -9,7 +9,7 @@ class MaintenanceHistoriesController < ApplicationController
     if params[:filtro]
       @maintenance_histories = MaintenanceHistory.where("car_id = ?", @car_selected.id).where("status = ?", params[:filtro]).order("scheduled_date ASC")
     else
-      @maintenance_histories = MaintenanceHistory.where("car_id = ?", @car_selected.id).order("scheduled_date ASC")
+      @maintenance_histories = MaintenanceHistory.where("car_id = ?", @car_selected.id).order("status DESC, scheduled_date ASC")
     end
   end
 
@@ -40,6 +40,7 @@ class MaintenanceHistoriesController < ApplicationController
   # GET /maintenance_histories/1/review
   def review
     car = @maintenance_history.car
+    @maintenance_history.status = "Completado"
     @maintenance_history.review_km = car.current_km
     @maintenance_history.review_date = DateTime.now
   end

@@ -13,6 +13,7 @@ class CarsController < ApplicationController
   # GET /cars/1.json
   def show
     cookies[:selected_car_id] = @car.id
+    set_car_with_cookies
   end
 
   # GET /cars/1
