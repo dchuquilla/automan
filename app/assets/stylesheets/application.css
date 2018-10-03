@@ -13,6 +13,7 @@
  *= require foundation/app
  *= require datepick/jquery.datepick
  *= require jquery.auto-complete
+ *= require app
  *= require_self
 
  */

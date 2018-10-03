@@ -1,0 +1,16 @@
+@import "foundation/scss/style/color";
+
+#error_explanation {
+  background: $yellow-200;
+  h2 {
+    background: $red-300;
+    padding: 0 5px;
+    color: $white;
+    font-weight: bold;
+  }
+  ul {
+    margin-left: 25px;
+    padding-bottom: 10px;
+    font-size: 14px;
+  }
+}

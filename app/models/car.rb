@@ -8,7 +8,7 @@ class Car < ApplicationRecord
   def current_km_estimated
     # 1 KM semanal a KM por hora (168)
     # 2 Tiempo transcurrido con el paso de las horas
-    self.current_km + ((self.week_km / 168.0) * (((Time.now - self.updated_at) / 1.hour).round))
+    self.current_km + ((self.week_km / 168.0) * (((Time.now - self.updated_at) / 1.hour).round)) rescue 0
   end
 
 end

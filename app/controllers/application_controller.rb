@@ -11,11 +11,10 @@ class ApplicationController < ActionController::Base
   end
 
   def set_car_with_cookies
+    Rails.logger.info "ApplicationController#set_car_with_cookies"
     if cookies[:selected_car_id].present?
       @car_selected = Car.where("id = ? AND owner_id = ?", cookies[:selected_car_id], current_user.owner.id).last
-      if @car_selected.present?
-        
-      else
+      unless @car_selected.present?
         Rails.logger.info "Auto no encotrado con cookie"
         not_found
       end

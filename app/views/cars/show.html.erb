@@ -1,38 +1,35 @@
-<div class="row column">
-  <p>
-    <strong>Placa:</strong>
-    <%= @car.plate %>
-  </p>
-  <p>
-    <strong>Marca:</strong>
-    <%= @car.brand %>
-  </p>
-  <p>
-    <strong>Modelo:</strong>
-    <%= @car.model %>
-  </p>
-  <p>
-    <strong>KM Actuak:</strong>
-    <%= @car.current_km.round %>
-  </p>
-  <p>
-    <strong>KM Semanal:</strong>
-    <%= @car.week_km.round %>
-  </p>
-  <p>
-    <strong>Tipo:</strong>
-    <%= @car.car_type %>
-  </p>
-  <%= link_to select_car_path(@car), class: "floating-action button success" do %>
-    <i class="material-icons">folder</i>
-  <% end %>
-  <%= link_to @car, class: "floating-action button primary" do %>
-    <i class="material-icons">search</i>
-  <% end %>
-  <%= link_to edit_car_path(@car), class: "floating-action button secondary" do %>
-    <i class="material-icons">edit</i>
-  <% end %>
-  <%= link_to @car, class: "floating-action button alert", method: :delete, data: { confirm: '¿Está seguro?' } do %>
-    <i class="material-icons">delete</i>
-  <% end %>
+<div class="row">
+  <div class="columns large-6 small-12">
+    <h1 class="text-headline"><%= @car.plate %></h1>
+    <p>
+      <strong>Marca:</strong>
+      <%= @car.brand %>
+    </p>
+    <p>
+      <strong>Modelo:</strong>
+      <%= @car.model %>
+    </p>
+    <p>
+      <strong>KM Actuak:</strong>
+      <%= @car.current_km.round %>
+    </p>
+    <p>
+      <strong>KM Semanal:</strong>
+      <%= @car.week_km.round %>
+    </p>
+    <p>
+      <strong>Tipo:</strong>
+      <%= @car.car_type %>
+    </p>
+    <%= link_to select_car_path(@car), class: "floating-action button success" do %>
+      <i class="material-icons">folder</i>
+    <% end %>
+    <%= link_to edit_car_path(@car), class: "floating-action button secondary" do %>
+      <i class="material-icons">edit</i>
+    <% end %>
+    <%= link_to @car, class: "floating-action button alert", method: :delete, data: { confirm: '¿Está seguro?' } do %>
+      <i class="material-icons">delete</i>
+    <% end %>
+  </div>
+  <div class="columns large-6 small-12"></div>
 </div>

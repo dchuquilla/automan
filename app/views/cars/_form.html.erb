@@ -1,7 +1,7 @@
 <%= form_with(model: car, local: true) do |form| %>
   <% if car.errors.any? %>
     <div id="error_explanation">
-      <h2>Debe corregir los siguientes errores:</h2>
+      <h2 class="text-subhead">Se han presentado los siguientes errores:</h2>
       <ul>
       <% car.errors.full_messages.each do |message| %>
         <li><%= message %></li>

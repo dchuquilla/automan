@@ -1,7 +1,7 @@
 <%= form_with(model: setting, local: true) do |form| %>
   <% if setting.errors.any? %>
     <div id="error_explanation">
-      <h2>Se han presentado los siguientes errores</h2>
+      <h2 class="text-subhead">Se han presentado los siguientes errores:</h2>
 
       <ul>
       <% setting.errors.full_messages.each do |message| %>

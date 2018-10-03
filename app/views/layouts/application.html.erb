@@ -34,7 +34,7 @@
                   <% if cookies[:selected_car_id].present? %>
                     <li>
                       <a href="#">
-                        <%= @car_selected.plate %>
+                        <%= @car_selected.plate.upcase %>
                       </a>
                       <ul class="menu vertical nested">
                         <li><%= link_to 'Detalles de auto', car_path(@car_selected) %></li>

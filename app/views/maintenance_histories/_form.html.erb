@@ -1,7 +1,7 @@
 <%= form_with(model: maintenance_history, local: true, html: { autocomplete: "off" }) do |form| %>
   <% if maintenance_history.errors.any? %>
     <div id="error_explanation">
-      <h2>Se han presentado los siguientes errores</h2>
+      <h2 class="text-subhead">Se han presentado los siguientes errores:</h2>
       <ul>
       <% maintenance_history.errors.full_messages.each do |message| %>
         <li><%= message %></li>

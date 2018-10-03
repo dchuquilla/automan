@@ -1,7 +1,7 @@
 <%= form_with(model: cost_detail, local: true) do |form| %>
   <% if cost_detail.errors.any? %>
     <div id="error_explanation">
-      <h2>Se han presentado los siguientes errores:</h2>
+      <h2 class="text-subhead">Se han presentado los siguientes errores:</h2>
 
       <ul>
       <% cost_detail.errors.full_messages.each do |message| %>
