@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     member do
       get 'review'
     end
+    resources :user_car_settings, only: [:edit, :update]
   end
   resources :cars do 
     member do

@@ -3,42 +3,34 @@
     <h3>
       <%= @maintenance_history.maintenance_type %>
     </h3>
-
     <p>
       <strong>Estado:</strong>
       <%= @maintenance_history.status %>
     </p>
-
     <p>
       <strong>Km Estimado:</strong>
       <%= @maintenance_history.estimated_km.round %>
     </p>
-
     <p>
       <strong>Fecha Agenda:</strong>
       <%= @maintenance_history.scheduled_date.strftime(DATE_FORMAT) %>
     </p>
-
     <p>
       <strong>Km Revisión:</strong>
       <%= @maintenance_history.review_km.round if @maintenance_history.review_km.present? %>
     </p>
-
     <p>
       <strong>Fecha Revisión:</strong>
       <%= @maintenance_history.review_date.strftime(DATE_FORMAT) if @maintenance_history.review_date.present?%>
     </p>
-
     <p>
       <strong>Proveedor:</strong>
       <%= @maintenance_history.provider %>
     </p>
-
     <p>
       <strong>Costo:</strong>
       <%= @maintenance_history.cost %>
     </p>
-
     <p>
       <strong>Notified:</strong>
       <%= @maintenance_history.notified ? 'Si' : 'No'%>
@@ -51,6 +43,12 @@
 
   <div class="columns large-6 small-12">
     <h3>Mantenimiento programado</h3>
+    <p>
+      <strong>Repetir mantenimiento cada <%= @maintenance_history.user_car_setting.km_estimated %> kilómetros ó cada <%= @maintenance_history.user_car_setting.month_estimated %> meses.</strong>
+    </p>
+
+    <%= link_to 'Cambiar configuración', edit_maintenance_history_user_car_setting_path(@maintenance_history, @maintenance_history.user_car_setting), class: "button" %>
+    
   </div>
 </div>
 
@@ -59,7 +57,7 @@
     <h3>Configuración pendiente</h3>
     <p>Usted ha creado un nuevo tipo de mantenimiento, por favor complete la configuración, esta información servirá para agendar nuevos mantenimientos de este tipo.</p>
     <div class="row column">
-      <%= form_for @maintenance_history.user_car_setting, url: {action: "update"} do |form| %>
+      <%= form_with(model: @maintenance_history.user_car_setting, url: maintenance_history_user_car_setting_path(@maintenance_history.user_car_setting), local: true) do |form| %>
         <div class="field">
           <%= form.label :km_estimated %>
           <%= form.text_field :km_estimated %>
