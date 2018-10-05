@@ -19,3 +19,12 @@
   bottom: 30px;
   right: 30px;
 }
+
+.image_attached {
+  position: relative;
+  .detach {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+}

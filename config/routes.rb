@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     member do
       get 'select'
       get 'update_current_km'
+      get 'image_detach'
     end
   end
   resources :owners, except: [:index]

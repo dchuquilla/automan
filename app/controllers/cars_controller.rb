@@ -1,7 +1,7 @@
 class CarsController < ApplicationController
   before_action :authenticate_user!
   before_action :clean_car_selection_cookie, only: [:index, :destroy]
-  before_action :set_car, only: [:show, :select, :edit, :update_current_km, :update, :destroy]
+  before_action :set_car, only: [:show, :select, :edit, :update_current_km, :update, :destroy, :image_detach]
 
   # GET /cars
   # GET /cars.json
@@ -78,6 +78,15 @@ class CarsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to cars_url, notice: 'Su auto fue eliminado.' }
       format.json { head :no_content }
+    end
+  end
+
+  def image_detach
+    image = @car.images.where(id: params[:image_id]).first
+    image.purge_later
+    respond_to do |format|
+      format.html { redirect_to action: 'show' }
+      format.json { render text: "Imagen eliminada."}
     end
   end
 
