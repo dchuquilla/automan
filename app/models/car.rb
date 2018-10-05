@@ -1,6 +1,9 @@
 class Car < ApplicationRecord
   belongs_to :owner
   has_many :maintenance_histories
+  # Multiple images with ActiveStorage
+  has_many_attached :images
+  
   validates :plate, :brand, :model, :current_km, :car_type, :week_km, presence: true
 
 

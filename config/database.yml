@@ -4,12 +4,13 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
-  <<: *default
+  adapter: postgresql
+  encoding: UTF8
+  database: automan_development
+  host: localhost
+  user: postgres
   port: 5432
-  host: ec2-54-243-235-153.compute-1.amazonaws.com
-  database: da5o8diaj47q2f
-  user: lgiihovsucecaa
-  password: 200179f5506cfb252aa3acce06de0a24e290dd259d00db06703913b84e607a22
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 test:
   adapter: postgresql

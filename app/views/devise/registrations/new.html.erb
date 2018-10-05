@@ -1,29 +1,27 @@
-<div class="row column">
-  <div class="column small-12 medium-7 large-8">
-    <h2>Registro de usuarios</h2>
+<div class="row">
+  <div class="columns">
+    <h1 class="text-headline">Registro de usuarios</h1>
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <%= devise_error_messages! %>
       <div class="field">
-        <%= f.label :email %><br />
+        <%= f.label :email %>
         <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
       </div>
       <div class="field">
         <%= f.label :password, 'Clave' %>
         <% if @minimum_password_length %>
         <em>(Mínimo <%= @minimum_password_length %> caracteres)</em>
-        <% end %><br />
+        <% end %>
         <%= f.password_field :password, autocomplete: "new-password" %>
       </div>
       <div class="field">
-        <%= f.label :password_confirmation, 'Confirmar clave' %><br />
+        <%= f.label :password_confirmation, 'Confirmar clave' %>
         <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
       </div>
       <div class="actions">
-        <%= f.submit "Registrar" %>
+        <%= f.submit "Registrar", class: "button" %>
       </div>
     <% end %>
-  </div>
-  <div class="column small-12 medium-5 large-4">
     <%= render "devise/shared/links" %>
   </div>
 </div>

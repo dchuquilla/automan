@@ -41,6 +41,7 @@ class CarsController < ApplicationController
   def create
     @car = Car.new(car_params)
     @car.owner_id = current_user.owner.id
+    @car.images.attach(params[:car][:images])
     respond_to do |format|
       if @car.save
         format.html { redirect_to @car, notice: 'Su auto fue creado.' }
@@ -58,6 +59,7 @@ class CarsController < ApplicationController
     if params[:car][:current_km].to_d > @car.current_km
       params[:car][:km_updated_date] = DateTime.now
     end
+    @car.images.attach(params[:car][:images])
     respond_to do |format|
       if @car.update(car_params)
         format.html { redirect_to @car, notice: 'Su auto fue actualizado.' }
@@ -82,7 +84,7 @@ class CarsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_car
-      @car = Car.where("id = ? AND owner_id = ?", params[:id], current_user.owner.id).last
+      @car = Car.where("id = ? AND owner_id = ?", params[:id], current_user.owner.id).with_attached_images.last
       unless @car.present?
         not_found
       end

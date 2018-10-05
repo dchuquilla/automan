@@ -31,5 +31,11 @@
       <i class="material-icons">delete</i>
     <% end %>
   </div>
-  <div class="columns large-6 small-12"></div>
+  <div class="columns large-6 small-12">
+    <p>
+      <% @car.images.each do |avatar| %>
+        <%= image_tag avatar, class: "thumbnail" %>
+      <% end %>
+    </p>
+  </div>
 </div>
