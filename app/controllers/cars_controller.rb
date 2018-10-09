@@ -41,7 +41,9 @@ class CarsController < ApplicationController
   def create
     @car = Car.new(car_params)
     @car.owner_id = current_user.owner.id
-    @car.images.attach(params[:car][:images])
+    if params[:car][:images]
+      @car.images.attach(params[:car][:images])
+    end
     respond_to do |format|
       if @car.save
         format.html { redirect_to @car, notice: 'Su auto fue creado.' }
@@ -59,7 +61,9 @@ class CarsController < ApplicationController
     if params[:car][:current_km].to_d > @car.current_km
       params[:car][:km_updated_date] = DateTime.now
     end
-    @car.images.attach(params[:car][:images])
+    if params[:car][:images]
+      @car.images.attach(params[:car][:images])
+    end
     respond_to do |format|
       if @car.update(car_params)
         format.html { redirect_to @car, notice: 'Su auto fue actualizado.' }
