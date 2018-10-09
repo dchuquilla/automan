@@ -1,7 +1,7 @@
 class MaintenanceHistoriesController < ApplicationController
   before_action :authenticate_user!
   before_action :maintenance_status
-  before_action :set_maintenance_history, only: [:show, :edit, :review, :update, :destroy]
+  before_action :set_maintenance_history, only: [:show, :edit, :review, :update, :destroy, :image_detach]
 
   # GET /maintenance_histories
   # GET /maintenance_histories.json
@@ -50,6 +50,9 @@ class MaintenanceHistoriesController < ApplicationController
   def create
     @maintenance_history = MaintenanceHistory.new(maintenance_history_params)
     @maintenance_history.car_id = @car_selected.id
+    if params[:maintenance_history][:images]
+      @maintenance_history.images.attach(params[:maintenance_history][:images])
+    end
     respond_to do |format|
       if @maintenance_history.save
         format.html { redirect_to @maintenance_history, notice: 'El mantenimiento fue creado.' }
@@ -65,6 +68,9 @@ class MaintenanceHistoriesController < ApplicationController
   # PATCH/PUT /maintenance_histories/1.json
   def update
     @maintenance_history.car_id = @car_selected.id
+    if params[:maintenance_history][:images]
+      @maintenance_history.images.attach(params[:maintenance_history][:images])
+    end
     respond_to do |format|
       if @maintenance_history.update(maintenance_history_params)
         format.html { redirect_to @maintenance_history, notice: 'El mantenimiento fue modificado.' }
@@ -83,6 +89,15 @@ class MaintenanceHistoriesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to maintenance_histories_url, notice: 'El mantenimiento fue eliminado.' }
       format.json { head :no_content }
+    end
+  end
+
+  def image_detach
+    image = @maintenance_history.images.where(id: params[:image_id]).first
+    image.purge_later
+    respond_to do |format|
+      format.html { redirect_to action: 'show' }
+      format.json { render text: "Imagen eliminada."}
     end
   end
 

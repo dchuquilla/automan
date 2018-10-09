@@ -22,7 +22,7 @@
       <%= @car.car_type %>
     </p>
     <%= link_to select_car_path(@car), class: "floating-action button success" do %>
-      <i class="material-icons">folder</i>
+      <i class="material-icons">build</i>
     <% end %>
     <%= link_to edit_car_path(@car), class: "floating-action button secondary" do %>
       <i class="material-icons">edit</i>
@@ -32,7 +32,7 @@
     <% end %>
   </div>
   <div class="columns large-6 small-12">
-    <div class="row small-up-1 medium-up-2 large-up-2">
+    <div class="row small-up-2 medium-up-3 large-up-4">
       <% @car.images.each do |avatar| %>
         <div class="column image_attached">
           <%= image_tag avatar.variant(resize: "300x300"), class: "thumbnail" %>

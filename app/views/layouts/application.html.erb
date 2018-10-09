@@ -12,6 +12,11 @@
   </head>
 
   <body>
+    <% if cookies[:selected_car_id].present? && @car_selected.images.attached? %>
+      <div class="bg-image" style="background-image:url(<%= raw rails_blob_path(@car_selected.images.first) %>)"></div>
+    <% else %>
+      <div class="bg-image" style="background-image:url(<%= asset_path 'default-bg.jpg' %>)"></div>
+    <% end %>
     <div class="off-canvas-wrapper">
       <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
         <div class="off-canvas position-left reveal-for-large" id="my-info" data-off-canvas>
@@ -59,20 +64,34 @@
               <span class="title-bar-title">Automan</span>
             </div>
           </div>
-          <div class="callout primary">
-            <div class="row column">
-              <% if cookies[:selected_car_id].present? %>
-                <h1>
+          <% if cookies[:selected_car_id].present? %>
+              <div class="callout secondary">
+                <div class="row column">
+                <h1 class="text-headline">
                   <%= link_to @car_selected.plate.upcase, edit_car_path(@car_selected) %> - 
-                  <small class="current_km">KM Actual: <%= link_to @car_selected.current_km_estimated.round, update_current_km_car_path(@car_selected) %></small> / 
-                  <small class="week_km">KM Promedio: <%= @car_selected.week_km.round %></small></h1>
-              <% end %>
-            </div>
-          </div>
+                  <small class="current_km text-title">KM Actual: <%= link_to @car_selected.current_km_estimated.round, update_current_km_car_path(@car_selected) %></small> / 
+                  <small class="week_km text-title">KM Promedio: <%= @car_selected.week_km.round %></small></h1>
+                </div>
+              </div>
+          <% end %>
           <div class="row column">
             <div class="small-12 large-12">
-              <p class="notice"><%= notice %></p>
-              <p class="alert"><%= alert %></p>
+              <% if notice %>
+                <div data-closable class="callout alert-callout-subtle success">
+                  <%= notice %>
+                  <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+                    <span aria-hidden="true">⊗</span>
+                  </button>
+                </div>
+              <% end %>
+              <% if alert %>
+                <div data-closable class="callout alert-callout-subtle alert">
+                  <%= alert %>
+                  <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+                    <span aria-hidden="true">⊗</span>
+                  </button>
+                </div>
+              <% end %>
             </div>
           </div>
           <%= yield %> <!-- modelo donde se unifica el modelo del controladr y la vista -->

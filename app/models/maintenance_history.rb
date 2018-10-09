@@ -2,6 +2,7 @@ class MaintenanceHistory < ApplicationRecord
   belongs_to :car
   belongs_to :user_car_setting
   has_many :cost_details
+  has_many_attached :images
   
   validates :car_id, :estimated_km, :maintenance_type, :scheduled_date, :status, :user_car_setting_id, presence: true
 

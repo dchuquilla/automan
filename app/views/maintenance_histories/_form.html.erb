@@ -1,57 +1,74 @@
 <%= form_with(model: maintenance_history, local: true, html: { autocomplete: "off" }) do |form| %>
   <% if maintenance_history.errors.any? %>
-    <div id="error_explanation">
-      <h2 class="text-subhead">Se han presentado los siguientes errores:</h2>
-      <ul>
-      <% maintenance_history.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+    <div class="row">
+      <div class="columns">
+        <div id="error_explanation">
+          <h2 class="text-subhead">Se han presentado los siguientes errores:</h2>
+          <ul>
+          <% maintenance_history.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      </div>
     </div>
   <% end %>
-  
-  <div class="field">
-    <%= form.label :maintenance_type %>
-    <%= form.text_field :maintenance_type %>
+  <div class="row">
+    <div class="columns small-16 large-6">
+      <div class="field">
+        <%= form.label :status, "Adjuntos" %>
+        <%= form.file_field :images, multiple: true, direct_upload: true %>
+      </div>
+      <div class="field">
+        <%= form.label :maintenance_type %>
+        <%= form.text_field :maintenance_type %>
+      </div>
+      <div class="field">
+        <%= form.label :status %>
+        <%= form.select :status, @maintenance_status %>
+      </div>
+      <div class="field">
+        <%= form.label :estimated_km %>
+        <%= form.number_field :estimated_km, step: 1, value: form.object.estimated_km.present? ? form.object.estimated_km.round : '' %>
+      </div>
+      <div class="field">
+        <%= form.label :scheduled_date %>
+        <% if form.object.scheduled_date.present? %>
+          <%= form.text_field :scheduled_date, value: form.object.scheduled_date.present? ? form.object.scheduled_date.strftime(DATE_FORMAT) : '', class: "date_pick" %>
+        <% else %>
+          <%= form.text_field :scheduled_date, class: "date_pick" %>
+        <% end %>
+      </div>
+    </div>
+    <div class="columns small-16 large-6">
+      <div class="field">
+        <%= form.label :review_km %>
+        <%= form.number_field :review_km, step: 1, value: form.object.review_km.present? ? form.object.review_km.round : '' %>
+      </div>
+      <div class="field">
+        <%= form.label :review_date %>
+        <%= form.text_field :review_date, value: form.object.review_date.present? ? form.object.review_date.strftime(DATE_FORMAT) : '', class: "date_pick" %>
+      </div>
+      <div class="field">
+        <%= form.label :provider %>
+        <%= form.text_field :provider %>
+      </div>
+      <div class="field">
+        <%= form.label :cost %>
+        <%= form.number_field :cost, step: 0.01 %>
+      </div>
+      <div class="field">
+        <%= form.label :notified %>
+        <%= form.check_box :notified %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= form.label :status %>
-    <%= form.select :status, @maintenance_status %>
-  </div>
-  <div class="field">
-    <%= form.label :estimated_km %>
-    <%= form.number_field :estimated_km, step: 1, value: form.object.estimated_km.present? ? form.object.estimated_km.round : '' %>
-  </div>
-  <div class="field">
-    <%= form.label :scheduled_date %>
-    <% if form.object.scheduled_date.present? %>
-      <%= form.text_field :scheduled_date, value: form.object.scheduled_date.present? ? form.object.scheduled_date.strftime(DATE_FORMAT) : '', class: "date_pick" %>
-    <% else %>
-      <%= form.text_field :scheduled_date, class: "date_pick" %>
-    <% end %>
-  </div>
-  <div class="field">
-    <%= form.label :review_km %>
-    <%= form.number_field :review_km, step: 1, value: form.object.review_km.present? ? form.object.review_km.round : '' %>
-  </div>
-  <div class="field">
-    <%= form.label :review_date %>
-    <%= form.text_field :review_date, value: form.object.review_date.present? ? form.object.review_date.strftime(DATE_FORMAT) : '', class: "date_pick" %>
-  </div>
-  <div class="field">
-    <%= form.label :provider %>
-    <%= form.text_field :provider %>
-  </div>
-  <div class="field">
-    <%= form.label :cost %>
-    <%= form.number_field :cost, step: 0.01 %>
-  </div>
-  <div class="field">
-    <%= form.label :notified %>
-    <%= form.check_box :notified %>
-  </div>
-  <div class="actions">
-    <%= form.submit "Guardar", class: "button" %>
+  <div class="row">
+    <div class="columns">
+      <div class="actions">
+        <%= form.submit "Guardar", class: "button" %>
+      </div>
+    </div>
   </div>
 <% end %>
 

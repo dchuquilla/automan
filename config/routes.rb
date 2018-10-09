@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   devise_for :users
   resources :cost_details
   resources :maintenance_histories do
+    member do
+      get 'image_detach'
+    end
     collection do
       get 'types', format: 'json'
     end

@@ -1,5 +1,5 @@
 <div class="row column">
-  <h1 class="text-headline">Revision</h1>
+  <h1 class="text-headline">Revisión de <%= @maintenance_history.maintenance_type %></h1>
   <%= render 'form_review', maintenance_history: @maintenance_history %>
   <%= link_to 'Detalles', @maintenance_history, class: "hollow button general" %>
   <%= link_to 'Ver todos', maintenance_histories_path, class: "hollow button general" %>

@@ -1,5 +1,5 @@
 <div class="row column">
-  <h1 class="text-headline">Editar manteimineto</h1>
+  <h1 class="text-headline">Editar manteimineto <%= @maintenance_history.maintenance_type %></h1>
   <%= render 'form', maintenance_history: @maintenance_history %>
   <%= link_to 'Detalles', @maintenance_history, class: "hollow button general" %>
   <%= link_to 'Ver todos', maintenance_histories_path, class: "hollow button general" %>

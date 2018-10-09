@@ -1,8 +1,12 @@
 <div class="row">
-  <div class="columns large-6 small-12">
-    <h3>
+  <div class="columns">
+    <h1 class="text-headline">
       <%= @maintenance_history.maintenance_type %>
-    </h3>
+    </h1>
+  </div>
+</div>
+<div class="row">
+  <div class="columns large-6 small-12">
     <p>
       <strong>Estado:</strong>
       <%= @maintenance_history.status %>
@@ -38,42 +42,59 @@
 
     <%= link_to 'Editar', edit_maintenance_history_path(@maintenance_history), class: "button" %>
     <%= link_to 'Ver Todos', maintenance_histories_path, class: "hollow button general" %>
-    
   </div>
-
   <div class="columns large-6 small-12">
-    <h3>Mantenimiento programado</h3>
-    <p>
-      <strong>Repetir mantenimiento cada <%= @maintenance_history.user_car_setting.km_estimated %> kilómetros ó cada <%= @maintenance_history.user_car_setting.month_estimated %> meses.</strong>
-    </p>
-
     <%= link_to 'Cambiar configuración', edit_maintenance_history_user_car_setting_path(@maintenance_history, @maintenance_history.user_car_setting), class: "button" %>
-    
+    <% if @maintenance_history.user_car_setting.km_estimated.nil? || @maintenance_history.user_car_setting.month_estimated.nil? %>
+      <div class="row column">
+        <h2 class="text-title">Configuración pendiente</h2>
+        <p>Usted ha creado un nuevo tipo de mantenimiento, por favor complete la configuración, esta información servirá para agendar nuevos mantenimientos de este tipo.</p>
+        <div class="row column">
+          <%= form_with(model: @maintenance_history.user_car_setting, url: maintenance_history_user_car_setting_path(@maintenance_history.user_car_setting), local: true) do |form| %>
+            <div class="field">
+              <%= form.label :km_estimated %>
+              <%= form.text_field :km_estimated %>
+            </div>
+            <div class="field">
+              <%= form.label :month_estimated %>
+              <% if form.object.month_estimated.present? %>
+                <%= form.text_field :month_estimated, value: form.object.month_estimated.strftime(DATE_FORMAT), class: "date_pick" %>
+              <% else %>
+                <%= form.text_field :month_estimated, class: "date_pick" %>
+              <% end %>
+            </div>
+            <div class="actions">
+              <%= form.submit "Guardar", class: "button" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+      <h2 class="text-title">Mantenimiento programado</h2>
+      <p>
+        <strong>Repetir mantenimiento cada <%= @maintenance_history.user_car_setting.km_estimated %> kilómetros ó cada <%= @maintenance_history.user_car_setting.month_estimated %> meses.</strong>
+      </p>
+    <% end %>
   </div>
 </div>
 
-<% if @maintenance_history.user_car_setting.km_estimated.nil? || @maintenance_history.user_car_setting.month_estimated.nil? %>
-  <div class="row column">
-    <h3>Configuración pendiente</h3>
-    <p>Usted ha creado un nuevo tipo de mantenimiento, por favor complete la configuración, esta información servirá para agendar nuevos mantenimientos de este tipo.</p>
-    <div class="row column">
-      <%= form_with(model: @maintenance_history.user_car_setting, url: maintenance_history_user_car_setting_path(@maintenance_history.user_car_setting), local: true) do |form| %>
-        <div class="field">
-          <%= form.label :km_estimated %>
-          <%= form.text_field :km_estimated %>
-        </div>
-        <div class="field">
-          <%= form.label :month_estimated %>
-          <% if form.object.month_estimated.present? %>
-            <%= form.text_field :month_estimated, value: form.object.month_estimated.strftime(DATE_FORMAT), class: "date_pick" %>
+<div class="row">
+  <div class="columns large-12">
+    <div class="row small-up-3 medium-up-4 large-up-5">
+      <% @maintenance_history.images.each do |avatar| %>
+        <div class="column image_attached">
+          <% if avatar.content_type == 'application/pdf' %>
+            <%= link_to rails_blob_path(avatar, only_path: true) do %>
+              <%= image_tag avatar.preview(resize: "100x100"), class: "thumbnail" %>
+            <% end %>
           <% else %>
-            <%= form.text_field :month_estimated, class: "date_pick" %>
+            <%= image_tag avatar.variant(resize: "300x300"), class: "thumbnail" %>
           <% end %>
-        </div>
-        <div class="actions">
-          <%= form.submit "Guardar", class: "button" %>
+          <%= link_to image_detach_maintenance_history_path(@maintenance_history.id, "image_id" => avatar.id), class: "detach floating-action button alert", data: { confirm: '¿Está seguro?' } do %>
+            <i class="material-icons">delete</i>
+          <% end %>
         </div>
       <% end %>
     </div>
   </div>
-<% end %>
+</div>
