@@ -10,12 +10,12 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= landing/jquery-1.4.2.min.js
-//= landing/cufon-yui.js
-//= landing/cufon-replace.js
-//= landing/Myriad_Pro_400.font.js
-//= landing/Myriad_Pro_600.font.js
-//= landing/NewsGoth_BT_400.font.js
-//= landing/NewsGoth_BT_700.font.js
-//= landing/NewsGoth_Dm_BT_400.font.js
-//= landing/script.js
+
+//= require landing/jquery
+//= require landing/touchSwipe.min
+//= require landing/easing
+//= require landing/foundation.min
+//= require landing/foundation/foundation.topbar
+//= require landing/carouFredSel
+//= require landing/scrollTo
+//= require landing/main
