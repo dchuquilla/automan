@@ -15,17 +15,18 @@ class UserCarSettingsController < ApplicationController
   # GET /user_car_settings/new
   def new
     @user_car_setting = UserCarSetting.new
+    @maintenance_history = MaintenanceHistory.find(params[:maintenance_history_id])
   end
 
   # GET /user_car_settings/1/edit
   def edit
+    @maintenance_history = MaintenanceHistory.find(params[:maintenance_history_id])
   end
 
   # POST /user_car_settings
   # POST /user_car_settings.json
   def create
     @user_car_setting = UserCarSetting.new(user_car_setting_params)
-
     respond_to do |format|
       if @user_car_setting.save
         format.html { redirect_to @user_car_setting, notice: 'Configuración creada' }

@@ -1,10 +1,10 @@
 <div class="row column">
   <% if params[:id] == '0' %>
-    <h1 class="text-headline">Agregar reparación</h1>
+    <h1 class="text-headline">Carga de gasolina</h1>
   <% else %>
     <h1 class="text-headline">Revisión de <%= @maintenance_history.maintenance_type %></h1>
   <% end %>
-  <%= render 'form_review', maintenance_history: @maintenance_history %>
+  <%= render 'form_gas', maintenance_history: @maintenance_history %>
   <% if params[:id] != '0' %>
     <%= link_to 'Detalles', @maintenance_history, class: "hollow button general" %>
   <% end %>

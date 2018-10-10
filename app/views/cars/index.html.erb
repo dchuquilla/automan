@@ -41,7 +41,14 @@
     </tbody>
   </table>
   <br>
-  <%= link_to new_car_path, class: "floating-action button primary main" do %>
+  <%= link_to new_car_path, class: "floating-action button primary main show-for-medium" do %>
     <i class="material-icons">add</i>
+  <% end %>
+</div>
+
+<div class="mobile-bottom-bar hide-for-medium">
+  <%= link_to new_car_path, class: "footer-link button hollow" do %>
+    <i class="material-icons">add</i><br>
+    <small>Agregar auto</small>
   <% end %>
 </div>

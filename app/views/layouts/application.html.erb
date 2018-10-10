@@ -12,11 +12,7 @@
   </head>
 
   <body>
-    <% if cookies[:selected_car_id].present? && @car_selected.images.attached? %>
-      <div class="bg-image" style="background-image:url(<%= raw rails_blob_path(@car_selected.images.first) %>)"></div>
-    <% else %>
-      <div class="bg-image" style="background-image:url(<%= asset_path 'default-bg.jpg' %>)"></div>
-    <% end %>
+    <div class="bg-image" style="background-image:url(<%= asset_path 'default-bg.jpg' %>)"></div>
     <div class="off-canvas-wrapper">
       <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
         <div class="off-canvas position-left reveal-for-large" id="my-info" data-off-canvas>
@@ -66,6 +62,9 @@
           </div>
           <% if cookies[:selected_car_id].present? %>
               <div class="callout secondary">
+                <% if cookies[:selected_car_id].present? && @car_selected.images.attached? %>
+                  <div class="bg-image" style="background-image:url(<%= raw rails_blob_path(@car_selected.images.first) %>)"></div>
+                <% end %>
                 <div class="row column">
                 <h1 class="text-headline">
                   <%= link_to @car_selected.plate.upcase, edit_car_path(@car_selected) %> - 

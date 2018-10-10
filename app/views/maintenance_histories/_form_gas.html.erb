@@ -1,5 +1,5 @@
 <%= form_with(model: maintenance_history, local: true, html: { autocomplete: "off" }) do |form| %>
-  <%= hidden_field_tag :from_review, true %>
+  <%= hidden_field_tag :from_gas, true %>
   <% if maintenance_history.errors.any? %>
     <div class="row">
       <div class="columns">
@@ -21,7 +21,7 @@
         <%= form.label :status, "Adjuntos" %>
         <%= form.file_field :images, multiple: true, direct_upload: true %>
       </div>
-      <div class="field">
+      <div class="field hide">
         <%= form.label :maintenance_type %>
         <%= form.text_field :maintenance_type %>
       </div>

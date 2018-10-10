@@ -23,6 +23,7 @@
               <li class="name">
                 <a href="#" class="logo">
                   <h1>Automan<span class="tld">.com</span></h1>
+                  
                 </a>
               </li>
                 <span class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></span>
@@ -100,7 +101,7 @@
 
       <!--    Start Button    -->
       <div class="btn_holder">
-        <a href="#" class="btn_fancy">
+        <a href="#Download" class="btn_fancy">
           <div class="solid_layer"></div>
           <div class="border_layer"></div>
           <div class="text_layer">Acceder</div>
@@ -173,42 +174,7 @@
     <!--  End Testimonials Section  -->
 
 
-
-    <!--  Start Call To Action Section  -->
-    <section class="cta" id="Download">
-      <div class="row">
-
-        <!--    Start CTA Titles    -->
-        <h1 class="title">Acceder al sistema.</h1>
-        <h2 class="sub_title">Utilize el correo electrónico y clave con las que registro su cuenta de usuario.</h2>
-        <!--    End CTA Titles    -->
-
-        <!--    Start Button    -->
-        <%= form_for(:user, as: resource_name, url: session_path(resource_name), html: { id: "login-form" }) do |f| %>
-          <fieldset>
-            <div class="field">
-              <%= f.label :email %>
-              <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-            </div>
-            <div class="field">
-              <%= f.label :password %>
-              <%= f.password_field :password, autocomplete: "current-password" %>
-            </div>
-            <% if devise_mapping.rememberable? -%>
-              <div class="field1">
-                <%= f.label :remember_me, 'Recordar', class: "extra" %>
-                <%= f.check_box :remember_me %>
-                <%= f.submit "Ingresar" %>
-              </div>
-            <% end -%>
-            <%= render "devise/shared/links" %>
-          </fieldset>
-        <% end %>
-        <!--    End Button    -->
-
-      </div>
-    </section>
-    <!--  End Call To Action Section  -->
+    <%= yield %> <!-- modelo donde se unifica el modelo del controladr y la vista -->
 
 
     <!--  Start Footer Section  -->
@@ -262,7 +228,7 @@
     </a>
     <!--    End Back To Top    -->
 
-    <%= yield %> <!-- modelo donde se unifica el modelo del controladr y la vista -->
+    
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     <%= javascript_include_tag 'landing', 'data-turbolinks-track': 'reload' %>

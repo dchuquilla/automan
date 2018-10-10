@@ -1,41 +1,39 @@
-<div class="row column">
-  <h1 class="text-headline">Mantenimientos</h1>
-  <table class="responsive-card-table unstriped">
-    <thead>
-      <tr>
-        <% if params[:filtro].nil? %>
-          <th>Estado</th>
-        <% end %>
-        <th>Tipo</th>
-        <th>Póximo KM</th>
-        <th>Fecha Estimada</th>
-        <% if params[:filtro] == "Completado" %>
-          <th>KM Revisión</th>
-          <th>Fecha Revisión</th>
-          <th>Proveedor</th>
-          <th>Costo</th>
-        <% end %>
-        <th>Notificado?</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @maintenance_histories.each do |maintenance_history| %>
-        <tr>
-          <% if params[:filtro].nil? %>
-            <td data-label="Estado"><%= maintenance_history.status %></td>
+<div class="row">
+  <div class="columns">
+    <h1 class="text-headline">Mantenimientos</h1>
+    <br>
+    <% @maintenance_histories.each do |maintenance_history| %>
+      <div class="mantenimiento callout <%= maintenance_history.status == 'Completado' ? "primary" : "success"%>">
+        <div class="estado">
+          <%= maintenance_history.status %>
+        </div>
+        <div class="row collapse align-middle">
+          <div class="columns small-3 medium-2 large-2 fecha">
+            <% if maintenance_history.status == 'Completado' %>
+              <% if maintenance_history.review_date.present? %>
+                <%= maintenance_history.review_date.strftime(DATE_FORMAT_FANCY) %><br class="show-for-small-only">
+                <%= maintenance_history.review_date.strftime("%Y") %>
+              <% end %>
+            <% else %>
+              <% if maintenance_history.scheduled_date.present? %>
+                <%= maintenance_history.scheduled_date.strftime(DATE_FORMAT_FANCY) %><br class="show-for-small-only">
+                <%= maintenance_history.scheduled_date.strftime("%Y") %>
+              <% end %>
+            <% end %>
+          </div>
+          <% if maintenance_history.status == 'Completado' %>
+            <div class="columns small-6 medium-4 large-5 nombre">
+              <%= maintenance_history.maintenance_type %>
+            </div>
+            <div class="columns small-3 medium-2 large-1 nombre">
+              $ <%= maintenance_history.cost %>
+            </div>
+          <% else %> 
+            <div class="columns small-9 medium-6 large-6 nombre">
+              <%= maintenance_history.maintenance_type %>
+            </div>
           <% end %>
-          <td data-label="Tipo"><%= maintenance_history.maintenance_type %></td>
-          <td data-label="Póximo KM"><%= maintenance_history.estimated_km.round %></td>
-          <td data-label="Fecha Estimada"><%= maintenance_history.scheduled_date.strftime(DATE_FORMAT) if maintenance_history.scheduled_date.present? %></td>
-          <% if params[:filtro] == "Completado" %>
-            <td data-label="KM Revisión"><%= maintenance_history.review_km.round %></td>
-            <td data-label="Fecha Revisión"><%= maintenance_history.review_date %></td>
-            <td data-label="Proveedor"><%= maintenance_history.provider %></td>
-            <td data-label="Costo"><%= maintenance_history.cost %></td>
-          <% end %>
-          <td data-label="Notificado?"><%= maintenance_history.notified ? 'Si' : 'No' %></td>
-          <td>
+          <div class="columns small-12 medium-4 large-4 text-center acciones">
             <% if maintenance_history.status == 'Pendiente' %>
               <%= link_to review_maintenance_history_path(maintenance_history), class: "floating-action button success" do %>
                 <i class="material-icons">assignment_turned_in</i>
@@ -50,13 +48,26 @@
             <%= link_to maintenance_history, class: "floating-action button alert", method: :delete, data: { confirm: '¿Está seguro?' } do %>
               <i class="material-icons">delete</i>
             <% end %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <br>
-  <%= link_to new_maintenance_history_path, class: "floating-action button primary main" do %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <%= link_to new_maintenance_history_path, class: "floating-action button primary main show-for-medium" do %>
     <i class="material-icons">add</i>
+  <% end %>
+</div>
+<div class="mobile-bottom-bar hide-for-medium">
+  <%= link_to new_maintenance_history_path, class: "footer-link button hollow" do %>
+    <i class="material-icons">assignment_turned_in</i><br>
+    <small>Mantenimiento</small>
+  <% end %>
+  <%= link_to review_maintenance_history_path(0), class: "footer-link button hollow" do %>
+    <i class="material-icons">build</i><br>
+    <small>Reparacion</small>
+  <% end %>
+  <%= link_to gas_maintenance_history_path(0), class: "footer-link button hollow" do %>
+    <i class="material-icons">local_gas_station</i><br>
+    <small>Gasolina</small>
   <% end %>
 </div>

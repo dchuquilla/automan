@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     end
     member do
       get 'review'
+      get 'gas'
     end
     resources :user_car_settings, only: [:edit, :update]
   end

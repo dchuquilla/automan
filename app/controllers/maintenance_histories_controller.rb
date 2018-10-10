@@ -39,10 +39,33 @@ class MaintenanceHistoriesController < ApplicationController
 
   # GET /maintenance_histories/1/review
   def review
-    car = @maintenance_history.car
+    if @maintenance_history.nil?
+      @maintenance_history = MaintenanceHistory.new
+      car = @car_selected
+    else
+      car = @maintenance_history.car
+    end
     @maintenance_history.status = "Completado"
+    @maintenance_history.estimated_km = car.current_km
+    @maintenance_history.scheduled_date = DateTime.now.strftime(DATE_FORMAT)
     @maintenance_history.review_km = car.current_km
-    @maintenance_history.review_date = DateTime.now
+    @maintenance_history.review_date = DateTime.now.strftime(DATE_FORMAT)
+  end
+
+  # GET /maintenance_histories/1/review
+  def gas
+    if @maintenance_history.nil?
+      @maintenance_history = MaintenanceHistory.new
+      car = @car_selected
+    else
+      car = @maintenance_history.car
+    end
+    @maintenance_history.maintenance_type = "Carga de gasolina"
+    @maintenance_history.status = "Completado"
+    @maintenance_history.estimated_km = car.current_km
+    @maintenance_history.scheduled_date = DateTime.now.strftime(DATE_FORMAT)
+    @maintenance_history.review_km = car.current_km
+    @maintenance_history.review_date = DateTime.now.strftime(DATE_FORMAT)
   end
 
   # POST /maintenance_histories
@@ -58,7 +81,13 @@ class MaintenanceHistoriesController < ApplicationController
         format.html { redirect_to @maintenance_history, notice: 'El mantenimiento fue creado.' }
         format.json { render :show, status: :created, location: @maintenance_history }
       else
-        format.html { render :new }
+        if params[:from_gas].present?
+          format.html { render :gas }
+        elsif params[:from_review].present?
+          format.html { render :review }
+        else
+          format.html { render :edit }
+        end
         format.json { render json: @maintenance_history.errors, status: :unprocessable_entity }
       end
     end
@@ -76,7 +105,13 @@ class MaintenanceHistoriesController < ApplicationController
         format.html { redirect_to @maintenance_history, notice: 'El mantenimiento fue modificado.' }
         format.json { render :show, status: :ok, location: @maintenance_history }
       else
-        format.html { render :edit }
+        if params[:from_gas].present?
+          format.html { render :gas }
+        elsif params[:from_review].present?
+          format.html { render :review }
+        else
+          format.html { render :edit }
+        end
         format.json { render json: @maintenance_history.errors, status: :unprocessable_entity }
       end
     end
@@ -108,7 +143,11 @@ class MaintenanceHistoriesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_maintenance_history
-      @maintenance_history = MaintenanceHistory.find(params[:id])
+      begin
+        @maintenance_history = MaintenanceHistory.find(params[:id])
+      rescue Exception => e
+        @maintenance_history = nil
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

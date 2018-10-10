@@ -6,6 +6,9 @@ class MaintenanceHistory < ApplicationRecord
   
   validates :car_id, :estimated_km, :maintenance_type, :scheduled_date, :status, :user_car_setting_id, presence: true
 
+  validates :provider, :cost, presence: true,
+                    if: [Proc.new { |m| m.status == 'Completado' }]
+
   before_validation do
     check_car_setting
   end

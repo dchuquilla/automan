@@ -70,6 +70,7 @@ $maincontent-shadow: 0 0 10px rgba($black, 0.5) !default;
     transition: transform $offcanvas-transition-length $offcanvas-transition-timing;
     backface-visibility: hidden;
     z-index: 1;
+    padding-bottom: 90px;
 
     @if has-value($maincontent-shadow) {
       box-shadow: $maincontent-shadow;
