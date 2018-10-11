@@ -12,43 +12,49 @@
   </head>
 
   <body>
+
     <div class="bg-image" style="background-image:url(<%= asset_path 'default-bg.jpg' %>)"></div>
     <div class="off-canvas-wrapper">
       <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
-        <div class="off-canvas position-left reveal-for-large" id="my-info" data-off-canvas>
-          <div class="row column">
+        <div class="off-canvas position-left reveal-for-large" id="offCanvasLeftOverlap" data-off-canvas data-transition="overlap">
+          <button class="close-button" aria-label="Close menu" type="button" data-close>
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="row column" style="display: inherit;">
             <br>
             <%= image_tag('logo.png') %>
+            <br>
+            <br>
             <% if user_signed_in? %>
-              <ul class="vertical menu drilldown" data-drilldown>
+              <ul class="vertical menu">
                 <% if current_user.owner.nil? %>
-                  <li><%= link_to("Crear Propietario", new_owner_path) %></li>
+                  <li><%= link_to("Crear Propietario", new_owner_path, class: "hallow button primary") %></li>
                 <% else %>
-                  <li><%= link_to("Editar propietario", edit_owner_path(current_user.owner)) %></li>
+                  <li><%= link_to("Editar propietario", edit_owner_path(current_user.owner), class: "hallow button primary") %></li>
                   <li>
-                    <a href="#">Autos</a>
-                    <ul class="menu vertical nested">
-                      <li><%= link_to("Mis autos", cars_path) %></li>
-                      <li><%= link_to("Agregar auto", new_car_path) %></li>
+                    <br>
+                    <p class="text-title">Autos</p>
+                    <ul class="menu vertical">
+                      <li><%= link_to("Mis autos", cars_path, class: "hollow button general") %></li>
+                      <li><%= link_to("Agregar auto", new_car_path, class: "hollow button general") %></li>
                     </ul>
                   </li>
                   <% if cookies[:selected_car_id].present? %>
                     <li>
-                      <a href="#">
-                        <%= @car_selected.plate.upcase %>
-                      </a>
-                      <ul class="menu vertical nested">
-                        <li><%= link_to 'Detalles de auto', car_path(@car_selected) %></li>
-                        <li><%= link_to("Agendar manteminieto", new_maintenance_history_path) %></li>
-                        <li><%= link_to("Mantenimientos Pendientes", maintenance_histories_path(filtro: "Pendiente")) %></li>
-                        <li><%= link_to("Mantenimientos Atrasados", maintenance_histories_path(filtro: "Atrasado")) %></li>
-                        <li><%= link_to("Mantenimientos completados", maintenance_histories_path(filtro: "Completado")) %></li>
-                        <li><%= link_to("Todos", maintenance_histories_path) %></li>
+                      <br>
+                      <p class="text-title"><%= @car_selected.plate.upcase %></p>
+                      <ul class="menu vertical">
+                        <li><%= link_to('Detalles de auto', car_path(@car_selected), class: "hollow button general") %></li>
+                        <li><%= link_to("Agendar manteminieto", new_maintenance_history_path, class: "hollow button general") %></li>
+                        <li><%= link_to("Mantenimientos Pendientes", maintenance_histories_path(filtro: "Pendiente"), class: "hollow button general") %></li>
+                        <li><%= link_to("Mantenimientos Atrasados", maintenance_histories_path(filtro: "Atrasado"), class: "hollow button general") %></li>
+                        <li><%= link_to("Mantenimientos completados", maintenance_histories_path(filtro: "Completado"), class: "hollow button general") %></li>
+                        <li><%= link_to("Todos", maintenance_histories_path, class: "hollow button general") %></li>
                       </ul>
                     </li>
                   <% end %>
                 <% end %>
-                <li><%= link_to "Salir", destroy_user_session_path, method: :delete %></li>
+                <li><br><%= link_to("Salir", destroy_user_session_path, method: :delete, class: "hallow button primary") %></li>
               </ul>
             <% end %>
           </div>
@@ -56,9 +62,16 @@
         <div class="off-canvas-content" data-off-canvas-content>
           <div class="title-bar hide-for-large">
             <div class="title-bar-left">
-              <button class="menu-icon" type="button" data-open="my-info"></button>
+              <button class="menu-icon" type="button" data-open="offCanvasLeftOverlap"></button>
               <span class="title-bar-title">Automan</span>
             </div>
+            <ul class="menu align-right">
+              <li>
+                <%= link_to cars_path, class: "flat button primary" do %>
+                  <i class="material-icons">drive_eta</i>Mis autos
+                <% end %>
+              </li>
+            </ul>
           </div>
           <% if cookies[:selected_car_id].present? %>
               <div class="callout secondary">

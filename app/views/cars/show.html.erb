@@ -1,6 +1,10 @@
 <div class="row">
-  <div class="columns large-6 small-12">
+  <div class="columns">
     <h1 class="text-headline"><%= @car.plate %></h1>
+  </div>
+</div>
+<div class="row">
+  <div class="columns small-12 medium-6 large-6">
     <p>
       <strong>Marca:</strong>
       <%= @car.brand %>
@@ -31,7 +35,7 @@
       <i class="material-icons">delete</i>
     <% end %>
   </div>
-  <div class="columns large-6 small-12">
+  <div class="columns small-12 medium-6 large-6">
     <div class="row small-up-2 medium-up-3 large-up-4">
       <% @car.images.each do |avatar| %>
         <div class="column image_attached">

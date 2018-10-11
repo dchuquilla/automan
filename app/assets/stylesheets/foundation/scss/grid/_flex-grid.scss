@@ -75,6 +75,7 @@
   flex: flex-grid-column($columns);
   padding-left: $gutter;
   padding-right: $gutter;
+  padding-top: $gutter;
 
   // max-width fixes IE 10/11 not respecting the flex-basis property
   @if $columns != null and $columns != shrink {
