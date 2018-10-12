@@ -47,7 +47,7 @@
         <%= form.number_field :current_km, strep: 1, value: form.object.current_km.present? ? form.object.current_km_estimated.round : '' %>
       </div>
       <div class="field">
-        <%= form.label :week_km, "KM Semanal*" %>
+        <%= form.label :week_km, "KM Semanal* (aprox.)" %>
         <%= form.number_field :week_km, strep: 1, value: form.object.week_km.present? ? form.object.week_km.round : '' %>
       </div>
     </div>
@@ -59,4 +59,23 @@
       </div>
     </div>
   </div>
+<% end %>
+
+<% content_for :late_javascripts do %>
+  <script type="text/javascript">
+    $(function() {
+      $('#car_brand').autoComplete({
+        source: function(term, response){
+          try { xhr.abort(); } catch(e){}
+          $.getJSON('<%= brands_cars_path %>', { q: term }, function(data){ response(data); });
+        }
+      });
+      $('#car_model').autoComplete({
+        source: function(term, response){
+          try { xhr.abort(); } catch(e){}
+          $.getJSON('<%= models_cars_path %>', { q: term }, function(data){ response(data); });
+        }
+      });
+    });
+  </script>
 <% end %>

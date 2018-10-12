@@ -35,10 +35,6 @@
       <strong>Costo:</strong>
       <%= @maintenance_history.cost %>
     </p>
-    <p>
-      <strong>Notified:</strong>
-      <%= @maintenance_history.notified ? 'Si' : 'No'%>
-    </p>
 
     <%= link_to 'Editar', edit_maintenance_history_path(@maintenance_history), class: "button" %>
     <%= link_to 'Ver Todos', maintenance_histories_path, class: "hollow button general" %>

@@ -9,6 +9,24 @@ class CarsController < ApplicationController
     @cars = Car.where("owner_id = ?", current_user.owner.id)
   end
 
+  def brands
+    q_term = "#{params[:q]}"
+    brands = Car.distinct.select('brand').where("brand ~* ?", q_term).map(&:brand)
+    respond_to do |format|
+      format.json { render json: brands.to_json }
+      format.html { render text: "no aplica"}
+    end
+  end
+
+  def models
+    q_term = "#{params[:q]}"
+    models = Car.distinct.select('model').where("model ~* ?", q_term).map(&:model)
+    respond_to do |format|
+      format.json { render json: models.to_json }
+      format.html { render text: "no aplica"}
+    end
+  end
+
   # GET /cars/1
   # GET /cars/1.json
   def show

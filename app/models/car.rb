@@ -1,8 +1,8 @@
 class Car < ApplicationRecord
   belongs_to :owner
-  has_many :maintenance_histories
+  has_many :maintenance_histories, dependent: :destroy
   # Multiple images with ActiveStorage
-  has_many_attached :images
+  has_many_attached :images, dependent: :destroy
   
   validates :plate, :brand, :model, :current_km, :car_type, :week_km, presence: true
 

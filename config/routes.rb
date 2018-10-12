@@ -21,6 +21,10 @@ Rails.application.routes.draw do
       get 'update_current_km'
       get 'image_detach'
     end
+    collection do
+      get 'brands', format: 'json'
+      get 'models', format: 'json'
+    end
   end
   resources :owners, except: [:index]
   resources :settings
