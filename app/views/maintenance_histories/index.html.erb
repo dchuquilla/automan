@@ -23,14 +23,18 @@
           </div>
           <% if maintenance_history.status == 'Completado' %>
             <div class="columns small-6 medium-4 large-5 nombre">
-              <%= maintenance_history.maintenance_type %>
+              <%= link_to maintenance_history_path(maintenance_history), class: "flat button primary" do %>
+                <%= maintenance_history.maintenance_type %>
+              <% end %>
             </div>
             <div class="columns small-3 medium-2 large-1 nombre">
               $ <%= maintenance_history.cost %>
             </div>
           <% else %> 
             <div class="columns small-9 medium-6 large-6 nombre">
-              <%= maintenance_history.maintenance_type %>
+              <%= link_to maintenance_history_path(maintenance_history), class: "flat button primary" do %>
+                <%= maintenance_history.maintenance_type %>
+              <% end %>
             </div>
           <% end %>
           <div class="columns small-12 medium-4 large-4 text-center acciones">

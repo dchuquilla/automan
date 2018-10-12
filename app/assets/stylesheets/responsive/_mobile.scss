@@ -1,0 +1,21 @@
+/* Mobile only * small devices Iphone horizontal and vertical*/
+@media screen and (min-width: 0em) and (max-width: 46.0625em) {
+  .off-canvas {
+    display: none;
+  }
+  .off-canvas.is-closed {
+    display: none;
+  }
+  .off-canvas.is-open {
+      display: block !important;
+  }
+  .colums {
+    padding-top: 15px;
+  }
+}
+/* Mobile only vertical devises*/
+@media screen and (min-width: 0em) and (max-width: 21em) {
+}
+/* iPhone 6 horizontal only */
+@media screen and (min-width: 22em) and (max-width: 47em) {
+}

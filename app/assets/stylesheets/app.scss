@@ -94,3 +94,35 @@
     }
   }
 }
+
+.mantenimiento.callout {
+  padding: 5px 10px;
+  .flat.button {
+    padding: 15px 0px;
+    margin: 0;
+    display: block;
+    text-align: left;
+    color: #333;
+  }
+}
+
+
+/* x-Large and up * share with  all devises form ipad horizontal*/
+@media screen and (min-width: 64em) and (max-width: 66em) {
+
+}
+/* Desktop and up * share with  all devises form ipad horizontal to up */
+@media screen and (min-width: 65em) {
+  .off-canvas.position-left {
+    width: 315px;
+    .hollow.button {
+      text-align: justify;
+    }
+  }
+  .position-left.reveal-for-large ~ .off-canvas-content {
+    margin-left: 315px;
+  }
+}
+
+@import 'responsive/ipad';
+@import 'responsive/mobile';
