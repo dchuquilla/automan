@@ -58,6 +58,7 @@ class CarsController < ApplicationController
   # POST /cars.json
   def create
     @car = Car.new(car_params)
+    @car.plate = @car.plate.upcase
     @car.owner_id = current_user.owner.id
     if params[:car][:images]
       @car.images.attach(params[:car][:images])
