@@ -96,6 +96,45 @@
   }
 }
 
+.auto {
+  .thumbnail {
+    max-height: 150px;
+    overflow: hidden;
+    margin: 0 0 5px 0;
+  }
+  .title {
+    a {
+      display: inline-block;
+      width: 100%;
+      margin: 0 !important;
+      color: $black-100 !important;
+      padding: 0 !important;
+      margin-bottom: 15px !important;
+      text-align: left;
+      font-size: 18px;
+    }
+  }
+  small{
+    color: $grey-700;
+  }
+  .current_km {
+    color: $purple-700;
+  }
+  .week_km {
+    color: $orange-700;
+  }
+  .pending {
+    color: $red-700;
+  }
+  .actions{
+    a {
+      display: inline-block;
+      width: 100%;
+      margin: 0 !important;
+    }
+  }
+}
+
 .mantenimiento.callout {
   padding: 5px 10px;
   .flat.button {

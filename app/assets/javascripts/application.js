@@ -23,3 +23,4 @@
 //= require datepick/jquery.datepick
 //= require datepick/jquery.datepick-es
 //= require jquery.auto-complete
+//= require app

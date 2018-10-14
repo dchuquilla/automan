@@ -38,7 +38,8 @@
         <%= form.number_field :year, strep: 1 %>
       </div>
       <div class="field">
-        <% types_list = ["Liviano", "Camion", "Camioneta", "Autobus", "Motocicleta"] %>
+        <%# types_list = ["Liviano", "Camion", "Camioneta", "Autobus", "Motocicleta"] %>
+        <% types_list = ["Liviano"] %>
         <%= form.label :car_type, "Tipo*" %>
         <%= form.select :car_type, types_list %>
       </div>

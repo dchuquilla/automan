@@ -1,46 +1,74 @@
 
 <div class="row column">
   <h1 class="text-headline">Mis autos</h1>
-  <table class="responsive-card-table unstriped">
-    <thead>
-      <tr>
-        <th>Placa</th>
-        <th>Marca</th>
-        <th>Modelo</th>
-        <th>Tipo</th>
-        <th>Km Actual</th>
-        <th>Km semanal</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
+  <div class="columns small-12">
+    <div class="row small-up-1 medium-up-2 large-up-2">
       <% @cars.each do |car| %>
-        <tr>
-          <td data-label="Placa"><%= car.plate %></td>
-          <td data-label="Marca"><%= car.brand %></td>
-          <td data-label="Modelo"><%= car.model %></td>
-          <td data-label="Tipo"><%= car.car_type %></td>
-          <td data-label="Km Actual"><%= car.current_km_estimated.round %></td>
-          <td data-label="Km semanal"><%= car.week_km.round %></td>
-          <td>
-            <%= link_to select_car_path(car), class: "floating-action button success" do %>
-              <i class="material-icons">build</i>
-            <% end %>
-            <%= link_to car, class: "floating-action button primary" do %>
-              <i class="material-icons">search</i>
-            <% end %>
-            <%= link_to edit_car_path(car), class: "floating-action button secondary" do %>
-              <i class="material-icons">edit</i>
-            <% end %>
-            <%= link_to car, class: "floating-action button alert", method: :delete, data: { confirm: '¿Está seguro?' } do %>
-              <i class="material-icons">delete</i>
-            <% end %>
-          </td>
-        </tr>
+        <div class="column callout auto">
+          <div class="row title">
+            <div class="columns">
+              <%= link_to select_car_path(car), class: "flat button primary" do %>
+                <%= car.plate %>/<%= car.brand %> <%= car.model %>
+              <% end %>
+            </div>
+          </div>
+          <div class="row info">
+            <div class="columns small-5 large-4 photo">
+              <div class="thumbnail">
+                <%= image_tag car.images.first.variant(resize: "300x300") %>
+              </div>
+            </div>
+            <div class="columns details">
+              <div class="row">
+                <div class="columns">
+                  <small>Km Actual</small><br>
+                  <span class="text-title current_km"><%= car.current_km_estimated.round %></span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="columns">
+                  <small>Km Semanal</small><br>
+                  <span class="text-title week_km"><%= car.week_km.round %></span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="columns">
+                  <small>Mantenimientos pendientes</small><br>
+                  <span class="text-title pending"><%= car.pending_maintenances.count %></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row collapse actions">
+            <div class="columns small-6 medium-3 large-6">
+              <%= link_to select_car_path(car), class: "hollow button" do %>
+                <i class="material-icons">build</i><br>
+                Mantenimientos
+              <% end %>
+            </div>
+            <div class="columns small-6 medium-3 large-6">
+              <%= link_to car, class: "hollow button" do %>
+                <i class="material-icons">search</i><br>
+                Detalles
+              <% end %>
+            </div>
+            <div class="columns small-6 medium-3 large-6">
+              <%= link_to edit_car_path(car), class: "hollow button" do %>
+                <i class="material-icons">edit</i><br>
+                Editar
+              <% end %>
+            </div>
+            <div class="columns small-6 medium-3 large-6">
+              <%= link_to car, class: "hollow button alert", method: :delete, data: { confirm: '¿Está seguro?' } do %>
+                <i class="material-icons">delete</i><br>
+                Eliminar
+              <% end %>
+            </div>
+          </div>
+        </div>
       <% end %>
-    </tbody>
-  </table>
-  <br>
+    </div>
+  </div>
   <%= link_to new_car_path, class: "floating-action button primary main show-for-medium" do %>
     <i class="material-icons">add</i>
   <% end %>
