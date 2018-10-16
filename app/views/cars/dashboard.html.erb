@@ -25,6 +25,18 @@
             Reportes
           <% end %>
         </div>
+        <div class="columns">
+          <%= link_to select_car_path(@car), class: "hallow button success" do %>
+            <i class="material-icons">date_range</i><br>
+            Calendario
+          <% end %>
+        </div>
+        <div class="columns">
+          <%= link_to select_car_path(@car), class: "hallow button success" do %>
+            <i class="material-icons">settings</i><br>
+            Configuración
+          <% end %>
+        </div>
       <% end %>
     </div>
   </div>

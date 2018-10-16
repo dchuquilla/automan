@@ -5,7 +5,7 @@
     </h1>
   </div>
 </div>
-<div class="row">
+<div class="row details">
   <div class="columns large-6 small-12">
     <p>
       <strong>Estado:</strong>
@@ -33,7 +33,7 @@
     </p>
     <p>
       <strong>Costo:</strong>
-      <%= @maintenance_history.cost %>
+      $ <%= @maintenance_history.cost %>
     </p>
 
     <%= link_to 'Editar', edit_maintenance_history_path(@maintenance_history), class: "button" %>
@@ -42,7 +42,7 @@
   <div class="columns large-6 small-12">
     <% if @maintenance_history.user_car_setting.km_estimated.nil? || @maintenance_history.user_car_setting.month_estimated.nil? %>
       <div class="row column">
-        <h2 class="text-title">Configuración pendiente</h2>
+        <h2 class="text-title alert">Configuración pendiente</h2>
         <p>Usted ha creado un nuevo tipo de mantenimiento, por favor complete la configuración, esta información servirá para agendar nuevos mantenimientos de este tipo.</p>
         <div class="row column">
           <%= form_with(model: @maintenance_history.user_car_setting, url: maintenance_history_user_car_setting_path(@maintenance_history.id, @maintenance_history.user_car_setting), local: true) do |form| %>
@@ -59,7 +59,7 @@
               <% end %>
             </div>
             <div class="actions">
-              <%= form.submit "Guardar", class: "button" %>
+              <%= form.submit "Guardar", class: "button alert" %>
             </div>
           <% end %>
         </div>
@@ -94,3 +94,5 @@
     </div>
   </div>
 </div>
+
+<%= render partial: 'shared/mobile_footer_links' %>

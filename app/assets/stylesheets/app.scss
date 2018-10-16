@@ -161,16 +161,26 @@
     color: #333;
   }
 }
-
+.text-title{
+  &.alert {
+    color: $red-700;
+  }
+}
+.details {
+  p {
+    margin-bottom: 5px;
+  }
+}
 
 /* x-Large and up * share with  all devises form ipad horizontal*/
 @media screen and (min-width: 64em) and (max-width: 66em) {
 
 }
 /* Desktop and up * share with  all devises form ipad horizontal to up */
-@media screen and (min-width: 65em) {
+@media screen and (min-width: 64em) {
   .off-canvas.position-left {
     width: 315px;
+    max-width: 350px;
     .hollow.button {
       text-align: justify;
     }

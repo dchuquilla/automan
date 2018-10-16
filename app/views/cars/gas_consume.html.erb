@@ -56,7 +56,7 @@
           name: "Costo",
           showInLegend: true,
           xValueFormatString: "DD MMM",
-          yValueFormatString: "$#,##0",
+          yValueFormatString: "$##0.00",
           dataPoints: [
             <% @maintenance_histories.each_with_index do |maintenance_history, index| %>
               <% year      = (maintenance_history.review_date - 1.month).strftime('%Y') %>
