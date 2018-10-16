@@ -1,7 +1,8 @@
 class CarsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_car, only: [:show, :select, :dashboard, :gas_consume, :edit, :update_current_km, :update, :destroy, :image_detach]
   before_action :clean_car_selection_cookie, only: [:index, :destroy]
-  before_action :set_car, only: [:show, :select, :edit, :update_current_km, :update, :destroy, :image_detach]
+  before_action :set_car_selection_cookie, only: [:show, :select, :dashboard, :gas_consume]
 
   # GET /cars
   # GET /cars.json
@@ -30,15 +31,26 @@ class CarsController < ApplicationController
   # GET /cars/1
   # GET /cars/1.json
   def show
-    cookies[:selected_car_id] = @car.id
     set_car_with_cookies
   end
 
   # GET /cars/1
   # GET /cars/1.json
   def select
-    cookies[:selected_car_id] = @car.id
     redirect_to maintenance_histories_path
+  end
+
+  # GET /cars/1
+  # GET /cars/1.json
+  def dashboard
+    set_car_with_cookies
+  end
+
+  # GET /cars/1
+  # GET /cars/1.json
+  def gas_consume
+    set_car_with_cookies
+    @maintenance_histories = MaintenanceHistory.where("car_id = ? AND maintenance_type = 'Carga de gasolina' AND status = 'Completado'", @car.id).order("review_date ASC")
   end
 
   # GET /cars/new

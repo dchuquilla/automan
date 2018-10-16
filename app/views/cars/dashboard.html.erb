@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="columns">
+    <h1 class="text-headline">Tablero de control</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="columns">
+    <div class="row small-up-2 medium-up-3 large-up-3 dashboard">
+      <div class="columns">
+        <%= link_to select_car_path(@car), class: "hallow button success" do %>
+          <i class="material-icons">build</i><br>
+          Mantenimientos
+        <% end %>
+      </div>
+      <div class="columns">
+        <%= link_to gas_consume_car_path(@car), 'data-turbolinks': 'false', class: "hallow button success" do %>
+          <i class="material-icons">local_gas_station</i><br>
+          Km/Galón
+        <% end %>
+      </div>
+      <% if Rails.env.development? %>
+        <div class="columns">
+          <%= link_to select_car_path(@car), class: "hallow button success" do %>
+            <i class="material-icons">bar_chart</i><br>
+            Reportes
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

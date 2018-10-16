@@ -83,6 +83,7 @@ es:
         notified: "Notificado"
         car_id: "Auto"
         maintenance_type: "Tipo"
+        gallons: "Galones"
       user_car_setting:
         km_estimated: "KM Estimado"
         month_estimated: "Meses Estimados"

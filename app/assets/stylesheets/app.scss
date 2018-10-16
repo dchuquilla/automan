@@ -25,6 +25,10 @@
 .image_attached {
   position: relative;
   .detach {
+    width: 30px;
+    height: 30px;
+    padding: 3px;
+    margin-right: 0 !important;
     position: absolute;
     top: 5px;
     right: 5px;
@@ -137,6 +141,13 @@
       width: 100%;
       margin: 0 !important;
     }
+  }
+}
+
+.dashboard {
+  a.button {
+    // display: block;
+    width: 100%;
   }
 }
 

@@ -1,0 +1,117 @@
+<div class="row">
+  <div class="columns">
+    <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+  </div>
+</div>
+<div class="row">
+  <div class="columns">
+    <table>
+      <tr>
+        <th>Fecha</th>
+        <th>KM</th>
+        <th>Galones</th>
+        <th>Costo</th>
+      </tr>
+        <% @maintenance_histories.each do |maintenance_history| %>
+          <tr>
+            <td><%= maintenance_history.review_date.strftime(DATE_FORMAT) %></td>
+            <td><%= maintenance_history.review_km %></td>
+            <td><%= maintenance_history.gallons %></td>
+            <td>$ <%= maintenance_history.cost %></td>
+          </tr>
+        <% end %>
+    </table>
+  </div>
+</div>
+
+<%= render partial: 'shared/mobile_footer_links' %>
+
+<% content_for :late_javascripts do %>
+  <script>
+    window.onload = function () {
+
+      var chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        theme: "light2",
+        title:{
+          text: "Kilometraje por galón"
+        },
+        axisX:{
+          valueFormatString: "DD MMM"
+        },
+        axisY: {
+          prefix: "$",
+          labelFormatter: addSymbols
+        },
+        toolTip: {
+          shared: true
+        },
+        legend: {
+          cursor: "pointer",
+          itemclick: toggleDataSeries
+        },
+        data: [
+        {
+          type: "column",
+          name: "Costo",
+          showInLegend: true,
+          xValueFormatString: "DD MMM",
+          yValueFormatString: "$#,##0",
+          dataPoints: [
+            <% @maintenance_histories.each_with_index do |maintenance_history, index| %>
+              <% year      = (maintenance_history.review_date - 1.month).strftime('%Y') %>
+              <% month     = (maintenance_history.review_date - 1.month).strftime('%m') %>
+              <% day       = (maintenance_history.review_date - 1.month).strftime('%d') %>
+              { x: new Date(<%= year %>, <%= month %>, <%= day %>), y: <%= maintenance_history.cost %> },
+            <% end %>
+          ]
+        },
+        {
+          type: "line",
+          name: "Km/gal",
+          showInLegend: true,
+          yValueFormatString: "##0.00 Km",
+          dataPoints: [
+            <% @maintenance_histories.each_with_index do |maintenance_history, index| %>
+              <% year      = (maintenance_history.review_date - 1.month).strftime('%Y') %>
+              <% month     = (maintenance_history.review_date - 1.month).strftime('%m') %>
+              <% day       = (maintenance_history.review_date - 1.month).strftime('%d') %>
+              <% if index == 0 %>
+                { x: new Date(<%= year %>, <%= month %>, <%= day %>), y: 0.00 },
+              <% else %>
+                <% prev_main = @maintenance_histories[index - 1] %>
+                <% distance  = maintenance_history.review_km - prev_main.review_km %>
+                <% km_gal     = distance / maintenance_history.gallons %>
+                { x: new Date(<%= year %>, <%= month %>, <%= day %>), y: <%= km_gal %> },
+              <% end %>
+            <% end %>
+          ]
+        }
+        ]
+      });
+      chart.render();
+
+      function addSymbols(e) {
+        var suffixes = ["", "K", "M", "B"];
+        var order = Math.max(Math.floor(Math.log(e.value) / Math.log(1000)), 0);
+
+        if(order > suffixes.length - 1)                 
+          order = suffixes.length - 1;
+
+        var suffix = suffixes[order];      
+        return CanvasJS.formatNumber(e.value / Math.pow(1000, order)) + suffix;
+      }
+
+      function toggleDataSeries(e) {
+        if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+          e.dataSeries.visible = false;
+        } else {
+          e.dataSeries.visible = true;
+        }
+        e.chart.render();
+      }
+    }
+    </script>
+
+  <%= javascript_include_tag 'charts', 'data-turbolinks-track': 'reload' %>
+<% end %>

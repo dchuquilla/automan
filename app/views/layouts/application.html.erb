@@ -44,7 +44,7 @@
                       <br>
                       <p class="text-title"><%= @car_selected.plate.upcase %></p>
                       <ul class="menu vertical">
-                        <li><%= link_to('Detalles de auto', car_path(@car_selected), class: "hollow button general") %></li>
+                        <li><%= link_to('Tablero de control', dashboard_car_path(@car_selected), class: "hollow button general") %></li>
                         <li><%= link_to("Agendar manteminieto", new_maintenance_history_path, class: "hollow button general") %></li>
                         <li><%= link_to("Mantenimientos Pendientes", maintenance_histories_path(filtro: "Pendiente"), class: "hollow button general") %></li>
                         <li><%= link_to("Mantenimientos Atrasados", maintenance_histories_path(filtro: "Atrasado"), class: "hollow button general") %></li>

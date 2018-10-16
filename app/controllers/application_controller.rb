@@ -35,6 +35,10 @@ class ApplicationController < ActionController::Base
     cookies.delete :selected_car_id
   end
 
+  def set_car_selection_cookie
+    cookies[:selected_car_id] = @car.id
+  end
+
   protected
     def after_sign_in_path_for(resource)
       cars_path

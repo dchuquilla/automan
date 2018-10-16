@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   resources :cars do 
     member do
       get 'select'
+      get 'dashboard'
+      get 'gas_consume'
       get 'update_current_km'
       get 'image_detach'
     end

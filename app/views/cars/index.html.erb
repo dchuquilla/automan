@@ -14,9 +14,13 @@
           </div>
           <div class="row collapse info">
             <div class="columns small-4 medium-5 large-3 photo">
-              <div class="thumbnail">
+              <div class="thumbnail image_attached">
                 <% if car.images.present? %>
-                  <%= image_tag car.images.first.variant(resize: "300x300") %>
+                  <% avatar = car.images.first %>
+                  <%= image_tag avatar.variant(resize: "300x300") %>
+                  <%= link_to image_detach_car_path(car.id, "image_id" => avatar.id), class: "detach floating-action button alert", data: { confirm: '¿Está seguro?' } do %>
+                    <i class="material-icons">delete</i>
+                  <% end %>
                 <% else %>
                   <%= image_tag('car_default.png') %>
                 <% end %>
@@ -51,9 +55,9 @@
               <% end %>
             </div>
             <div class="columns small-6 medium-3 large-6">
-              <%= link_to car, class: "hollow button" do %>
-                <i class="material-icons">search</i><br>
-                Detalles
+              <%= link_to dashboard_car_path(car), class: "hollow button" do %>
+                <i class="material-icons">dashboard</i><br>
+                Tablero
               <% end %>
             </div>
             <div class="columns small-6 medium-3 large-6">

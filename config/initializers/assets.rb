@@ -14,7 +14,9 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 
 Rails.application.config.assets.precompile += %w( landing.css )
-Rails.application.config.assets.precompile += %w( landing.js )
 Rails.application.config.assets.precompile += %w( foundation_emails.css )
 Rails.application.config.assets.precompile += %w( mailer.css )
 Rails.application.config.assets.precompile << /\.(?:svg|eot|woff|ttf)\z/
+# JAvascripts
+Rails.application.config.assets.precompile += %w( landing.js )
+Rails.application.config.assets.precompile += %w( charts.js )
