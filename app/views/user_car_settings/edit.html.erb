@@ -3,5 +3,5 @@
 
   <%= render 'form', user_car_setting: @user_car_setting %>
 
-  <%= link_to 'Cancelar', maintenance_history_path(@maintenance_history), class: "hollow button general" %>
+  <%= link_to 'Cancelar', car_maintenance_history_path(@car_selected, @maintenance_history), class: "hollow button general" %>
 </div>

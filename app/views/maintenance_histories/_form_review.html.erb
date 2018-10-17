@@ -1,4 +1,9 @@
-<%= form_with(model: maintenance_history, local: true, html: { autocomplete: "off" }) do |form| %>
+<% if ['new', 'create', 'review'].include?(params[:action]) %>
+  <% form_route = car_maintenance_histories_path(@car_selected) %>
+<% else %>
+  <% form_route = car_maintenance_history_path(@car_selected, @maintenance_history) %>
+<% end %>
+<%= form_with(url: form_route, model: maintenance_history, local: true, html: { autocomplete: "off" }) do |form| %>
   <%= hidden_field_tag :from_review, true %>
   <% if maintenance_history.errors.any? %>
     <div class="row">
@@ -27,7 +32,7 @@
       </div>
       <div class="field">
         <%= form.label :status %>
-        <%= form.select :status, @maintenance_status %>
+        <%= form.select :status, ["Completado"] %>
       </div>
       <div class="field hide">
         <%= form.label :estimated_km %>
@@ -76,7 +81,7 @@
       $('#maintenance_history_maintenance_type').autoComplete({
         source: function(term, response){
           try { xhr.abort(); } catch(e){}
-          $.getJSON('<%= types_maintenance_histories_path %>', { q: term }, function(data){ response(data); });
+          $.getJSON('<%= types_car_maintenance_histories_path(@car_selected) %>', { q: term }, function(data){ response(data); });
         }
       });
     });

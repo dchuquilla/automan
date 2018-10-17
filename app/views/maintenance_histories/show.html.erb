@@ -36,8 +36,8 @@
       $ <%= @maintenance_history.cost %>
     </p>
 
-    <%= link_to 'Editar', edit_maintenance_history_path(@maintenance_history), class: "button" %>
-    <%= link_to 'Ver Todos', maintenance_histories_path, class: "hollow button general" %>
+    <%= link_to 'Editar', edit_car_maintenance_history_path(@car_selected, @maintenance_history), class: "button" %>
+    <%= link_to 'Ver Todos', car_maintenance_histories_path(@car_selected), class: "hollow button general" %>
   </div>
   <div class="columns large-6 small-12">
     <% if @maintenance_history.user_car_setting.km_estimated.nil? || @maintenance_history.user_car_setting.month_estimated.nil? %>
@@ -45,7 +45,7 @@
         <h2 class="text-title alert">Configuración pendiente</h2>
         <p>Usted ha creado un nuevo tipo de mantenimiento, por favor complete la configuración, esta información servirá para agendar nuevos mantenimientos de este tipo.</p>
         <div class="row column">
-          <%= form_with(model: @maintenance_history.user_car_setting, url: maintenance_history_user_car_setting_path(@maintenance_history.id, @maintenance_history.user_car_setting), local: true) do |form| %>
+          <%= form_with(model: @maintenance_history.user_car_setting, url: car_maintenance_history_user_car_setting_path(@car_selected, @maintenance_history.id, @maintenance_history.user_car_setting), local: true) do |form| %>
             <div class="field">
               <%= form.label :km_estimated %>
               <%= form.text_field :km_estimated %>
@@ -69,7 +69,7 @@
       <p>
         <strong>Repetir mantenimiento cada <%= @maintenance_history.user_car_setting.km_estimated %> kilómetros ó cada <%= @maintenance_history.user_car_setting.month_estimated %> meses.</strong>
       </p>
-      <%= link_to 'Cambiar configuración', edit_maintenance_history_user_car_setting_path(@maintenance_history, @maintenance_history.user_car_setting), class: "button" %>
+      <%= link_to 'Cambiar configuración', edit_car_maintenance_history_user_car_setting_path(@car_selected, @maintenance_history, @maintenance_history.user_car_setting), class: "button" %>
     <% end %>
   </div>
 </div>

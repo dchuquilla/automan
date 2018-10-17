@@ -1,4 +1,4 @@
-<%= form_with(model: user_car_setting, url: maintenance_history_user_car_setting_path(@maintenance_history.id, user_car_setting.id), local: true) do |form| %>
+<%= form_with(model: user_car_setting, url: car_maintenance_history_user_car_setting_path(@car_selected, @maintenance_history, user_car_setting), local: true) do |form| %>
   <% if user_car_setting.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(user_car_setting.errors.count, "error") %> prohibited this user_car_setting from being saved:</h2>

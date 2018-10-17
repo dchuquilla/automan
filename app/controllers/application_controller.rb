@@ -12,13 +12,25 @@ class ApplicationController < ActionController::Base
 
   def set_car_with_cookies
     Rails.logger.info "ApplicationController#set_car_with_cookies"
-    if cookies[:selected_car_id].present?
-      @car_selected = Car.where("id = ? AND owner_id = ?", cookies[:selected_car_id], current_user.owner.id).last
+    @car_selected = nil
+    if current_user.present? && (cookies[:selected_car_id].present? || params[:car_id].present?)
+      if cookies[:selected_car_id].present?
+        @car_selected = Car.where("id = ? AND owner_id = ?", cookies[:selected_car_id], current_user.owner.id).last
+      elsif params[:car_id].present?
+        @car_selected = Car.where("id = ? AND owner_id = ?", params[:car_id], current_user.owner.id).last
+        cookies[:selected_car_id] = params[:car_id]
+      end
       unless @car_selected.present?
         Rails.logger.info "Auto no encotrado con cookie"
         not_found
       end
     end
+  end
+
+  def set_referer
+    Rails.logger.info "============================= REQUEST.REFERER"
+    Rails.logger.info request.referer.inspect
+    cookies[:request_referer] = request.referer
   end
 
   def not_found
@@ -39,10 +51,20 @@ class ApplicationController < ActionController::Base
     cookies[:selected_car_id] = @car.id
   end
 
+  def storable_location?
+    request.get? && is_navigational_format? && !devise_controller? && !request.xhr? 
+  end
+
+  def store_user_location!
+    # :user is the scope we are authenticating
+    store_location_for(:user, request.fullpath)
+  end
+  
   protected
-    def after_sign_in_path_for(resource)
-      cars_path
+    def after_sign_in_path_for(resource_or_scope)
+      stored_location_for(resource_or_scope) || cars_path
     end
+
     
   private
     # Overwriting the sign_out redirect path method

@@ -1,7 +1,10 @@
 class MaintenanceHistoriesController < ApplicationController
+  
+  before_action :store_user_location!, if: :storable_location?
   before_action :authenticate_user!
   before_action :maintenance_status
   before_action :set_maintenance_history, only: [:show, :edit, :review, :update, :destroy, :image_detach]
+  before_action :set_car_with_cookies
 
   # GET /maintenance_histories
   # GET /maintenance_histories.json
@@ -30,7 +33,8 @@ class MaintenanceHistoriesController < ApplicationController
   # GET /maintenance_histories/new
   def new
     @maintenance_history = MaintenanceHistory.new
-    
+    car = Car.find params[:car_id]
+    @maintenance_history.estimated_km = car.current_km
   end
 
   # GET /maintenance_histories/1/edit
@@ -78,7 +82,7 @@ class MaintenanceHistoriesController < ApplicationController
     end
     respond_to do |format|
       if @maintenance_history.save
-        format.html { redirect_to @maintenance_history, notice: 'El mantenimiento fue creado.' }
+        format.html { redirect_to car_maintenance_histories_url(@car_selected), notice: 'El mantenimiento fue creado.' }
         format.json { render :show, status: :created, location: @maintenance_history }
       else
         if params[:from_gas].present?
@@ -86,7 +90,7 @@ class MaintenanceHistoriesController < ApplicationController
         elsif params[:from_review].present?
           format.html { render :review }
         else
-          format.html { render :edit }
+          format.html { render :new }
         end
         format.json { render json: @maintenance_history.errors, status: :unprocessable_entity }
       end
@@ -102,7 +106,7 @@ class MaintenanceHistoriesController < ApplicationController
     end
     respond_to do |format|
       if @maintenance_history.update(maintenance_history_params)
-        format.html { redirect_to @maintenance_history, notice: 'El mantenimiento fue modificado.' }
+        format.html { redirect_to car_maintenance_histories_url(@car_selected), notice: 'El mantenimiento fue modificado.' }
         format.json { render :show, status: :ok, location: @maintenance_history }
       else
         if params[:from_gas].present?
@@ -122,7 +126,7 @@ class MaintenanceHistoriesController < ApplicationController
   def destroy
     @maintenance_history.destroy
     respond_to do |format|
-      format.html { redirect_to maintenance_histories_url, notice: 'El mantenimiento fue eliminado.' }
+      format.html { redirect_to car_maintenance_histories_url(@car_selected), notice: 'El mantenimiento fue eliminado.' }
       format.json { head :no_content }
     end
   end

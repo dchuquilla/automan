@@ -1,4 +1,5 @@
 class CarsController < ApplicationController
+  before_action :store_user_location!, if: :storable_location?
   before_action :authenticate_user!
   before_action :set_car, only: [:show, :select, :dashboard, :gas_consume, :edit, :update_current_km, :update, :destroy, :image_detach]
   before_action :clean_car_selection_cookie, only: [:index, :destroy]
@@ -37,7 +38,7 @@ class CarsController < ApplicationController
   # GET /cars/1
   # GET /cars/1.json
   def select
-    redirect_to maintenance_histories_path
+    redirect_to car_maintenance_histories_path(@car)
   end
 
   # GET /cars/1

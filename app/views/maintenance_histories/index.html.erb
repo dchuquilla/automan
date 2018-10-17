@@ -25,7 +25,7 @@
           </div>
           <% if maintenance_history.status == 'Completado' %>
             <div class="columns small-7 medium-4 large-5 nombre">
-              <%= link_to maintenance_history_path(maintenance_history), class: "flat button primary" do %>
+              <%= link_to car_maintenance_history_path(@car_selected, maintenance_history), class: "flat button primary" do %>
                 <%= maintenance_history.maintenance_type %>
               <% end %>
             </div>
@@ -34,24 +34,24 @@
             </div>
           <% else %> 
             <div class="columns small-10 medium-6 large-6 nombre">
-              <%= link_to maintenance_history_path(maintenance_history), class: "flat button primary" do %>
+              <%= link_to car_maintenance_history_path(@car_selected, maintenance_history), class: "flat button primary" do %>
                 <%= maintenance_history.maintenance_type %>
               <% end %>
             </div>
           <% end %>
           <div class="columns small-12 medium-4 large-4 text-center acciones">
             <% if maintenance_history.status == 'Pendiente' %>
-              <%= link_to review_maintenance_history_path(maintenance_history), class: "floating-action button success" do %>
+              <%= link_to review_car_maintenance_history_path(@car_selected, maintenance_history), class: "floating-action button success" do %>
                 <i class="material-icons">assignment_turned_in</i>
               <% end %>
             <% end %>
-            <%= link_to maintenance_history_path(maintenance_history), class: "floating-action button primary" do %>
+            <%= link_to car_maintenance_history_path(@car_selected, maintenance_history), class: "floating-action button primary" do %>
               <i class="material-icons">search</i>
             <% end %>
-            <%= link_to edit_maintenance_history_path(maintenance_history), class: "floating-action button secondary" do %>
+            <%= link_to edit_car_maintenance_history_path(@car_selected, maintenance_history), class: "floating-action button secondary" do %>
               <i class="material-icons">edit</i>
             <% end %>
-            <%= link_to maintenance_history, class: "floating-action button alert", method: :delete, data: { confirm: '¿Está seguro?' } do %>
+            <%= link_to car_maintenance_history_path(@car_selected, maintenance_history), class: "floating-action button alert", method: :delete, data: { confirm: '¿Está seguro?' } do %>
               <i class="material-icons">delete</i>
             <% end %>
           </div>
@@ -59,7 +59,7 @@
       </div>
     <% end %>
   </div>
-  <%= link_to new_maintenance_history_path, class: "floating-action button primary main show-for-medium" do %>
+  <%= link_to new_car_maintenance_history_path(@car_selected), class: "floating-action button primary main show-for-medium" do %>
     <i class="material-icons">add</i>
   <% end %>
 </div>

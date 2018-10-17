@@ -5,8 +5,5 @@
     <h1 class="text-headline">Revisión de <%= @maintenance_history.maintenance_type %></h1>
   <% end %>
   <%= render 'form_gas', maintenance_history: @maintenance_history %>
-  <% if params[:id] != '0' %>
-    <%= link_to 'Detalles', @maintenance_history, class: "hollow button general" %>
-  <% end %>
-  <%= link_to 'Cancelar', maintenance_histories_path, class: "hollow button general" %>
+  <%= link_to 'Cancelar', car_maintenance_histories_path(@car_selected), class: "hollow button general" %>
 </div>

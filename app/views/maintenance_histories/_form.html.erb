@@ -1,4 +1,9 @@
-<%= form_with(model: maintenance_history, local: true, html: { autocomplete: "off" }) do |form| %>
+<% if ['new', 'create'].include?(params[:action]) %>
+  <% form_route = car_maintenance_histories_path(@car_selected) %>
+<% else %>
+  <% form_route = car_maintenance_history_path(@car_selected, @maintenance_history) %>
+<% end %>
+<%= form_with(url: form_route, model: maintenance_history, local: true, html: { autocomplete: "off" }) do |form| %>
   <% if maintenance_history.errors.any? %>
     <div class="row">
       <div class="columns">
@@ -78,7 +83,7 @@
       $('#maintenance_history_maintenance_type').autoComplete({
         source: function(term, response){
           try { xhr.abort(); } catch(e){}
-          $.getJSON('<%= types_maintenance_histories_path %>', { q: term }, function(data){ response(data); });
+          $.getJSON('<%= types_car_maintenance_histories_path(@car_selected) %>', { q: term }, function(data){ response(data); });
         }
       });
     });
