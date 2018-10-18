@@ -68,3 +68,19 @@ table.button.google table td {
 .wrapper.secondary {
   background: #f3f3f3;
 }
+.remaining {
+  font-weight: bold;
+  text-align: center;
+}
+.alert {
+  background-color: $alert-color;
+  color: $white;
+}
+
+.warning {
+  background-color: $warning-color;
+}
+
+.success {
+  background-color: $success-color;
+}

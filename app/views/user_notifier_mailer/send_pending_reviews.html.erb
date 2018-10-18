@@ -42,12 +42,12 @@
                             <% @cars.each do |car| %>
                               <table>
                                 <thead>
-                                  <tr><th>Auto: <%= car.plate %></th></tr>
+                                  <tr><th><h3><%= car.plate %> | <small><%= link_to car.current_km_estimated.round, update_current_km_car_url(car) %></small></h3></th></tr>
                                 </thead>
                                 <tbody>
                                   <tr><td><table>
                                         <thead>
-                                          <tr><th>Estado</th>
+                                          <tr><th>Días</th>
                                             <th>Tipo</th>
                                             <th>KM Estimado</th>
                                             <th>Fecha agendada</th>
@@ -55,11 +55,11 @@
                                         </thead>
                                         <tbody>
                                           <% car.maintenance_histories.where("status = 'Pendiente'").order("status DESC, scheduled_date ASC").each do |maintenance_history| %>
-                                          <tr><td><%= maintenance_history.status %></td>
+                                          <tr><td class="remaining <%= maintenance_history.time_remaining_class %>"><%= maintenance_history.time_remaining > 0 ? maintenance_history.time_remaining : 0 %></td>
                                             <td><%= maintenance_history.maintenance_type %></td>
-                                            <td><%= maintenance_history.estimated_km %></td>
+                                            <td><%= maintenance_history.estimated_km.round %></td>
                                             <td><%= maintenance_history.scheduled_date.strftime(DATE_FORMAT) %></td>
-                                            <td><%= link_to "Detalles", car_maintenance_history_url(car, maintenance_history) %>
+                                            <td><%= link_to "Ver", car_maintenance_history_url(car, maintenance_history) %>
                                             </td></tr>
                                           <% end %>
                                         </tbody>

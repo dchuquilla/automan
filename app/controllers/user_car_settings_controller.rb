@@ -43,7 +43,7 @@ class UserCarSettingsController < ApplicationController
   def update
     respond_to do |format|
       if @user_car_setting.update(user_car_setting_params)
-        format.html { redirect_to @maintenance_history, notice: 'Configuración actualizada.' }
+        format.html { redirect_to car_maintenance_history_path(@car_selected, @maintenance_history), notice: 'Configuración actualizada.' }
         format.json { render :show, status: :ok, location: @user_car_setting }
       else
         format.html { render :edit }
