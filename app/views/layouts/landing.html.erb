@@ -10,231 +10,229 @@
   </head>
 
   <body>
-    <% cache "landing_page" do %>
-
-      <!--  Start Hero Section  -->
-      <section class="hero">
-        <header>
-          <div class="row">
-            
-
-            <nav class="top-bar" data-topbar role="navigation">
-              
-              <!--    Start Logo    -->
-              <ul class="title-area">
-                <li class="name">
-                  <a href="#" class="logo">
-                    <h1>Automan<span class="tld">.com</span></h1>
-                    
-                  </a>
-                </li>
-                  <span class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></span>
-                </li>
-              </ul>  
-              <!--    End Logo    -->
-
-              <!--    Start Navigation Menu    -->
-              <section class="top-bar-section" id="mean_nav">
-                <ul class="right">
-                  <li><a href="#services">Servicos</a></li>
-                  <li><a href="#testimonials">Testimonios</a></li>
-                  <li><a href="#Download">Acceder</a></li>
-                  <li><a href="#connect">Contactenos</a></li>
-                </ul>
-              </section>
-              <!--    End Navigation Menu    -->
-
-            </nav>
-          </div>
-        </header>
-
-        <!--    Start Hero Caption    -->
-        <section class="caption">
-          <div class="row">
-            <h1 class="mean_cap">Automan</hA>
-            <h2 class="sub_cap">Mantenimiento vehicular.</h2>
-            <a href="#" class="btn_details"><span>Mas detalles</span> <%= image_tag 'landing/btn_arrow.png', class: "arrow" %></a>
-          </div>
-        </section>
-        <!--    End Hero Caption    -->
-
-      </section>
-      <!--  End Hero Section  -->
-
-
-
-      <!--  Start Services Section  -->
-      <section class="services" id="services">     
-
-        <!--    Start Services Titles    -->
-        <div class="row">        
-          <h1 class="mean_title">Bienvenido a Automan</h1>
-          <h2 class="sub_title">Servicio de mantenimiento vehicular.</h2> 
-        </div>
-        <!--    End Services Titles    -->
-
-        <!--    Start Services List    -->
-        <div class="row services_list">
-          <div class="small-12 medium-3 large-3 columns">
-            <%= image_tag "landing/icon2.png", class: "serv_icon" %>
-            <h2 class="title">Planeamiento</h2>
-            <p>Esta plataforma fue creada para proporcionarle ayuda en el manejo de su presupuesto, al facilitar la gestión de los mantenimientos de su vehículo, usted recibirá notificaciones periodicas de los eventos pendientes para su pronta revisión.</p>
-          </div>
-
-          <div class="small-12 medium-3 large-3 columns">
-            <%= image_tag "landing/icon1.png", class: "serv_icon" %>
-            <h2 class="title">Mantenimientos programados</h2>
-            <p>Al realizar los mantenimientos de forma oportuna, la vida útli de su automovil se verá alargada y su inversión estará protegida. Si no tiene conocimiento de cuales son los principales puntos a revisar, no se preocupe, la plataforma genera una lista de revisiones con la estimación de recorrido y tiempo para su oportuna acción.</p>
-          </div>
-
-          <div class="small-12 medium-3 large-3 columns">
-            <%= image_tag "landing/icon3.png", class: "serv_icon" %>
-            <h2 class="title">Mantenimientos personalizados</h2>
-            <p>También puede crear los mantenimientos que considere necesarios, esta plataforma no esta limitada a un solo taller proveedor, usted tiene la libertad de asistir al taller de su elección.</p>
-          </div>
-
-          <div class="small-12 medium-3 large-3 columns">
-            <%= image_tag "landing/icon4.png", class: "serv_icon" %>
-            <h2 class="title">Comunidad en línea</h2>
-            <p>Cuanta más información genere en este sistema, más ayuda obtendrá de ella, no olvide mantener actualizado el reccorrido de su vehículo de forma diaria para que las notificaciones sean más exactas, recibirá notificacione en su correo electrónico, si no las encuentra revise su bandeja de spam e informe que conoce al remitiente. Para solicitar información adicional, escríbanos un correo electrónico a la cuenta <a href="mailto:info@autopman.com">info@autopman.com</a></p>
-          </div>
-        </div>
-        <!--    End Services List    -->
-
-        <!--    Start Button    -->
-        <div class="btn_holder">
-          <a href="#Download" class="btn_fancy">
-            <div class="solid_layer"></div>
-            <div class="border_layer"></div>
-            <div class="text_layer">Acceder</div>
-          </a>
-        </div>
-        <!--    End Button    -->
-
-      </section>
-      <!--  End Services Section  -->
-
-
-
-      <!--  Start Quote Section  -->
-      <section class="quote">
-          <blockquote>
-            <p>Si todo parece bajo control, es que no vas suficientemente rápido. </p>
-            <hr/>
-            <span class="author"><strong>Gilles Villeneuve</strong>, ​piloto del Grand Prix.</span>
-          </blockquote>
-      </section>
-      <!--  End Quote Section  -->
-
-
-
-      <!--  Start Testimonials Section  -->
-      <section class="testimonials" id="testimonials">
-        <div class="row">
-          <div class="slider_container">
-            <div id="carousel">
-              
-              <div class="tesimonial">
-                <%= image_tag "landing/mashable.jpg" %>
-                <span class="name">21 de agosto de 2018</span>
-                <p>Se registran 2000 vehículos en el sistema</p>
-              </div>
-
-              <div class="tesimonial">
-                <%= image_tag "landing/mashable.jpg" %>
-                <span class="name">15 de julio de 2018</span>
-                <p>Plataforma liberada al público.</p>
-              </div>
-              
-              <div class="tesimonial">
-                <%= image_tag "landing/mashable.jpg" %>
-                <span class="name">21 de agosto de 2018</span>
-                <p>Se registran 2000 vehículos en el sistema</p>
-              </div>
-
-              <div class="tesimonial">
-                <%= image_tag "landing/mashable.jpg" %>
-                <span class="name">15 de julio de 2018</span>
-                <p>Plataforma liberada al público.</p>
-              </div>
-
-            </div>          
-          </div>
-
-          <!--    Start Testimonials Pagination    -->
-          <nav class="pagination">
-            <ul>
-              <li><a href="#">1</a></li>
-              <li><a href="#" class="selected">2</a></li>
-              <li><a href="#">3</a></li>
-            </ul>
-          </nav>
-          <!--    End Testimonials Pagination    -->
-
-        </div>
-      </section>
-      <!--  End Testimonials Section  -->
-
-
-      <%= yield %> <!-- modelo donde se unifica el modelo del controladr y la vista -->
-
-
-      <!--  Start Footer Section  -->
-      <footer>
+    <!--  Start Hero Section  -->
+    <section class="hero">
+      <header>
         <div class="row">
           
-          <!--    Start Copyrights    -->
-          <div class="small-12 medium-4 large-4 columns">
-            <div class="copyrights">
-              <a class="logo" href="#">
-                <h1>automan<span class="tld">.com</span></h1>
-              </a>
-              <p>Copyright © 2018.</p>
-            </div>
-          </div>
-          <!--    End Copyrights    -->
 
+          <nav class="top-bar" data-topbar role="navigation">
+            
+            <!--    Start Logo    -->
+            <ul class="title-area">
+              <li class="name">
+                <a href="#" class="logo">
+                  <h1>Automan<span class="tld">.com</span></h1>
+                  
+                </a>
+              </li>
+                <span class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></span>
+              </li>
+            </ul>  
+            <!--    End Logo    -->
 
-          <div class="small-12 medium-8 large-8 columns">
-            <div class="contact_details right">
-              <nav class="social">
-                <ul class="no-bullet">
-                  <li><a href="http://facebook.com/pixelhint" target="_blank">Facebook</a></li>
-                  <li><a href="http://instagram.com/pixelhint" target="_blank">Instagram</a></li>
-                  <li><a href="http://twitter.com/pixelhint" target="_blank">Twitter</a></li>
-                  <li><a href="http://plus.google.com/+Pixelhint" target="_blank">Google+</a></li>
-                </ul>
-              </nav>
+            <!--    Start Navigation Menu    -->
+            <section class="top-bar-section" id="mean_nav">
+              <ul class="right">
+                <li><a href="#services">Servicos</a></li>
+                <li><a href="#testimonials">Testimonios</a></li>
+                <li><a href="#Download">Acceder</a></li>
+                <li><a href="#connect">Contactenos</a></li>
+              </ul>
+            </section>
+            <!--    End Navigation Menu    -->
 
-              <div class="contact">
-                <div class="details">
-                  <p>contact@pixelhint.com</p>
-                  <p>+1.323 596 5770</p>
-                </div>
-
-                <p class="adress">550 Hershell Hollow Road
-                Johnson City, TN 37615</p>
-              </div>
-            </div>
-          </div>
-
+          </nav>
         </div>
-      </footer>
-      <!--  End Footer Section  -->
+      </header>
 
-      <!--    Start Back To Top    -->
-      <a href="#" class="btn_fancy" id="back_top">
-        <div class="solid_layer"></div>
-        <div class="border_layer"></div>
-        <div class="text_layer"><%= image_tag "landing/top_arrow.png", alt: "Back to top", class: "top_arrow" %></div>
-      </a>
-      <!--    End Back To Top    -->
+      <!--    Start Hero Caption    -->
+      <section class="caption">
+        <div class="row">
+          <h1 class="mean_cap">Automan</hA>
+          <h2 class="sub_cap">Mantenimiento vehicular.</h2>
+          <a href="#" class="btn_details"><span>Mas detalles</span> <%= image_tag 'landing/btn_arrow.png', class: "arrow" %></a>
+        </div>
+      </section>
+      <!--    End Hero Caption    -->
 
-      
+    </section>
+    <!--  End Hero Section  -->
 
-      <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-      <%= javascript_include_tag 'landing', 'data-turbolinks-track': 'reload' %>
 
-    <% end %>
+
+    <!--  Start Services Section  -->
+    <section class="services" id="services">     
+
+      <!--    Start Services Titles    -->
+      <div class="row">        
+        <h1 class="mean_title">Bienvenido a Automan</h1>
+        <h2 class="sub_title">Servicio de mantenimiento vehicular.</h2> 
+      </div>
+      <!--    End Services Titles    -->
+
+      <!--    Start Services List    -->
+      <div class="row services_list">
+        <div class="small-12 medium-3 large-3 columns">
+          <%= image_tag "landing/icon2.png", class: "serv_icon" %>
+          <h2 class="title">Planeamiento</h2>
+          <p>Esta plataforma fue creada para proporcionarle ayuda en el manejo de su presupuesto, al facilitar la gestión de los mantenimientos de su vehículo, usted recibirá notificaciones periodicas de los eventos pendientes para su pronta revisión.</p>
+        </div>
+
+        <div class="small-12 medium-3 large-3 columns">
+          <%= image_tag "landing/icon1.png", class: "serv_icon" %>
+          <h2 class="title">Mantenimientos programados</h2>
+          <p>Al realizar los mantenimientos de forma oportuna, la vida útli de su automovil se verá alargada y su inversión estará protegida. Si no tiene conocimiento de cuales son los principales puntos a revisar, no se preocupe, la plataforma genera una lista de revisiones con la estimación de recorrido y tiempo para su oportuna acción.</p>
+        </div>
+
+        <div class="small-12 medium-3 large-3 columns">
+          <%= image_tag "landing/icon3.png", class: "serv_icon" %>
+          <h2 class="title">Mantenimientos personalizados</h2>
+          <p>También puede crear los mantenimientos que considere necesarios, esta plataforma no esta limitada a un solo taller proveedor, usted tiene la libertad de asistir al taller de su elección.</p>
+        </div>
+
+        <div class="small-12 medium-3 large-3 columns">
+          <%= image_tag "landing/icon4.png", class: "serv_icon" %>
+          <h2 class="title">Comunidad en línea</h2>
+          <p>Cuanta más información genere en este sistema, más ayuda obtendrá de ella, no olvide mantener actualizado el reccorrido de su vehículo de forma diaria para que las notificaciones sean más exactas, recibirá notificacione en su correo electrónico, si no las encuentra revise su bandeja de spam e informe que conoce al remitiente. Para solicitar información adicional, escríbanos un correo electrónico a la cuenta <a href="mailto:info@autopman.com">info@autopman.com</a></p>
+        </div>
+      </div>
+      <!--    End Services List    -->
+
+      <!--    Start Button    -->
+      <div class="btn_holder">
+        <a href="#Download" class="btn_fancy">
+          <div class="solid_layer"></div>
+          <div class="border_layer"></div>
+          <div class="text_layer">Acceder</div>
+        </a>
+      </div>
+      <!--    End Button    -->
+
+    </section>
+    <!--  End Services Section  -->
+
+
+
+    <!--  Start Quote Section  -->
+    <section class="quote">
+        <blockquote>
+          <p>Si todo parece bajo control, es que no vas suficientemente rápido. </p>
+          <hr/>
+          <span class="author"><strong>Gilles Villeneuve</strong>, ​piloto del Grand Prix.</span>
+        </blockquote>
+    </section>
+    <!--  End Quote Section  -->
+
+
+
+    <!--  Start Testimonials Section  -->
+    <section class="testimonials" id="testimonials">
+      <div class="row">
+        <div class="slider_container">
+          <div id="carousel">
+            
+            <div class="tesimonial">
+              <%= image_tag "landing/mashable.jpg" %>
+              <span class="name">21 de agosto de 2018</span>
+              <p>Se registran 2000 vehículos en el sistema</p>
+            </div>
+
+            <div class="tesimonial">
+              <%= image_tag "landing/mashable.jpg" %>
+              <span class="name">15 de julio de 2018</span>
+              <p>Plataforma liberada al público.</p>
+            </div>
+            
+            <div class="tesimonial">
+              <%= image_tag "landing/mashable.jpg" %>
+              <span class="name">21 de agosto de 2018</span>
+              <p>Se registran 2000 vehículos en el sistema</p>
+            </div>
+
+            <div class="tesimonial">
+              <%= image_tag "landing/mashable.jpg" %>
+              <span class="name">15 de julio de 2018</span>
+              <p>Plataforma liberada al público.</p>
+            </div>
+
+          </div>          
+        </div>
+
+        <!--    Start Testimonials Pagination    -->
+        <nav class="pagination">
+          <ul>
+            <li><a href="#">1</a></li>
+            <li><a href="#" class="selected">2</a></li>
+            <li><a href="#">3</a></li>
+          </ul>
+        </nav>
+        <!--    End Testimonials Pagination    -->
+
+      </div>
+    </section>
+    <!--  End Testimonials Section  -->
+
+
+    <%= yield %> <!-- modelo donde se unifica el modelo del controladr y la vista -->
+
+
+    <!--  Start Footer Section  -->
+    <footer>
+      <div class="row">
+        
+        <!--    Start Copyrights    -->
+        <div class="small-12 medium-4 large-4 columns">
+          <div class="copyrights">
+            <a class="logo" href="#">
+              <h1>automan<span class="tld">.com</span></h1>
+            </a>
+            <p>Copyright © 2018.</p>
+          </div>
+        </div>
+        <!--    End Copyrights    -->
+
+
+        <div class="small-12 medium-8 large-8 columns">
+          <div class="contact_details right">
+            <nav class="social">
+              <ul class="no-bullet">
+                <li><a href="http://facebook.com/pixelhint" target="_blank">Facebook</a></li>
+                <li><a href="http://instagram.com/pixelhint" target="_blank">Instagram</a></li>
+                <li><a href="http://twitter.com/pixelhint" target="_blank">Twitter</a></li>
+                <li><a href="http://plus.google.com/+Pixelhint" target="_blank">Google+</a></li>
+              </ul>
+            </nav>
+
+            <div class="contact">
+              <div class="details">
+                <p>contact@pixelhint.com</p>
+                <p>+1.323 596 5770</p>
+              </div>
+
+              <p class="adress">550 Hershell Hollow Road
+              Johnson City, TN 37615</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+    <!--  End Footer Section  -->
+
+    <!--    Start Back To Top    -->
+    <a href="#" class="btn_fancy" id="back_top">
+      <div class="solid_layer"></div>
+      <div class="border_layer"></div>
+      <div class="text_layer"><%= image_tag "landing/top_arrow.png", alt: "Back to top", class: "top_arrow" %></div>
+    </a>
+    <!--    End Back To Top    -->
+
+    
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <%= javascript_include_tag 'landing', 'data-turbolinks-track': 'reload' %>
+
+
   </body>
 </html>
