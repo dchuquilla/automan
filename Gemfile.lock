@@ -114,6 +114,12 @@ GEM
       foundation_emails (~> 2)
       nokogiri
     io-like (0.3.0)
+    iron_cache (1.4.2)
+      iron_core (>= 0.5.1)
+    iron_cache_rails (0.1.5)
+      iron_cache (>= 1)
+    iron_core (1.0.12)
+      rest (>= 3.0.8)
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
@@ -139,6 +145,8 @@ GEM
     msgpack (1.2.4-x64-mingw32)
     msgpack (1.2.4-x86-mingw32)
     multi_json (1.13.1)
+    net-http-persistent (2.9.4)
+    netrc (0.11.0)
     nio4r (2.3.1)
     nio4r (2.3.1-java)
     nokogiri (1.8.4)
@@ -196,6 +204,9 @@ GEM
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
+    rest (3.0.8)
+      net-http-persistent (>= 2.9.1, < 3)
+      netrc
     ruby_dep (1.5.0)
     rubyzip (1.2.2)
     sass (3.4.25)
@@ -269,6 +280,7 @@ DEPENDENCIES
   devise
   foundation-rails
   inky-rb
+  iron_cache_rails
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
   mini_magick

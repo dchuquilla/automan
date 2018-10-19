@@ -58,6 +58,8 @@ Rails.application.configure do
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
+  config.cache_store = :iron_cache, {project_id: ENV['IRON_CACHE_PROJECT_ID'], token: ENV['IRON_CACHE_TOKEN']}
+  config.action_controller.perform_caching = true
 
   # Use a real queuing backend for Active Job (and separate queues per environment)
   # config.active_job.queue_adapter     = :resque
