@@ -11,13 +11,19 @@
         <th>KM</th>
         <th>Galones</th>
         <th>Costo</th>
+        <th></th>
       </tr>
         <% @maintenance_histories.each do |maintenance_history| %>
           <tr>
-            <td><%= maintenance_history.review_date.strftime(DATE_FORMAT) %></td>
+            <td><%= maintenance_history.review_date.strftime(DATE_FORMAT_FANCY) %></td>
             <td><%= maintenance_history.review_km %></td>
             <td><%= maintenance_history.gallons %></td>
-            <td>$ <%= maintenance_history.cost %></td>
+            <td>$<%= maintenance_history.cost %></td>
+            <td>
+              <%= link_to edit_car_maintenance_history_path(@car_selected, maintenance_history), class: "floating-action button secondary" do %>
+                <i class="material-icons">edit</i>
+              <% end %>
+            </td>
           </tr>
         <% end %>
     </table>

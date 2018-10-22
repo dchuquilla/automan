@@ -72,6 +72,9 @@ table.button.google table td {
   font-weight: bold;
   text-align: center;
 }
+.text-center {
+  text-align: center;
+}
 .alert {
   background-color: $alert-color;
   color: $white;
@@ -83,4 +86,13 @@ table.button.google table td {
 
 .success {
   background-color: $success-color;
+}
+
+.actions.button {
+  background: #1daced;
+  text-align: center;
+  text-transform: uppercase;
+  a {
+    color: #fff;
+  }
 }

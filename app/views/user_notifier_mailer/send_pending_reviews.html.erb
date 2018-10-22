@@ -7,12 +7,12 @@
                   <tr><th class="small-6 large-6 columns first">
                       <table>
                         <tr><th>
-                            <%= image_tag('logo.png') %></th></tr>
+                            <%= image_tag('https://automan-ec.herokuapp.com/assets/logo-5f581980bbd1102b5c7e4285492c053cff7e81cd1a6ae0cc8a32dd67926775f7.png') %></th></tr>
                       </table></th>
                     <th class="small-6 large-6 columns last">
                       <table>
                         <tr><th>
-                            <p class="text-right"></p></th></tr>
+                            <p class="text-right">Mantenimientos Pendtienes</p></th></tr>
                       </table></th></tr>
                 </tbody>
               </table>
@@ -35,40 +35,58 @@
             <tr><th class="small-12 large-12 columns first last">
                 <table>
                   <tr><th>
-                      <h1 class="text-headline">Muy buen día <%= @user.owner.name %><%= @user.owner.last_name %>!</h1>
+                      <h2 class="text-headline">Muy buen día <%= @user.owner.name %> <%= @user.owner.last_name %>!</h2>
                       <p class="lead">Tiene mantenimientos pendientes que requieren de su atención.</p>
                       <table class="callout">
-                        <tr><th class="callout-inner primary">
-                            <% @cars.each do |car| %>
-                              <table>
-                                <thead>
-                                  <tr><th><h3><%= car.plate %> | <small><%= link_to car.current_km_estimated.round, update_current_km_car_url(car) %></small></h3></th></tr>
-                                </thead>
-                                <tbody>
-                                  <tr><td><table>
-                                        <thead>
-                                          <tr><th>Días</th>
-                                            <th>Tipo</th>
-                                            <th>KM Estimado</th>
-                                            <th>Fecha agendada</th>
-                                            <th></th></tr>
-                                        </thead>
-                                        <tbody>
-                                          <% car.maintenance_histories.where("status = 'Pendiente'").order("status DESC, scheduled_date ASC").each do |maintenance_history| %>
-                                          <tr><td class="remaining <%= maintenance_history.time_remaining_class %>"><%= maintenance_history.time_remaining > 0 ? maintenance_history.time_remaining : 0 %></td>
-                                            <td><%= maintenance_history.maintenance_type %></td>
-                                            <td><%= maintenance_history.estimated_km.round %></td>
-                                            <td><%= maintenance_history.scheduled_date.strftime(DATE_FORMAT) %></td>
-                                            <td><%= link_to "Ver", car_maintenance_history_url(car, maintenance_history) %>
-                                            </td></tr>
-                                          <% end %>
-                                        </tbody>
-                                      </table>
-                                    </td></tr>
-                                </tbody>
-                              </table>
-                            <% end %></th>
+                        <% @cars.each do |car| %>
+                          <tr><th class="callout-inner primary">
+                            <table>
+                              <thead>
+                                <tr><th>
+                                  <table class="row">
+                                    <tr>
+                                      <th class="small-3 large-3 columns first">
+                                        <% if car.images.present? %>
+                                          <% avatar = car.images.first %>
+                                          <%= image_tag avatar.variant(resize: "300x300") %>
+                                        <% else %>
+                                          <%= image_tag('car_default.png') %>
+                                        <% end %>
+                                      </th>
+                                      <th class="small-1 large-1 columns">
+                                      <th class="small-8 large-8 columns last">
+                                        <h3><%= car.plate %></h3>
+                                        <p>Kilometraje Actual: <%= link_to car.current_km_estimated.round, update_current_km_car_url(car) %></p>
+                                        <p>Kilometraje Semanal: <%= car.week_km.round %></p></th></tr>
+                                      </th>
+                                    </tr>
+                                  </table>
+                              </thead>
+                              <tbody>
+                                <tr><td><table>
+                                      <thead>
+                                        <tr>
+                                          <th>Actividad</th>
+                                          <th class="text-center">KM Estimado</th>
+                                          <th class="text-center">Fecha agendada</th>
+                                          <th></th></tr>
+                                      </thead>
+                                      <tbody>
+                                        <% car.maintenance_histories.where("status = 'Pendiente'").order("status DESC, scheduled_date ASC").each do |maintenance_history| %>
+                                        <tr>
+                                          <td><%= maintenance_history.maintenance_type %></td>
+                                          <td class="remaining <%= maintenance_history.time_remaining_class %>"><%= maintenance_history.estimated_km.round %></td>
+                                          <td class="text-center"><%= maintenance_history.scheduled_date.strftime(DATE_FORMAT) %></td>
+                                          <td class="actions button"><%= link_to "Ver", car_maintenance_history_url(car, maintenance_history) %>
+                                          </td></tr>
+                                        <% end %>
+                                      </tbody>
+                                    </table>
+                                  </td></tr>
+                              </tbody>
+                            </table>
                           <th class="expander"></th></tr>
+                        <% end %></th>
                       </table>
                       <p>Acuda oportunamente a los mantenimientos para mantener su inversión protegida.</p></th>
                     <th class="expander"></th></tr>
