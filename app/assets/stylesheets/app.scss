@@ -68,6 +68,16 @@
     right: 10px;
     background: #fff;
     padding: 2px;
+    &.alert {
+      background-color: $red-50 !important;
+      color: $red-900  !important;
+      border: 1px solid $red-200  !important;
+    }
+    &.warning {
+      background-color: $yellow-50 !important;
+      color: $yellow-900  !important;
+      border: 1px solid $yellow-200  !important;
+    }
   }
   .nombre {
     a {

@@ -1,62 +1,133 @@
 <div class="row">
   <div class="columns">
     <h1 class="text-headline">Mantenimientos</h1>
-    <br>
-    <% @maintenance_histories.each do |maintenance_history| %>
-      <div class="mantenimiento callout <%= maintenance_history.status == 'Completado' ? "primary" : "success"%>">
-        <div class="estado">
-          <%= maintenance_history.status %>
+    <% if params[:filtro] == 'Completado' %>
+      <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+      <br>
+      <% @maintenance_histories.all.group_by{ |m| m.review_date.beginning_of_month }.each do |maintenance_history_month| %>
+        <div class="row">
+          <div class="small-6 medium-9 large-9 columns">
+            <p class="text-title"><%= l(maintenance_history_month[0], format: "%B").titleize %></p>
+          </div>
+          <div class="small-6 medium-3 large-3 columns text-right">
+            <strong>$ <%= maintenance_history_month[1].map(&:cost).inject(0){|sum,x| sum + x } %></strong>
+          </div>
         </div>
-        <div class="row collapse align-middle">
-          <div class="columns small-2 medium-2 large-2 fecha">
-            <small>
+        <% maintenance_history_month[1].each do |maintenance_history| %>
+          <div class="mantenimiento callout <%= maintenance_history.status == 'Completado' ? "primary" : "success"%>">
+            <div class="estado">
+              <%= maintenance_history.status %>
+            </div>
+            <div class="row collapse align-middle">
+              <div class="columns small-2 medium-2 large-2 fecha">
+                <small>
+                  <% if maintenance_history.status == 'Completado' %>
+                    <% if maintenance_history.review_date.present? %>
+                      <%= maintenance_history.review_date.strftime(DATE_FORMAT_FANCY) %><br class="show-for-small-only">
+                      <%= maintenance_history.review_date.strftime("%Y") %>
+                    <% end %>
+                  <% else %>
+                    <% if maintenance_history.scheduled_date.present? %>
+                      <%= maintenance_history.scheduled_date.strftime(DATE_FORMAT_FANCY) %><br class="show-for-small-only">
+                      <%= maintenance_history.scheduled_date.strftime("%Y") %>
+                    <% end %>
+                  <% end %>
+                </small>
+              </div>
               <% if maintenance_history.status == 'Completado' %>
-                <% if maintenance_history.review_date.present? %>
-                  <%= maintenance_history.review_date.strftime(DATE_FORMAT_FANCY) %><br class="show-for-small-only">
-                  <%= maintenance_history.review_date.strftime("%Y") %>
-                <% end %>
-              <% else %>
-                <% if maintenance_history.scheduled_date.present? %>
-                  <%= maintenance_history.scheduled_date.strftime(DATE_FORMAT_FANCY) %><br class="show-for-small-only">
-                  <%= maintenance_history.scheduled_date.strftime("%Y") %>
-                <% end %>
+                <div class="columns small-7 medium-4 large-5 nombre">
+                  <%= link_to car_maintenance_history_path(@car_selected, maintenance_history), class: "flat button primary" do %>
+                    <%= maintenance_history.maintenance_type %>
+                  <% end %>
+                </div>
+                <div class="columns small-3 medium-2 large-1 nombre">
+                  $ <%= maintenance_history.cost %>
+                </div>
+              <% else %> 
+                <div class="columns small-10 medium-6 large-6 nombre">
+                  <%= link_to car_maintenance_history_path(@car_selected, maintenance_history), class: "flat button primary" do %>
+                    <%= maintenance_history.maintenance_type %>
+                  <% end %>
+                </div>
               <% end %>
-            </small>
+              <div class="columns small-12 medium-4 large-4 text-center acciones">
+                <% if maintenance_history.status == 'Pendiente' %>
+                  <%= link_to review_car_maintenance_history_path(@car_selected, maintenance_history), class: "floating-action button success" do %>
+                    <i class="material-icons">assignment_turned_in</i>
+                  <% end %>
+                <% end %>
+                <%= link_to car_maintenance_history_path(@car_selected, maintenance_history), class: "floating-action button primary" do %>
+                  <i class="material-icons">search</i>
+                <% end %>
+                <%= link_to edit_car_maintenance_history_path(@car_selected, maintenance_history), class: "floating-action button secondary" do %>
+                  <i class="material-icons">edit</i>
+                <% end %>
+                <%= link_to car_maintenance_history_path(@car_selected, maintenance_history), class: "floating-action button alert", method: :delete, data: { confirm: '¿Está seguro?' } do %>
+                  <i class="material-icons">delete</i>
+                <% end %>
+              </div>
+            </div>
           </div>
-          <% if maintenance_history.status == 'Completado' %>
-            <div class="columns small-7 medium-4 large-5 nombre">
-              <%= link_to car_maintenance_history_path(@car_selected, maintenance_history), class: "flat button primary" do %>
-                <%= maintenance_history.maintenance_type %>
+        <% end %>
+      <% end %>
+    <% else %>
+      <br>
+      <% @maintenance_histories.each do |maintenance_history| %>
+        <div class="mantenimiento callout <%= maintenance_history.status == 'Completado' ? "primary" : "success"%>">
+          <div class="estado <%= maintenance_history.time_remaining_class %>">
+            <%= maintenance_history.status %>
+          </div>
+          <div class="row collapse align-middle">
+            <div class="columns small-2 medium-2 large-2 fecha">
+              <small>
+                <% if maintenance_history.status == 'Completado' %>
+                  <% if maintenance_history.review_date.present? %>
+                    <%= maintenance_history.review_date.strftime(DATE_FORMAT_FANCY) %><br class="show-for-small-only">
+                    <%= maintenance_history.review_date.strftime("%Y") %>
+                  <% end %>
+                <% else %>
+                  <% if maintenance_history.scheduled_date.present? %>
+                    <%= maintenance_history.scheduled_date.strftime(DATE_FORMAT_FANCY) %><br class="show-for-small-only">
+                    <%= maintenance_history.scheduled_date.strftime("%Y") %>
+                  <% end %>
+                <% end %>
+              </small>
+            </div>
+            <% if maintenance_history.status == 'Completado' %>
+              <div class="columns small-7 medium-4 large-5 nombre">
+                <%= link_to car_maintenance_history_path(@car_selected, maintenance_history), class: "flat button primary" do %>
+                  <%= maintenance_history.maintenance_type %>
+                <% end %>
+              </div>
+              <div class="columns small-3 medium-2 large-1 nombre">
+                $ <%= maintenance_history.cost %>
+              </div>
+            <% else %> 
+              <div class="columns small-10 medium-6 large-6 nombre">
+                <%= link_to car_maintenance_history_path(@car_selected, maintenance_history), class: "flat button primary" do %>
+                  <%= maintenance_history.maintenance_type %>
+                <% end %>
+              </div>
+            <% end %>
+            <div class="columns small-12 medium-4 large-4 text-center acciones">
+              <% if maintenance_history.status == 'Pendiente' %>
+                <%= link_to review_car_maintenance_history_path(@car_selected, maintenance_history), class: "floating-action button success" do %>
+                  <i class="material-icons">assignment_turned_in</i>
+                <% end %>
+              <% end %>
+              <%= link_to car_maintenance_history_path(@car_selected, maintenance_history), class: "floating-action button primary" do %>
+                <i class="material-icons">search</i>
+              <% end %>
+              <%= link_to edit_car_maintenance_history_path(@car_selected, maintenance_history), class: "floating-action button secondary" do %>
+                <i class="material-icons">edit</i>
+              <% end %>
+              <%= link_to car_maintenance_history_path(@car_selected, maintenance_history), class: "floating-action button alert", method: :delete, data: { confirm: '¿Está seguro?' } do %>
+                <i class="material-icons">delete</i>
               <% end %>
             </div>
-            <div class="columns small-3 medium-2 large-1 nombre">
-              $ <%= maintenance_history.cost %>
-            </div>
-          <% else %> 
-            <div class="columns small-10 medium-6 large-6 nombre">
-              <%= link_to car_maintenance_history_path(@car_selected, maintenance_history), class: "flat button primary" do %>
-                <%= maintenance_history.maintenance_type %>
-              <% end %>
-            </div>
-          <% end %>
-          <div class="columns small-12 medium-4 large-4 text-center acciones">
-            <% if maintenance_history.status == 'Pendiente' %>
-              <%= link_to review_car_maintenance_history_path(@car_selected, maintenance_history), class: "floating-action button success" do %>
-                <i class="material-icons">assignment_turned_in</i>
-              <% end %>
-            <% end %>
-            <%= link_to car_maintenance_history_path(@car_selected, maintenance_history), class: "floating-action button primary" do %>
-              <i class="material-icons">search</i>
-            <% end %>
-            <%= link_to edit_car_maintenance_history_path(@car_selected, maintenance_history), class: "floating-action button secondary" do %>
-              <i class="material-icons">edit</i>
-            <% end %>
-            <%= link_to car_maintenance_history_path(@car_selected, maintenance_history), class: "floating-action button alert", method: :delete, data: { confirm: '¿Está seguro?' } do %>
-              <i class="material-icons">delete</i>
-            <% end %>
           </div>
         </div>
-      </div>
+      <% end %>
     <% end %>
   </div>
   <%= link_to new_car_maintenance_history_path(@car_selected), class: "floating-action button primary main show-for-medium" do %>
@@ -65,3 +136,36 @@
 </div>
 
 <%= render partial: 'shared/mobile_footer_links' %>
+<% if params[:filtro] == 'Completado' %>
+  <% content_for :late_javascripts do %>
+    <script>
+      window.onload = function () {
+
+      var chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        theme: "light2", // "light1", "light2", "dark1", "dark2"
+        title:{
+          text: "Costos mensuales"
+        },
+        axisY: {
+          title: "Dólares"
+        },
+        data: [{        
+          type: "column",  
+          showInLegend: true, 
+          legendMarkerColor: "grey",
+          legendText: "Costo mantenimientos mes",
+          dataPoints: [ 
+            <% @maintenance_histories.all.group_by{ |m| m.review_date.beginning_of_month }.each do |maintenance_history_month| %>
+              { y: <%= maintenance_history_month[1].map(&:cost).inject(0){|sum,x| sum + x } %>, label: "<%= l(maintenance_history_month[0], format: "%B").titleize %>" },
+            <% end %>     
+          ]
+        }]
+      });
+      chart.render();
+
+      }
+    </script>
+    <%= javascript_include_tag 'charts', 'data-turbolinks-track': 'reload' %>
+  <% end %>
+<% end %>

@@ -46,11 +46,9 @@
                       <p class="text-title"><%= @car_selected.plate.upcase %></p>
                       <ul class="menu vertical">
                         <li><%= link_to('Tablero de control', dashboard_car_path(@car_selected), class: "hollow button general") %></li>
+                        <li><%= link_to("Mantenimientos Pendientes", car_maintenance_histories_path(@car_selected), class: "hollow button general") %></li>
+                        <li><%= link_to("Mantenimientos completados", car_maintenance_histories_path(@car_selected, filtro: "Completado"), 'data-turbolinks': 'false', class: "hollow button general") %></li>
                         <li><%= link_to("Agendar mantenimiento", new_car_maintenance_history_path(@car_selected), class: "hollow button general") %></li>
-                        <li><%= link_to("Mantenimientos Pendientes", car_maintenance_histories_path(@car_selected, filtro: "Pendiente"), class: "hollow button general") %></li>
-                        <li><%= link_to("Mantenimientos Atrasados", car_maintenance_histories_path(@car_selected, filtro: "Atrasado"), class: "hollow button general") %></li>
-                        <li><%= link_to("Mantenimientos completados", car_maintenance_histories_path(@car_selected, filtro: "Completado"), class: "hollow button general") %></li>
-                        <li><%= link_to("Todos", car_maintenance_histories_path(@car_selected), class: "hollow button general") %></li>
                       </ul>
                     </li>
                   <% end %>
@@ -68,9 +66,16 @@
                 <span class="title-bar-title">Automan</span>
               </div>
               <ul class="menu align-right">
+                <% if cookies[:selected_car_id].present? %>
+                  <li>
+                    <%= link_to dashboard_car_path(@car_selected), class: "flat button primary" do %>
+                      <i class="material-icons">dashboard</i>Tablero
+                    <% end %>
+                  </li>
+                <% end %>
                 <li>
                   <%= link_to cars_path, class: "flat button primary" do %>
-                    <i class="material-icons">drive_eta</i>Mis autos
+                    <i class="material-icons">drive_eta</i>autos
                   <% end %>
                 </li>
               </ul>
