@@ -1,9 +1,22 @@
 <div class="row">
-  <div class="columns">
-    <h1 class="text-headline">
-      <%= @maintenance_history.maintenance_type %>
-    </h1>
-  </div>
+  <% if @maintenance_history.user_car_setting.km_estimated.nil? || @maintenance_history.user_car_setting.month_estimated.nil? %>
+    <div class="columns">
+      <h1 class="text-headline">
+        <%= @maintenance_history.maintenance_type %>
+      </h1>
+    </div>
+    <div class="small-2 medium-1 large-1 columns">
+      <%= link_to "#configuracion_pendiente", class: "floating-action button alert" do %>
+        <i class="material-icons">warning</i>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="columns">
+      <h1 class="text-headline">
+        <%= @maintenance_history.maintenance_type %>
+      </h1>
+    </div>
+  <% end %>
 </div>
 <div class="row details">
   <div class="columns large-6 small-12">
@@ -39,7 +52,7 @@
     <%= link_to 'Editar', edit_car_maintenance_history_path(@car_selected, @maintenance_history), class: "button" %>
     <%= link_to 'Ver Todos', car_maintenance_histories_path(@car_selected), class: "hollow button general" %>
   </div>
-  <div class="columns large-6 small-12">
+  <div class="columns large-6 small-12" id="configuracion_pendiente">
     <% if @maintenance_history.user_car_setting.km_estimated.nil? || @maintenance_history.user_car_setting.month_estimated.nil? %>
       <div class="row column">
         <h2 class="text-title alert">Configuración pendiente</h2>
