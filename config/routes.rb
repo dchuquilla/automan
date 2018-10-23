@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     member do
       get 'select'
       get 'dashboard'
+      get 'reports'
       get 'gas_consume'
       get 'update_current_km'
       get 'image_detach'

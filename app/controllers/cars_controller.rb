@@ -1,9 +1,9 @@
 class CarsController < ApplicationController
   before_action :store_user_location!, if: :storable_location?
   before_action :authenticate_user!
-  before_action :set_car, only: [:show, :select, :dashboard, :gas_consume, :edit, :update_current_km, :update, :destroy, :image_detach]
+  before_action :set_car, only: [:show, :select, :dashboard, :reports, :gas_consume, :edit, :update_current_km, :update, :destroy, :image_detach]
   before_action :clean_car_selection_cookie, only: [:index, :destroy]
-  before_action :set_car_selection_cookie, only: [:show, :select, :dashboard, :gas_consume]
+  before_action :set_car_selection_cookie, only: [:show, :select, :dashboard, :reports, :gas_consume]
 
   # GET /cars
   # GET /cars.json
@@ -41,10 +41,18 @@ class CarsController < ApplicationController
     redirect_to car_maintenance_histories_path(@car)
   end
 
-  # GET /cars/1
-  # GET /cars/1.json
+  # GET /cars/1/dashboard
+  # GET /cars/1/dashboard.json
   def dashboard
     set_car_with_cookies
+  end
+
+  # GET /cars/1/reports
+  # GET /cars/1/reports.json
+  def reports
+    set_car_with_cookies
+    @maintenance_histories = MaintenanceHistory.where("car_id = ? AND maintenance_type <> 'Carga de gasolina' AND status = 'Completado'", @car.id).order("review_date ASC")
+    @maintenance_histories_gas = MaintenanceHistory.where("car_id = ? AND maintenance_type = 'Carga de gasolina' AND status = 'Completado'", @car.id).order("review_date ASC")
   end
 
   # GET /cars/1

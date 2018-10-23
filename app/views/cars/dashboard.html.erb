@@ -18,13 +18,13 @@
           Km/Galón
         <% end %>
       </div>
+      <div class="columns">
+        <%= link_to reports_car_path(@car), 'data-turbolinks': 'false', class: "hallow button success" do %>
+          <i class="material-icons">bar_chart</i><br>
+          Reportes
+        <% end %>
+      </div>
       <% if Rails.env.development? %>
-        <div class="columns">
-          <%= link_to select_car_path(@car), class: "hallow button success" do %>
-            <i class="material-icons">bar_chart</i><br>
-            Reportes
-          <% end %>
-        </div>
         <div class="columns">
           <%= link_to select_car_path(@car), class: "hallow button success" do %>
             <i class="material-icons">date_range</i><br>

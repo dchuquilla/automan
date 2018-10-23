@@ -1,0 +1,130 @@
+<div class="row">
+  <div class="columns">
+    <h1 class="text-headline">Reportes</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="columns">
+    <div class="row small-up-1 medium-up-2 large-up-2 dashboard">
+      <div class="columns">
+        <div id="gas_consume" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+      </div>
+      <div class="columns">
+        <div id="cost_month" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :late_javascripts do %>
+  <script>
+    window.onload = function () {
+
+      var chart = new CanvasJS.Chart("gas_consume", {
+        animationEnabled: true,
+        theme: "light2",
+        title:{
+          text: "Kilometraje por galón"
+        },
+        axisX:{
+          valueFormatString: "DD MMM"
+        },
+        axisY: {
+          prefix: "$",
+          labelFormatter: addSymbols
+        },
+        toolTip: {
+          shared: true
+        },
+        legend: {
+          cursor: "pointer",
+          itemclick: toggleDataSeries
+        },
+        data: [
+        {
+          type: "column",
+          name: "Costo",
+          showInLegend: true,
+          xValueFormatString: "DD MMM",
+          yValueFormatString: "$##0.00",
+          dataPoints: [
+            <% @maintenance_histories_gas.each_with_index do |maintenance_history, index| %>
+              <% year      = (maintenance_history.review_date - 1.month).strftime('%Y') %>
+              <% month     = (maintenance_history.review_date - 1.month).strftime('%m') %>
+              <% day       = (maintenance_history.review_date - 1.month).strftime('%d') %>
+              { x: new Date(<%= year %>, <%= month %>, <%= day %>), y: <%= maintenance_history.cost %> },
+            <% end %>
+          ]
+        },
+        {
+          type: "line",
+          name: "Km/gal",
+          showInLegend: true,
+          yValueFormatString: "##0.00 Km",
+          dataPoints: [
+            <% @maintenance_histories_gas.each_with_index do |maintenance_history, index| %>
+              <% year      = (maintenance_history.review_date - 1.month).strftime('%Y') %>
+              <% month     = (maintenance_history.review_date - 1.month).strftime('%m') %>
+              <% day       = (maintenance_history.review_date - 1.month).strftime('%d') %>
+              <% if index == 0 %>
+                { x: new Date(<%= year %>, <%= month %>, <%= day %>), y: 0.00 },
+              <% else %>
+                <% prev_main = @maintenance_histories[index - 1] %>
+                <% distance  = maintenance_history.review_km - prev_main.review_km %>
+                <% km_gal     = distance / maintenance_history.gallons %>
+                { x: new Date(<%= year %>, <%= month %>, <%= day %>), y: <%= km_gal %> },
+              <% end %>
+            <% end %>
+          ]
+        }
+        ]
+      });
+      chart.render();
+
+      var chart2 = new CanvasJS.Chart("cost_month", {
+          animationEnabled: true,
+          theme: "light2", // "light1", "light2", "dark1", "dark2"
+          title:{
+            text: "Costos mensuales"
+          },
+          axisY: {
+            title: "Dólares"
+          },
+          data: [{        
+            type: "column",  
+            showInLegend: true, 
+            legendMarkerColor: "grey",
+            legendText: "Costo mantenimientos mes",
+            dataPoints: [ 
+              <% @maintenance_histories.all.group_by{ |m| m.review_date.beginning_of_month }.each do |maintenance_history_month| %>
+                { y: <%= maintenance_history_month[1].map(&:cost).inject(0){|sum,x| sum + x } %>, label: "<%= l(maintenance_history_month[0], format: "%B").titleize %>" },
+              <% end %>     
+            ]
+          }]
+        });
+        chart2.render();
+
+      function addSymbols(e) {
+        var suffixes = ["", "K", "M", "B"];
+        var order = Math.max(Math.floor(Math.log(e.value) / Math.log(1000)), 0);
+
+        if(order > suffixes.length - 1)                 
+          order = suffixes.length - 1;
+
+        var suffix = suffixes[order];      
+        return CanvasJS.formatNumber(e.value / Math.pow(1000, order)) + suffix;
+      }
+
+      function toggleDataSeries(e) {
+        if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+          e.dataSeries.visible = false;
+        } else {
+          e.dataSeries.visible = true;
+        }
+        e.chart.render();
+      }
+    }
+  </script>
+
+  <%= javascript_include_tag 'charts', 'data-turbolinks-track': 'reload' %>
+<% end %>

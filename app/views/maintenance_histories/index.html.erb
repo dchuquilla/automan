@@ -140,30 +140,28 @@
   <% content_for :late_javascripts do %>
     <script>
       window.onload = function () {
-
-      var chart = new CanvasJS.Chart("chartContainer", {
-        animationEnabled: true,
-        theme: "light2", // "light1", "light2", "dark1", "dark2"
-        title:{
-          text: "Costos mensuales"
-        },
-        axisY: {
-          title: "Dólares"
-        },
-        data: [{        
-          type: "column",  
-          showInLegend: true, 
-          legendMarkerColor: "grey",
-          legendText: "Costo mantenimientos mes",
-          dataPoints: [ 
-            <% @maintenance_histories.all.group_by{ |m| m.review_date.beginning_of_month }.each do |maintenance_history_month| %>
-              { y: <%= maintenance_history_month[1].map(&:cost).inject(0){|sum,x| sum + x } %>, label: "<%= l(maintenance_history_month[0], format: "%B").titleize %>" },
-            <% end %>     
-          ]
-        }]
-      });
-      chart.render();
-
+        var chart = new CanvasJS.Chart("chartContainer", {
+          animationEnabled: true,
+          theme: "light2", // "light1", "light2", "dark1", "dark2"
+          title:{
+            text: "Costos mensuales"
+          },
+          axisY: {
+            title: "Dólares"
+          },
+          data: [{        
+            type: "column",  
+            showInLegend: true, 
+            legendMarkerColor: "grey",
+            legendText: "Costo mantenimientos mes",
+            dataPoints: [ 
+              <% @maintenance_histories.all.group_by{ |m| m.review_date.beginning_of_month }.each do |maintenance_history_month| %>
+                { y: <%= maintenance_history_month[1].map(&:cost).inject(0){|sum,x| sum + x } %>, label: "<%= l(maintenance_history_month[0], format: "%B").titleize %>" },
+              <% end %>     
+            ]
+          }]
+        });
+        chart.render();
       }
     </script>
     <%= javascript_include_tag 'charts', 'data-turbolinks-track': 'reload' %>
