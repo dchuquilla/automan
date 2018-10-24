@@ -114,7 +114,14 @@
               <% end %>
             </div>
           </div>
-          <%= yield %> <!-- modelo donde se unifica el modelo del controladr y la vista -->
+          <div class="row colapse">
+            <div class="columns">
+              <%= yield %>
+            </div>
+            <div class="columns small-12 medium-4 large-3 <%= !Rails.env.development? ? "hide" : "" %>">
+              ADS
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -123,5 +130,7 @@
       $(document).foundation();
     </script>
     <%= yield :late_javascripts  %>
+
+    <script type="text/javascript"> var infolinks_pid = 3139142; var infolinks_wsid = 0; </script> <script type="text/javascript" src="//resources.infolinks.com/js/infolinks_main.js"></script>
   </body>
 </html>
