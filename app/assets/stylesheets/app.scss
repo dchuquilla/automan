@@ -180,6 +180,16 @@
   p {
   }
 }
+#add-maintenances-bar {
+  background-color: #fff;
+  position: fixed;
+  bottom: 0;
+  right: 10px;
+  z-index: 0;
+  a {
+    height: 100%;
+  }
+}
 
 /* x-Large and up * share with  all devises form ipad horizontal*/
 @media screen and (min-width: 64em) and (max-width: 66em) {

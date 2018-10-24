@@ -1,0 +1,21 @@
+<%= link_to '#', class: "floating-action button primary main show-for-medium", id: "show-footer-buttons" do %>
+  <i class="material-icons">add</i>
+<% end %>
+<div class="show-for-medium hide" id="add-maintenances-bar">
+  <%= link_to new_car_maintenance_history_path(@car_selected), class: "footer-link button hollow" do %>
+    <i class="material-icons">assignment_turned_in</i><br>
+    <small>Mantenimiento</small>
+  <% end %>
+  <%= link_to review_car_maintenance_history_path(@car_selected, 0), class: "footer-link button hollow" do %>
+    <i class="material-icons">build</i><br>
+    <small>Reparacion</small>
+  <% end %>
+  <%= link_to gas_car_maintenance_history_path(@car_selected, 0), class: "footer-link button hollow" do %>
+    <i class="material-icons">local_gas_station</i><br>
+    <small>Gasolina</small>
+  <% end %>
+  <%= link_to '#', class: "footer-link button hollow", id: "hide-footer-buttons" do %>
+    <i class="material-icons">close</i><br>
+    <small>Cerrar</small>
+  <% end %>
+</div>

@@ -975,3 +975,14 @@ footer p{
       box-shadow: none;
   }
 }
+
+
+/* Custom */
+.row.for-topbar {
+  background: #f08a244f;
+}
+@media screen and (min-width: 0em) and (max-width: 46.0625em) {
+  .row.for-topbar {
+    background: transparent;
+  }
+}

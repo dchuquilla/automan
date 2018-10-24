@@ -130,12 +130,10 @@
       <% end %>
     <% end %>
   </div>
-  <%= link_to new_car_maintenance_history_path(@car_selected), class: "floating-action button primary main show-for-medium" do %>
-    <i class="material-icons">add</i>
-  <% end %>
 </div>
-
+<%= render partial: 'shared/desktop_footer_links' %>
 <%= render partial: 'shared/mobile_footer_links' %>
+
 <% if params[:filtro] == 'Completado' %>
   <% content_for :late_javascripts do %>
     <script>
