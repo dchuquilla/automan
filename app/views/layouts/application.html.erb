@@ -46,7 +46,7 @@
                       <p class="text-title"><%= @car_selected.plate.upcase %></p>
                       <ul class="menu vertical">
                         <li><%= link_to('Tablero de control', dashboard_car_path(@car_selected), class: "hollow button general") %></li>
-                        <li><%= link_to("Mantenimientos Pendientes", car_maintenance_histories_path(@car_selected), class: "hollow button general") %></li>
+                        <li><%= link_to("Mantenimientos Pendientes", car_maintenance_histories_path(@car_selected), 'data-turbolinks': 'false', 'data-turbolinks': 'false', class: "hollow button general") %></li>
                         <li><%= link_to("Mantenimientos completados", car_maintenance_histories_path(@car_selected, filtro: "Completado"), 'data-turbolinks': 'false', class: "hollow button general") %></li>
                         <li><%= link_to("Agendar mantenimiento", new_car_maintenance_history_path(@car_selected), class: "hollow button general") %></li>
                       </ul>
