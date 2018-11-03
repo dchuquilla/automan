@@ -75,6 +75,11 @@ class CarsController < ApplicationController
   def update_current_km
   end
 
+  # GET /cars/1/edit
+  def update_current_kms
+    @cars = Car.where("owner_id = ?", current_user.owner.id)
+  end
+
   # POST /cars
   # POST /cars.json
   def create
@@ -106,8 +111,13 @@ class CarsController < ApplicationController
     end
     respond_to do |format|
       if @car.update(car_params)
-        format.html { redirect_to @car, notice: 'Su auto fue actualizado.' }
-        format.json { render :show, status: :ok, location: @car }
+        if params[:stay].present? && params[:stay] == "true"
+          format.html { redirect_to update_current_kms_cars_path, notice: 'Su kilometraje fue actualizado.' }
+          format.json { render :show, status: :ok, location: @car }
+        else
+          format.html { redirect_to @car, notice: 'Su auto fue actualizado.' }
+          format.json { render :show, status: :ok, location: @car }
+        end
       else
         format.html { render :edit }
         format.json { render json: @car.errors, status: :unprocessable_entity }

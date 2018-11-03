@@ -62,9 +62,8 @@ class ApplicationController < ActionController::Base
   
   protected
     def after_sign_in_path_for(resource_or_scope)
-      stored_location_for(resource_or_scope) || cars_path
+      stored_location_for(resource_or_scope) || update_current_kms_cars_path
     end
-
     
   private
     # Overwriting the sign_out redirect path method

@@ -1,0 +1,16 @@
+<div class="row column">
+  <h1 class="text-headline">¿Su Kilometraje Actual es?</h1>
+</div>
+<% @cars.each do |car| %>
+  <div class="row">
+    <div class="columns">
+      <div class="callout form-<%= car.id %>">
+        <h2 class="text-title"><%= car.plate %>: <small><%= car.brand %></small> <small><%= car.model %></small></h2>
+        <%= render 'form_current_km', car: car, stay: true %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<div class="row column">
+  <%= link_to 'Inicio', cars_path, class: "hollow button general" %>
+</div>

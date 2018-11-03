@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     collection do
       get 'brands', format: 'json'
       get 'models', format: 'json'
+      get 'update_current_kms'
     end
     resources :maintenance_histories do
       member do

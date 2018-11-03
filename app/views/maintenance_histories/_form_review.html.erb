@@ -1,9 +1,9 @@
 <% if ['new', 'create'].include?(params[:action]) %>
   <% form_route = car_maintenance_histories_path(@car_selected) %>
 <% elsif ['review'].include?(params[:action]) %>
-  <% if params[:id] == 0 %>
+  <% if params[:id] == "0" %>
     <% form_route = car_maintenance_histories_path(@car_selected) %>
-  <% else %>
+  <% elsif @maintenance_history.id.present? %>
     <% form_route = car_maintenance_history_path(@car_selected, @maintenance_history) %>
   <% end %>
 <% else %>

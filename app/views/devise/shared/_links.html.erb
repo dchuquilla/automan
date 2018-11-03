@@ -1,5 +1,5 @@
 <ul class="no-bullet">
-  <%- if controller_name != 'sessions' %>
+  <%- if controller_name != 'sessions' && controller_name != 'landing' %>
     <li>
       <%= link_to "Ingresar", new_session_path(resource_name) %>
     </li>

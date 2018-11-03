@@ -1,4 +1,5 @@
-<%= form_with(model: car, local: true) do |form| %>
+<%= form_with(model: car, local: true, id: "update_current_km_#{car.id}") do |form| %>
+  <%= hidden_field_tag "stay", stay %>
   <% if car.errors.any? %>
     <div id="error_explanation">
       <h2 class="text-subhead">Se han presentado los siguientes errores:</h2>
@@ -9,11 +10,49 @@
       </ul>
     </div>
   <% end %>
-  <div class="field">
-    <%= form.label :current_km, "KM Actual*" %>
-    <%= form.number_field :current_km, step: 1, value: form.object.current_km.present? ? form.object.current_km_estimated.round : '' %>
+  <div class="row">
+    <div class="columns">
+      <div class="field">
+        <%= form.label :current_km, "KM Actual*" %>
+        <%= form.number_field :current_km, step: 1, class: "current_km_calculated", value: form.object.current_km.present? ? form.object.current_km_estimated.round : '' %>
+      <div class="current_km_message"></div>
+      </div>
+    </div>
+    <div class="columns small-4">
+      <div class="row collapse text-center">
+        <div class="columns">
+          <%= form.submit "Guardar", class: "button" %>
+        </div>
+        <br><br>
+      </div>
+      <div class="row collapse text-center">
+        <div class="columns">
+          <button type="reset" value="Reset" class="hollow button general">Deshacer</button>
+        </div>
+        <br><br>
+      </div>
+      <div class="actions">
+      </div>
+    </div>
   </div>
-  <div class="actions">
-    <%= form.submit "Guardar", class: "button" %>
-  </div>
+<% end %>
+
+<% content_for :late_javascripts do %>
+  <script type="text/javascript">
+    $(function() {
+      var car_current_km = <%= car.current_km %>;
+      $('#<%= "update_current_km_#{car.id}" %> .current_km_calculated').on('input',function(e){
+        current_km_val = $(this).val();
+        if (current_km_val < car_current_km) {
+          var alert_message = "El kilometraje ingresado es menor al último registrado.";
+          $('<%= ".callout.form-#{car.id}" %>').addClass('alert');
+          $('#<%= "update_current_km_#{car.id}" %> .current_km_message').html(alert_message);
+        } else {
+          $('<%= ".callout.form-#{car.id}" %>').removeClass('alert');
+          $('#<%= "update_current_km_#{car.id}" %> .current_km_message').html('');
+        }
+      });
+
+    });
+  </script>
 <% end %>

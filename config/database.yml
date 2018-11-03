@@ -9,7 +9,8 @@ development:
   database: automan_development
   host: localhost
   user: postgres
-  port: 5432
+  password: 
+  port: 5433
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 test:
