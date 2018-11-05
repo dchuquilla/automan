@@ -68,21 +68,60 @@ CREATE OR REPLACE FUNCTION tg_mantenimientos_recurrentes()
  LANGUAGE plpgsql
 AS $function$
   DECLARE i user_car_settings%rowtype;
-  DECLARE contador integer;
-  DECLARE edad integer;
   DECLARE km_estimado integer;
-  DECLARE mes_estimado integer;
   DECLARE fecha_estimada Timestamp Without Time Zone;
-  DECLARE tipo varchar(255);
 BEGIN
   if NEW.status = 'Completado' AND NEW.status <> OLD.status then
     SELECT * FROM user_car_settings where id = NEW.user_car_setting_id INTO i;
     SELECT NEW.review_km + i.km_estimated INTO km_estimado;
     SELECT NEW.review_date + i.month_estimated * interval '1 month' into fecha_estimada;
-    INSERT INTO maintenance_histories ( car_id, maintenance_type, estimated_km, notified, scheduled_date, status, created_at, updated_at) VALUES ( NEW.car_id, NEW.maintenance_type, km_estimado, FALSE, fecha_estimada, 'Pendiente', now(), now());
+    INSERT INTO maintenance_histories ( car_id, maintenance_type, estimated_km, notified, scheduled_date, status, user_car_setting_id, created_at, updated_at) VALUES ( NEW.car_id, NEW.maintenance_type, km_estimado, FALSE, fecha_estimada, 'Pendiente', NEW.user_car_setting_id, now(), now());
   end if;
   return NEW;
 END
 $function$
 CREATE TRIGGER "crearMantenimientoRecurrentes" AFTER UPDATE ON maintenance_histories FOR EACH ROW EXECUTE PROCEDURE tg_mantenimientos_recurrentes();
+
+-- Nuevas plantillas de tipos de mantenimeinto
+CREATE OR REPLACE FUNCTION tg_plantillas_mantenimientos()
+ RETURNS trigger
+ LANGUAGE plpgsql
+AS $function$
+  DECLARE i cars%rowtype;
+  DECLARE edad integer;
+  DECLARE configuracion_auto_id integer;
+  DECLARE calculated_km integer;
+  DECLARE km_estimado integer;
+  DECLARE mes_estimado integer;
+  DECLARE fecha_estimada Timestamp Without Time Zone;
+BEGIN
+  FOR i IN SELECT * FROM cars LOOP
+    SELECT date_part('year', now()) -  i.year INTO edad;
+    -- Obtener un numero aleatorio de un rango, meses y Km.
+    SELECT floor(random() * (NEW.km_max-NEW.km_min+1) + NEW.km_min)::int INTO calculated_km;
+    SELECT calculated_km + i.current_km INTO km_estimado;
+    SELECT floor(random() * (NEW.month_max-NEW.month_min+1) + NEW.month_min)::int INTO mes_estimado;
+    -- generar fecha furtura aproximanda de mantenimiento.
+    SELECT now() + mes_estimado * interval '1 month' into fecha_estimada;
+    -- Insertar mantenimientos básicos
+    INSERT INTO user_car_settings (car_id, maintenance_type, km_estimated, month_estimated, created_at, updated_at) VALUES (NEW.id, NEW.maintenance_type, calculated_km, mes_estimado, now(), now()) RETURNING id INTO configuracion_auto_id;
+    --INSERT INTO maintenance_histories (car_id, maintenance_type, estimated_km, notified, scheduled_date, status, user_car_setting_id, created_at, updated_at) VALUES (i.id, NEW.maintenance_type, km_estimado, FALSE, fecha_estimada, 'Pendiente', NEW.id, now(), now());
+    INSERT INTO maintenance_histories (car_id, maintenance_type, estimated_km, notified, scheduled_date, status, user_car_setting_id, created_at, updated_at)
+    SELECT car_id, maintenance_type, estimated_km, notified, scheduled_date, status, user_car_setting_id, created_at, updated_at
+    FROM
+      (SELECT i.id AS car_id, NEW.maintenance_type AS maintenance_type, km_estimado AS estimated_km, FALSE AS notified, fecha_estimada AS scheduled_date, 'Pendiente' AS status, configuracion_auto_id AS user_car_setting_id, now() AS created_at, now() AS updated_at) a
+    WHERE NOT EXISTS
+        (SELECT 1
+         FROM maintenance_histories b
+         WHERE a.car_id = b.car_id
+           AND a.maintenance_type = b.maintenance_type
+           AND a.status = b.status);
+
+  END LOOP;
+  return NEW;
+END
+$function$
+CREATE TRIGGER "completarMantenimientos" AFTER INSERT ON settings FOR EACH ROW EXECUTE PROCEDURE tg_plantillas_mantenimientos();
+
+
 
