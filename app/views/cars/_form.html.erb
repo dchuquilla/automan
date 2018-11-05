@@ -31,17 +31,35 @@
         <%= form.label :model, "Modelo*" %>
         <%= form.text_field :model %>
       </div>
-    </div>
-    <div class="columns small-16 large-6">
       <div class="field">
         <%= form.label :year, "Año*" %>
         <%= form.number_field :year, strep: 1 %>
       </div>
+    </div>
+    <div class="columns small-16 large-6">
       <div class="field">
         <%# types_list = ["Liviano", "Camion", "Camioneta", "Autobus", "Motocicleta"] %>
         <% types_list = ["Liviano"] %>
         <%= form.label :car_type, "Tipo*" %>
         <%= form.select :car_type, types_list %>
+      </div>
+      <div class="field">
+        <%= form.label :insureance_company, "Compañia aseguradora" %>
+        <%= form.text_field :insureance_company %>
+      </div>
+      <div class="field">
+        <div class="row">
+          <div class="columns">
+            <%= form.label :insurance_month, "Finalización del seguro" %>
+            <% months_list = [["Enero", 1], ["Febrero", 2], ["Marzo", 3], ["Abril", 4], ["Mayo", 5], ["Junio", 6], ["Julio", 7], ["Agosto", 8], ["Septiembre", 9], ["Octubre", 10], ["Noviembre", 11], ["Diciembre", 12]] %>
+            <%= form.select :insurance_month, months_list %>
+          </div>
+          <div class="columns">
+            <%= form.label :insurance_month, raw("&nbsp;") %>
+            <% years_lit = ((Time.now.year)...(Time.now.year+11)).to_a %>
+            <%= form.select :insurance_month, years_lit %>
+          </div>
+        </div>
       </div>
       <div class="field">
         <%= form.label :current_km, "KM Actual*" %>

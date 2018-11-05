@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_16_202440) do
+ActiveRecord::Schema.define(version: 2018_11_05_204953) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,9 @@ ActiveRecord::Schema.define(version: 2018_10_16_202440) do
     t.datetime "updated_at", null: false
     t.integer "year"
     t.datetime "km_updated_date"
+    t.integer "insurance_month"
+    t.integer "insurance_year"
+    t.string "insurance_company"
     t.index ["owner_id"], name: "index_cars_on_owner_id"
   end
 
