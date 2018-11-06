@@ -13,8 +13,7 @@ class CarsController < ApplicationController
 
   def brands
     q_term = "#{params[:q]}"
-    brands_list = get_brands_list
-    Rails.logger.info brands_list
+    brands_list = Car.get_brands_list
     brands = brands_list.select {|x| x.downcase.include?(q_term)}
     # brands = Car.distinct.select('brand').where("brand ~* ?", q_term).map(&:brand)
     respond_to do |format|
@@ -25,7 +24,10 @@ class CarsController < ApplicationController
 
   def models
     q_term = "#{params[:q]}"
-    models = Car.distinct.select('model').where("model ~* ?", q_term).map(&:model)
+    brand = "#{params[:brand]}"
+    models_list = Car.get_models_list[brand]
+    models = models_list.select {|x| x.downcase.include?(q_term)}
+    # models = Car.distinct.select('model').where("model ~* ?", q_term).map(&:model)
     respond_to do |format|
       format.json { render json: models.to_json }
       format.html { render text: "no aplica"}
@@ -159,9 +161,5 @@ class CarsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def car_params
       params.require(:car).permit(:plate, :brand, :model, :current_km, :car_type, :week_km, :owner_id, :year, :km_updated_date)
-    end
-
-    def get_brands_list
-      ["ACURA", "ALFA ROMEO", "ASIA", "AUDI", "AUSTIN HEALEY", "BMW", "BYD", "CADILLAC", "CHANGHE", "CHERY", "CHEVROLET", "CHRYSLER", "CITROEN", "DAEWOO", "DAIHATSU", "DATSUN", "DODGE", "DONGFENG", "FAW", "FIAT", "FORD", "FOTON", "GEELY", "GMC", "GREAT WALL", "HONDA", "HUMMER", "HYUNDAI", "INFINITI", "INTERNATIONAL", "ISUZU", "JAC", "JAGUAR", "JEEP", "JINBEI", "JINBEY HAISE", "JMC", "KAWASAKI", "KIA", "KING LONG", "LADA", "LAND ROVER", "LEXUS", "LIFAN", "LOTUS", "MAHINDRA", "MASERATI", "MAZDA", "MERCEDES BENZ", "MG", "MINI", "MITSUBISHI", "NISSAN", "OLDSMOBILE", "PEUGEOT", "POLARIS", "PONTIAC", "PORSCHE", "QMC", "RENAULT", "SAAB", "SAIC WULING", "SCION", "SKODA", "SOUEAST", "SSANGYONG", "SUBARU", "SUZUKI", "TATA", "TOYOTA", "TUNDRA", "VOLKSWAGEN", "VOLVO", "ZOTYE", "ZXAUTO"]
     end
 end

@@ -92,7 +92,7 @@
       $('#car_model').autoComplete({
         source: function(term, response){
           try { xhr.abort(); } catch(e){}
-          $.getJSON('<%= models_cars_path %>', { q: term }, function(data){ response(data); });
+          $.getJSON('<%= models_cars_path %>', { q: term, brand: $('#car_brand').val() }, function(data){ response(data); });
         }
       });
     });
