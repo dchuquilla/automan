@@ -71,7 +71,10 @@ es:
         current_km: "KM Actual"
         week_km: "KM Semanal"
         car_type: "Tipo"
-        year: "Año" 
+        year: "Año"
+        insurance_month: "Mes de finalización del seguro"
+        insurance_year: "Año de finalización del seguro"
+        insurance_company: "Compañía aseguradora"
       maintenance_history:
         status: "Estado"
         estimated_km: "KM Estimado"

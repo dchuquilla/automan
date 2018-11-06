@@ -91,6 +91,9 @@ class CarsController < ApplicationController
     @car = Car.new(car_params)
     @car.plate = @car.plate.upcase
     @car.owner_id = current_user.owner.id
+    if @car.insurance_company.blank?
+      @car.insurance_company = "No cuento con seguro"
+    end
     if params[:car][:images]
       @car.images.attach(params[:car][:images])
     end
@@ -99,6 +102,9 @@ class CarsController < ApplicationController
         format.html { redirect_to @car, notice: 'Su auto fue creado.' }
         format.json { render :show, status: :created, location: @car }
       else
+        Rails.logger.info @car.insurance_company
+        Rails.logger.info @car.insurance_month
+        Rails.logger.info @car.insurance_year
         format.html { render :new }
         format.json { render json: @car.errors, status: :unprocessable_entity }
       end
@@ -160,6 +166,6 @@ class CarsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def car_params
-      params.require(:car).permit(:plate, :brand, :model, :current_km, :car_type, :week_km, :owner_id, :year, :km_updated_date)
+      params.require(:car).permit(:plate, :brand, :model, :current_km, :car_type, :week_km, :owner_id, :year, :km_updated_date, :insurance_month, :insurance_year, :insurance_company)
     end
 end

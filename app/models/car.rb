@@ -5,6 +5,7 @@ class Car < ApplicationRecord
   has_many_attached :images, dependent: :destroy
   
   validates :plate, :brand, :model, :current_km, :car_type, :week_km, presence: true
+  validates :insurance_month, :insurance_year, :insurance_company, presence: true, if: [Proc.new { |c| (c.insurance_company != "No cuento con seguro") || (!c.insurance_month.blank? || !c.insurance_year.blank?) }]
 
   # KM actual estimado usando KM semanal
   def current_km_estimated

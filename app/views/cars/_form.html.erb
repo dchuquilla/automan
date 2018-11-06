@@ -44,20 +44,24 @@
         <%= form.select :car_type, types_list %>
       </div>
       <div class="field">
-        <%= form.label :insureance_company, "Compañia aseguradora" %>
-        <%= form.text_field :insureance_company %>
+        <%= form.label :insurance_company, "Compañía aseguradora" %>
+        <% if @car.insurance_company == 'No cuento con seguro' %>
+          <%= form.text_field :insurance_company, placeholder: "No cuento con seguro", value: "" %>
+        <% else %>
+          <%= form.text_field :insurance_company, placeholder: "No cuento con seguro" %>
+        <% end %>
       </div>
       <div class="field">
         <div class="row">
-          <div class="columns">
+          <div class="small-12 medium-6 large-6 columns">
             <%= form.label :insurance_month, "Finalización del seguro" %>
             <% months_list = [["Enero", 1], ["Febrero", 2], ["Marzo", 3], ["Abril", 4], ["Mayo", 5], ["Junio", 6], ["Julio", 7], ["Agosto", 8], ["Septiembre", 9], ["Octubre", 10], ["Noviembre", 11], ["Diciembre", 12]] %>
-            <%= form.select :insurance_month, months_list %>
+            <%= form.select :insurance_month, months_list, include_blank: true %>
           </div>
-          <div class="columns">
-            <%= form.label :insurance_month, raw("&nbsp;") %>
-            <% years_lit = ((Time.now.year)...(Time.now.year+11)).to_a %>
-            <%= form.select :insurance_month, years_lit %>
+          <div class="small-12 medium-6 large-6 columns">
+            <%= form.label :insurance_year, raw("&nbsp;"), class: "hide-for-small-only" %>
+            <% years_list = ((Time.now.year)...(Time.now.year+11)).to_a %>
+            <%= form.select :insurance_year, years_list, include_blank: true %>
           </div>
         </div>
       </div>
