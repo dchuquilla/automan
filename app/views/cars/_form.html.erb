@@ -45,11 +45,7 @@
       </div>
       <div class="field">
         <%= form.label :insurance_company, "Compañía aseguradora" %>
-        <% if @car.insurance_company == 'No cuento con seguro' %>
-          <%= form.text_field :insurance_company, placeholder: "No cuento con seguro", value: "" %>
-        <% else %>
-          <%= form.text_field :insurance_company, placeholder: "No cuento con seguro" %>
-        <% end %>
+        <%= form.text_field :insurance_company, placeholder: "No cuento con seguro" %>
       </div>
       <div class="field">
         <div class="row">

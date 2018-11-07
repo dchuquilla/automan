@@ -25,11 +25,9 @@ BEGIN
 END
 $function$
 -- Crear triggers con metodo creado
-CREATE TRIGGER "procesarCambiosKmActual" 
-  AFTER UPDATE ON cars 
-    FOR EACH ROW 
-      EXECUTE PROCEDURE tg_kilometraje_semanal();
+CREATE TRIGGER "procesarCambiosKmActual"AFTER UPDATE ON cars FOR EACH ROW EXECUTE PROCEDURE tg_kilometraje_semanal();
 
+-- Gestion de manteminientos recurrentes para autos creados
 CREATE OR REPLACE FUNCTION tg_mantenimientos_basicos()
  RETURNS trigger
  LANGUAGE plpgsql
@@ -53,14 +51,24 @@ BEGIN
     -- generar fecha furtura aproximanda de mantenimiento.
     SELECT now() + mes_estimado * interval '1 month' into fecha_estimada;
     -- Insertar mantenimientos básicos
-    INSERT INTO user_car_settings (car_id, maintenance_type, km_estimated, month_estimated, created_at, updated_at) VALUES (NEW.id, i.maintenance_type, calculated_km, mes_estimado, now(), now());
-    SELECT id FROM user_car_settings WHERE car_id = NEW.id AND maintenance_type = i.maintenance_type AND km_estimated = calculated_km AND month_estimated = mes_estimado INTO setting_id;
-    INSERT INTO maintenance_histories (car_id, maintenance_type, estimated_km, notified, scheduled_date, status, user_car_setting_id, created_at, updated_at) VALUES (NEW.id, i.maintenance_type, km_estimado, FALSE, fecha_estimada, 'Pendiente', setting_id, now(), now());
+    INSERT INTO user_car_settings (car_id, maintenance_type, km_estimated, month_estimated, created_at, updated_at) VALUES (NEW.id, i.maintenance_type, calculated_km, mes_estimado, now(), now()) RETURNING id INTO setting_id;
+    -- SELECT id FROM user_car_settings WHERE car_id = NEW.id AND maintenance_type = i.maintenance_type AND km_estimated = calculated_km AND month_estimated = mes_estimado INTO setting_id;
+    INSERT INTO maintenance_histories (car_id, maintenance_type, estimated_km, notified, scheduled_date, status, user_car_setting_id, created_at, updated_at)
+    SELECT car_id, maintenance_type, estimated_km, notified, scheduled_date, status, user_car_setting_id, created_at, updated_at
+    FROM
+      (SELECT NEW.id AS car_id, i.maintenance_type AS maintenance_type, km_estimado AS estimated_km, FALSE AS notified, fecha_estimada AS scheduled_date, 'Pendiente' AS status, setting_id AS user_car_setting_id, now() AS created_at, now() AS updated_at) a
+    WHERE NOT EXISTS
+        (SELECT 1
+         FROM maintenance_histories b
+         WHERE a.car_id = b.car_id
+           AND a.maintenance_type = b.maintenance_type
+           AND a.status = b.status);
+    -- INSERT INTO maintenance_histories (car_id, maintenance_type, estimated_km, notified, scheduled_date, status, user_car_setting_id, created_at, updated_at) VALUES (NEW.id, i.maintenance_type, km_estimado, FALSE, fecha_estimada, 'Pendiente', setting_id, now(), now());
   END LOOP;
   return NEW;
 END
 $function$
-CREATE TRIGGER "crearMantenimientoBasicos" AFTER INSERT ON cars FOR EACH ROW EXECUTE PROCEDURE tg_mantenimientos_basicos();
+CREATE TRIGGER "crearMantenimientoBasicos" AFTER INSERT OR UPDATE ON cars FOR EACH ROW EXECUTE PROCEDURE tg_mantenimientos_basicos();
 
 -- Gestion de manteminientos recurrentes
 CREATE OR REPLACE FUNCTION tg_mantenimientos_recurrentes()

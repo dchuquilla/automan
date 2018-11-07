@@ -5,7 +5,7 @@ class Car < ApplicationRecord
   has_many_attached :images, dependent: :destroy
   
   validates :plate, :brand, :model, :current_km, :car_type, :week_km, presence: true
-  validates :insurance_month, :insurance_year, :insurance_company, presence: true, if: [Proc.new { |c| (c.insurance_company != "No cuento con seguro") || (!c.insurance_month.blank? || !c.insurance_year.blank?) }]
+  validates :insurance_company, :insurance_month, :insurance_year, presence: true, if: [Proc.new { |c| (c.insurance_company.present? || c.insurance_month.present? || c.insurance_year.present?) }]
 
   # KM actual estimado usando KM semanal
   def current_km_estimated
@@ -18,7 +18,7 @@ class Car < ApplicationRecord
     self.maintenance_histories.where(status: "Pendiente")
   end
 
-
+  # Class methods
   class << self
     def get_brands_list
       ["ACURA", "ALFA ROMEO", "ARCTIC CAT", "ASIA", "AUDI", "AUSTIN HEALEY", "BAW", "BMW", "BYD", "CADILLAC", "CHANA", "CHANGAN", "CHANGHE", "CHERY", "CHEVROLET", "CHRYSLER", "CITROEN", "DAEWOO", "DAIHATSU", "DATSUN", "DAYANG", "DFSK", "DODGE", "DONGFENG", "FAW", "FIAT", "FORD", "FOTON", "GEELY", "GMC", "GREAT WALL", "HONDA", "HUMMER", "HYUNDAI", "INFINITI", "INTERNATIONAL", "ISUZU", "JAC", "JAGUAR", "JEEP", "JINBEI", "JINBEY HAISE", "JMC", "KAWASAKI", "KIA", "KING LONG", "LADA", "LAND ROVER", "LEXUS", "LIFAN", "LOTUS", "MAHINDRA", "MASERATI", "MAZDA", "MERCEDES BENZ", "MG", "MINI", "MITSUBISHI", "NEW SUPER", "NISSAN", "OLDSMOBILE", "PEUGEOT", "PLYMOUTH", "POLARIS", "PONTIAC", "PORSCHE", "QMC", "RENAULT", "SAAB", "SAIC WULING", "SCION", "SEAT", "SKODA", "SOUEAST", "SSANGYONG", "SUBARU", "SUZUKI", "TALBOT", "TATA", "TIANYE", "TOYOTA", "TUNDRA", "VOLKSWAGEN", "VOLVO", "ZOTYE", "ZXAUTO"]
