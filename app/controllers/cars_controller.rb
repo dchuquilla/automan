@@ -120,7 +120,7 @@ class CarsController < ApplicationController
           format.html { redirect_to update_current_kms_cars_path, notice: 'Su kilometraje fue actualizado.' }
           format.json { render :show, status: :ok, location: @car }
         else
-          format.html { redirect_to @car, notice: 'Su auto fue actualizado.' }
+          format.html { redirect_to cars_path, notice: 'Su auto fue actualizado.' }
           format.json { render :show, status: :ok, location: @car }
         end
       else

@@ -137,7 +137,9 @@
     color: $grey-700;
   }
   .current_km {
-    color: $purple-700;
+    a {
+      color: $purple-700;
+    }
   }
   .week_km {
     color: $orange-700;

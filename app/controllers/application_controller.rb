@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
       end
     end
     # Update current km at least 24 hours difference
-    if current_user.present? && current_user.owner.present? && (request.method.downcase == 'get')
+    if current_user.present? && current_user.owner.present? && request.method.downcase == 'get' && params[:action] != 'update_current_kms'
       if current_user.owner.cars.count > 0
         delayed_cars = current_user.owner.cars.to_a.select {|c| ((Time.now - c.updated_at)/1.hour).round >= 24}.length
         if delayed_cars > 0
