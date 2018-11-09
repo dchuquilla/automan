@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_05_204953) do
+ActiveRecord::Schema.define(version: 2018_11_09_210207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 2018_11_05_204953) do
     t.string "maintenance_type"
     t.bigint "user_car_setting_id"
     t.decimal "gallons"
+    t.integer "priority"
     t.index ["car_id"], name: "index_maintenance_histories_on_car_id"
     t.index ["user_car_setting_id"], name: "index_maintenance_histories_on_user_car_setting_id"
   end
@@ -92,6 +93,7 @@ ActiveRecord::Schema.define(version: 2018_11_05_204953) do
     t.datetime "updated_at", null: false
     t.string "email", null: false
     t.integer "user_id"
+    t.boolean "dismiss_car_updates"
     t.index ["email"], name: "index_owners_on_email", unique: true
   end
 
@@ -105,6 +107,7 @@ ActiveRecord::Schema.define(version: 2018_11_05_204953) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "maintenance_type"
+    t.integer "priority"
   end
 
   create_table "user_car_settings", force: :cascade do |t|
@@ -114,6 +117,7 @@ ActiveRecord::Schema.define(version: 2018_11_05_204953) do
     t.string "maintenance_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "priority"
   end
 
   create_table "users", force: :cascade do |t|

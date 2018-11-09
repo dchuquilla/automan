@@ -5,3 +5,8 @@ task enviar_pendientes: :environment do
     UserNotifierMailer.send_pending_reviews(user).deliver
   end
 end
+
+desc "Reiniciar dismiss_car_updates en propietarios"
+task reset_dismiss_car_updates: :environment do
+  Owner.update_all(dismiss_car_updates: false)
+end

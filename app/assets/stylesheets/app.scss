@@ -172,6 +172,15 @@
     text-align: left;
     color: #333;
   }
+  &.top {
+    font-weight: bold !important;
+    &:last-child {
+      margin-bottom: 20px;
+    }
+    .flat.button {
+      font-weight: bold !important;
+    }
+  }
 }
 .text-title{
   &.alert {

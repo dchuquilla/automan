@@ -10,9 +10,9 @@ class MaintenanceHistoriesController < ApplicationController
   # GET /maintenance_histories.json
   def index
     if params[:filtro]
-      @maintenance_histories = MaintenanceHistory.where("car_id = ? AND maintenance_type <> 'Carga de gasolina'", @car_selected.id).where("status = ?", params[:filtro]).order("review_date DESC")
+      @maintenance_histories = MaintenanceHistory.where("car_id = ? AND maintenance_type <> 'Carga de gasolina'", @car_selected.id).where("status = ?", params[:filtro]).order("priority, review_date DESC")
     else
-      @maintenance_histories = MaintenanceHistory.where("car_id = ? AND status <> 'Completado'", @car_selected.id).order("scheduled_date ASC")
+      @maintenance_histories = MaintenanceHistory.where("car_id = ? AND status <> 'Completado'", @car_selected.id).order("priority, scheduled_date ASC")
     end
   end
 

@@ -85,6 +85,15 @@ class CarsController < ApplicationController
     @cars = Car.where("owner_id = ?", current_user.owner.id)
   end
 
+  # GET /cars/1/save_all
+  def dismiss_car_update
+    current_owner = current_user.owner
+    current_owner.dismiss_car_updates = true;
+    current_owner.agreement_terms = true;
+    current_owner.save!
+    redirect_to cars_path
+  end
+
   # POST /cars
   # POST /cars.json
   def create

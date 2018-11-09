@@ -28,10 +28,10 @@ class ApplicationController < ActionController::Base
       end
     end
     # Update current km at least 24 hours difference
-    if current_user.present? && current_user.owner.present? && request.method.downcase == 'get' && params[:action] != 'update_current_kms'
+    if current_user.present? && current_user.owner.present? && request.method.downcase == 'get' && !['update_current_kms', 'dismiss_car_update'].include?(params[:action])
       if current_user.owner.cars.count > 0
-        delayed_cars = current_user.owner.cars.to_a.select {|c| ((Time.now - c.updated_at)/1.hour).round >= 24}.length
-        if delayed_cars > 0
+        delayed_cars = current_user.owner.cars.to_a.select {|c| ((Time.now - c.updated_at)/1.day).round >= 1}.length
+        if delayed_cars > 0 && current_user.owner.dismiss_car_updates == false
           Rails.logger.info "ApplicationController#general_redirections::update_current_kms_cars_path"
           redirect_to update_current_kms_cars_path
         end

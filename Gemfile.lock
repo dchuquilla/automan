@@ -107,6 +107,7 @@ GEM
     foundation_emails (2.2.1.0)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
+    highline (2.0.0)
     htmlentities (4.3.4)
     i18n (1.1.0)
       concurrent-ruby (~> 1.0)
@@ -156,6 +157,7 @@ GEM
       mini_portile2 (~> 2.3.0)
     nokogiri (1.8.4-x86-mingw32)
       mini_portile2 (~> 2.3.0)
+    options (2.3.2)
     orm_adapter (0.5.0)
     pg (1.1.3)
     pg (1.1.3-x64-mingw32)
@@ -167,6 +169,9 @@ GEM
     premailer-rails (1.10.2)
       actionmailer (>= 3, < 6)
       premailer (~> 1.7, >= 1.7.9)
+    progress_bar (1.3.0)
+      highline (>= 1.6, < 3)
+      options (~> 2.3.0)
     public_suffix (3.0.3)
     puma (3.12.0)
     puma (3.12.0-java)
@@ -198,6 +203,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.19.0, < 2.0)
     rake (12.3.1)
+    rake-progressbar (0.0.5)
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
@@ -286,8 +292,10 @@ DEPENDENCIES
   mini_magick
   pg (>= 0.18, < 2.0)
   premailer-rails
+  progress_bar
   puma (~> 3.11)
   rails (~> 5.2.0)
+  rake-progressbar
   sass-rails (~> 5.0)
   selenium-webdriver
   spring

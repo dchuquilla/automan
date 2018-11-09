@@ -24,7 +24,6 @@ BEGIN
   return NEW;
 END
 $function$
--- Crear triggers con metodo creado
 CREATE TRIGGER "procesarCambiosKmActual"AFTER UPDATE ON cars FOR EACH ROW EXECUTE PROCEDURE tg_kilometraje_semanal();
 
 -- Gestion de manteminientos recurrentes para autos creados
@@ -45,25 +44,24 @@ BEGIN
   SELECT date_part('year', now()) - NEW.year INTO edad;
   FOR i IN SELECT * FROM settings WHERE car_age = edad AND car_type = NEW.car_type LOOP
     -- Obtener un numero aleatorio de un rango, meses y Km.
-    SELECT floor(random() * (i.km_max-i.km_min+1) + i.km_min)::int INTO calculated_km;
-    SELECT calculated_km + NEW.current_km INTO km_estimado;
-    SELECT floor(random() * (i.month_max-i.month_min+1) + i.month_min)::int INTO mes_estimado;
+    SELECT (floor(random() * (i.km_max-i.km_min+1) + i.km_min)/1000)::INTEGER * 1000 INTO calculated_km;
+    SELECT (calculated_km + NEW.current_km)::INTEGER - 1 INTO km_estimado;
+    SELECT floor(random() * (i.month_max-i.month_min+1) + i.month_min)::INTEGER INTO mes_estimado;
     -- generar fecha furtura aproximanda de mantenimiento.
     SELECT now() + mes_estimado * interval '1 month' into fecha_estimada;
     -- Insertar mantenimientos básicos
-    INSERT INTO user_car_settings (car_id, maintenance_type, km_estimated, month_estimated, created_at, updated_at) VALUES (NEW.id, i.maintenance_type, calculated_km, mes_estimado, now(), now()) RETURNING id INTO setting_id;
+    INSERT INTO user_car_settings (car_id, maintenance_type, km_estimated, month_estimated, created_at, updated_at, priority) VALUES (NEW.id, i.maintenance_type, calculated_km, mes_estimado, now(), now(), i.priority) RETURNING id INTO setting_id;
     -- SELECT id FROM user_car_settings WHERE car_id = NEW.id AND maintenance_type = i.maintenance_type AND km_estimated = calculated_km AND month_estimated = mes_estimado INTO setting_id;
-    INSERT INTO maintenance_histories (car_id, maintenance_type, estimated_km, notified, scheduled_date, status, user_car_setting_id, created_at, updated_at)
+    INSERT INTO maintenance_histories (car_id, maintenance_type, estimated_km, notified, scheduled_date, status, user_car_setting_id, created_at, updated_at, priority)
     SELECT car_id, maintenance_type, estimated_km, notified, scheduled_date, status, user_car_setting_id, created_at, updated_at
     FROM
-      (SELECT NEW.id AS car_id, i.maintenance_type AS maintenance_type, km_estimado AS estimated_km, FALSE AS notified, fecha_estimada AS scheduled_date, 'Pendiente' AS status, setting_id AS user_car_setting_id, now() AS created_at, now() AS updated_at) a
+      (SELECT NEW.id AS car_id, i.maintenance_type AS maintenance_type, km_estimado AS estimated_km, FALSE AS notified, fecha_estimada AS scheduled_date, 'Pendiente' AS status, setting_id AS user_car_setting_id, now() AS created_at, now() AS updated_at, i.priority as priority) a
     WHERE NOT EXISTS
         (SELECT 1
          FROM maintenance_histories b
          WHERE a.car_id = b.car_id
            AND a.maintenance_type = b.maintenance_type
            AND a.status = b.status);
-    -- INSERT INTO maintenance_histories (car_id, maintenance_type, estimated_km, notified, scheduled_date, status, user_car_setting_id, created_at, updated_at) VALUES (NEW.id, i.maintenance_type, km_estimado, FALSE, fecha_estimada, 'Pendiente', setting_id, now(), now());
   END LOOP;
   return NEW;
 END
@@ -81,9 +79,9 @@ AS $function$
 BEGIN
   if NEW.status = 'Completado' AND NEW.status <> OLD.status then
     SELECT * FROM user_car_settings where id = NEW.user_car_setting_id INTO i;
-    SELECT NEW.review_km + i.km_estimated INTO km_estimado;
+    SELECT (NEW.review_km + i.km_estimated)::INTEGER - 1 INTO km_estimado;
     SELECT NEW.review_date + i.month_estimated * interval '1 month' into fecha_estimada;
-    INSERT INTO maintenance_histories ( car_id, maintenance_type, estimated_km, notified, scheduled_date, status, user_car_setting_id, created_at, updated_at) VALUES ( NEW.car_id, NEW.maintenance_type, km_estimado, FALSE, fecha_estimada, 'Pendiente', NEW.user_car_setting_id, now(), now());
+    INSERT INTO maintenance_histories (car_id, maintenance_type, estimated_km, notified, scheduled_date, status, user_car_setting_id, created_at, updated_at, priority) VALUES ( NEW.car_id, NEW.maintenance_type, km_estimado, FALSE, fecha_estimada, 'Pendiente', NEW.user_car_setting_id, now(), now(), NEW.priority);
   end if;
   return NEW;
 END
@@ -106,18 +104,17 @@ BEGIN
   FOR i IN SELECT * FROM cars LOOP
     SELECT date_part('year', now()) -  i.year INTO edad;
     -- Obtener un numero aleatorio de un rango, meses y Km.
-    SELECT floor(random() * (NEW.km_max-NEW.km_min+1) + NEW.km_min)::int INTO calculated_km;
-    SELECT calculated_km + i.current_km INTO km_estimado;
-    SELECT floor(random() * (NEW.month_max-NEW.month_min+1) + NEW.month_min)::int INTO mes_estimado;
+    SELECT (floor(random() * (NEW.km_max-NEW.km_min+1) + NEW.km_min)/1000)::INTEGER * 1000 INTO calculated_km;
+    SELECT (calculated_km + i.current_km)::INTEGER - 1 INTO km_estimado;
+    SELECT floor(random() * (NEW.month_max-NEW.month_min+1) + NEW.month_min)::INTEGER INTO mes_estimado;
     -- generar fecha furtura aproximanda de mantenimiento.
     SELECT now() + mes_estimado * interval '1 month' into fecha_estimada;
     -- Insertar mantenimientos básicos
-    INSERT INTO user_car_settings (car_id, maintenance_type, km_estimated, month_estimated, created_at, updated_at) VALUES (NEW.id, NEW.maintenance_type, calculated_km, mes_estimado, now(), now()) RETURNING id INTO configuracion_auto_id;
-    --INSERT INTO maintenance_histories (car_id, maintenance_type, estimated_km, notified, scheduled_date, status, user_car_setting_id, created_at, updated_at) VALUES (i.id, NEW.maintenance_type, km_estimado, FALSE, fecha_estimada, 'Pendiente', NEW.id, now(), now());
-    INSERT INTO maintenance_histories (car_id, maintenance_type, estimated_km, notified, scheduled_date, status, user_car_setting_id, created_at, updated_at)
-    SELECT car_id, maintenance_type, estimated_km, notified, scheduled_date, status, user_car_setting_id, created_at, updated_at
+    INSERT INTO user_car_settings (car_id, maintenance_type, km_estimated, month_estimated, created_at, updated_at, priority) VALUES (NEW.id, NEW.maintenance_type, calculated_km, mes_estimado, now(), now(), i.priority) RETURNING id INTO configuracion_auto_id;
+    INSERT INTO maintenance_histories (car_id, maintenance_type, estimated_km, notified, scheduled_date, status, user_car_setting_id, created_at, updated_at, priority)
+    SELECT car_id, maintenance_type, estimated_km, notified, scheduled_date, status, user_car_setting_id, created_at, updated_at, priority
     FROM
-      (SELECT i.id AS car_id, NEW.maintenance_type AS maintenance_type, km_estimado AS estimated_km, FALSE AS notified, fecha_estimada AS scheduled_date, 'Pendiente' AS status, configuracion_auto_id AS user_car_setting_id, now() AS created_at, now() AS updated_at) a
+      (SELECT i.id AS car_id, NEW.maintenance_type AS maintenance_type, km_estimado AS estimated_km, FALSE AS notified, fecha_estimada AS scheduled_date, 'Pendiente' AS status, configuracion_auto_id AS user_car_setting_id, now() AS created_at, now() AS updated_at, i.priority as priority) a
     WHERE NOT EXISTS
         (SELECT 1
          FROM maintenance_histories b

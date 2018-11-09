@@ -14,7 +14,7 @@
           </div>
         </div>
         <% maintenance_history_month[1].each do |maintenance_history| %>
-          <div class="mantenimiento callout <%= maintenance_history.status == 'Completado' ? "primary" : "success"%>">
+          <div class="mantenimiento callout <%= maintenance_history.status == 'Completado' ? "primary" : "success"%>" <%= maintenance_history.priority == 1 ? "top" : "other" %>>
             <div class="estado">
               <%= maintenance_history.status %>
             </div>
@@ -73,7 +73,7 @@
     <% else %>
       <br>
       <% @maintenance_histories.each do |maintenance_history| %>
-        <div class="mantenimiento callout <%= maintenance_history.status == 'Completado' ? "primary" : "success"%>">
+        <div class="mantenimiento callout <%= maintenance_history.status == 'Completado' ? "primary" : "success"%> <%= maintenance_history.priority == 1 ? "top" : "other" %>">
           <div class="estado <%= maintenance_history.time_remaining_class %>">
             <%= maintenance_history.status %>
           </div>
