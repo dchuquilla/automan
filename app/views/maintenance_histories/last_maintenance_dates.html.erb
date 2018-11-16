@@ -1,0 +1,16 @@
+<div class="row column">
+  <h1 class="text-headline">¿Cuales son sus mantenimientos más recientes?</h1>
+</div>
+<% @maintenance_histories.each do |maintenance_history| %>
+  <div class="row">
+    <div class="columns">
+      <div class="callout form-<%= maintenance_history.id %>">
+        <h2 class="text-title"><%= maintenance_history.maintenance_type %></h2>
+        <%= render 'form_last_maintenance', car: @car_selected, maintenance_history: maintenance_history, stay: true %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<div class="row column">
+  <%= link_to 'Continuar', dismiss_car_update_cars_path, class: "hollow button general", data: { confirm: '¿Está seguro?' } %>
+</div>

@@ -1,7 +1,7 @@
 class CarsController < ApplicationController
   before_action :store_user_location!, if: :storable_location?
   before_action :authenticate_user!
-  before_action :set_car, only: [:show, :select, :dashboard, :reports, :gas_consume, :edit, :update_current_km, :update, :destroy, :image_detach]
+  before_action :set_car, only: [:show, :select, :dashboard, :reports, :gas_consume, :edit, :update_current_km, :update, :destroy, :image_detach, :last_maintenance_dates]
   before_action :clean_car_selection_cookie, only: [:index, :destroy]
   before_action :set_car_selection_cookie, only: [:show, :select, :dashboard, :reports, :gas_consume]
 
@@ -82,7 +82,8 @@ class CarsController < ApplicationController
 
   # GET /cars/1/edit
   def update_current_kms
-    @cars = Car.where("owner_id = ?", current_user.owner.id)
+    # @cars = Car.where("owner_id = ?", current_user.owner.id)
+    @cars = current_user.owner.cars.to_a.select {|c| ((Time.now - c.updated_at)/1.day).round >= 1}
   end
 
   # GET /cars/1/save_all
@@ -126,8 +127,14 @@ class CarsController < ApplicationController
     respond_to do |format|
       if @car.update(car_params)
         if params[:stay].present? && params[:stay] == "true"
-          format.html { redirect_to update_current_kms_cars_path, notice: 'Su kilometraje fue actualizado.' }
-          format.json { render :show, status: :ok, location: @car }
+          delayed_cars = current_user.owner.cars.to_a.select {|c| ((Time.now - c.updated_at)/1.day).round >= 1}.length
+          if delayed_cars == 0
+            format.html { redirect_to cars_path, notice: 'Todos los kilometrajes fueron actualizados.' }
+            format.json { render :show, status: :ok, location: @car }
+          else
+            format.html { redirect_to update_current_kms_cars_path, notice: 'Su kilometraje fue actualizado.' }
+            format.json { render :show, status: :ok, location: @car }
+          end
         else
           format.html { redirect_to cars_path, notice: 'Su auto fue actualizado.' }
           format.json { render :show, status: :ok, location: @car }

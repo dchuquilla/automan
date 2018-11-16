@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       get 'gas_consume'
       get 'update_current_km'
       get 'image_detach'
+      get 'image_detach'
     end
     collection do
       get 'brands', format: 'json'
@@ -23,6 +24,7 @@ Rails.application.routes.draw do
       end
       collection do
         get 'types', format: 'json'
+        get 'last_maintenance_dates'
       end
       member do
         get 'review'

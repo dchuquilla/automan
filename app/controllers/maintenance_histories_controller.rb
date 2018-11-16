@@ -3,7 +3,7 @@ class MaintenanceHistoriesController < ApplicationController
   before_action :store_user_location!, if: :storable_location?
   before_action :authenticate_user!
   before_action :maintenance_status
-  before_action :set_maintenance_history, only: [:show, :edit, :review, :update, :destroy, :image_detach]
+  before_action :set_maintenance_history, only: [:show, :edit, :review, :update, :destroy, :image_detach, :last_maintenance_dates]
   before_action :set_car_with_cookies
 
   # GET /maintenance_histories
@@ -39,6 +39,11 @@ class MaintenanceHistoriesController < ApplicationController
 
   # GET /maintenance_histories/1/edit
   def edit
+  end
+
+  def last_maintenance_dates
+    maintenance_types = ["Cambio de aceite y filtros", "Inspección de frenos", "ABC de Motor", "Cambiar Aceite de Caja", "Cambar Filtro de Combustible"]
+    @maintenance_histories = MaintenanceHistory.where("car_id = ? AND maintenance_type in (?)", @car_selected.id, maintenance_types).where("status = 'Pendiente'").order("priority, review_date DESC")
   end
 
   # GET /maintenance_histories/1/review
