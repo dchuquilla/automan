@@ -33,4 +33,8 @@ class MaintenanceHistory < ApplicationRecord
     end
   end
 
+  def has_completed?
+    MaintenanceHistory.where("maintenance_type = ? AND status = 'Completado'", self.maintenance_type).count > 0
+  end
+
 end

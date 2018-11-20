@@ -31,7 +31,11 @@
     <div class="columns small-4">
       <div class="row collapse text-center">
         <div class="columns">
-          <%= form.submit "Enviar", class: "button" %>
+          <% if maintenance_history.has_completed? %>
+            <%= form.submit "Registrado", class: "button success" %>
+          <% else %>
+            <%= form.submit "Enviar", class: "button" %>
+          <% end %>
         </div>
         <br><br>
       </div>
