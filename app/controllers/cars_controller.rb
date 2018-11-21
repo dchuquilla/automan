@@ -106,7 +106,7 @@ class CarsController < ApplicationController
     end
     respond_to do |format|
       if @car.save
-        format.html { redirect_to @car, notice: 'Su auto fue creado.' }
+        format.html { redirect_to last_maintenance_dates_car_maintenance_histories_path(@car), notice: 'Su auto fue creado.' }
         format.json { render :show, status: :created, location: @car }
       else
         format.html { render :new }

@@ -130,3 +130,8 @@ CREATE TRIGGER "completarMantenimientos" AFTER INSERT ON settings FOR EACH ROW E
 
 
 
+
+
+update maintenance_histories set maintenance_type = 'Cambiar Filtro de Combustible' where maintenance_type = 'Cambar Filtro de Combustible';
+update settings set maintenance_type = 'Cambiar Filtro de Combustible' where maintenance_type = 'Cambar Filtro de Combustible';
+update user_car_settings set maintenance_type = 'Cambiar Filtro de Combustible' where maintenance_type = 'Cambar Filtro de Combustible';

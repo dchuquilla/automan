@@ -11,6 +11,7 @@
 <% end %>
 <%= form_with(url: form_route, model: maintenance_history, local: true, html: { autocomplete: "off" }) do |form| %>
   <%= hidden_field_tag :from_review, true %>
+  <%= hidden_field_tag :last, false %>
   <% if maintenance_history.errors.any? %>
     <div class="row">
       <div class="columns">

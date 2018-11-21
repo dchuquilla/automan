@@ -2,10 +2,21 @@
   <h1 class="text-headline">¿Cuales son sus mantenimientos más recientes?</h1>
 </div>
 <% @maintenance_histories.each do |maintenance_history| %>
-  <div class="row">
+  <div class="row coll">
     <div class="columns">
       <div class="callout form-<%= maintenance_history.id %>">
-        <h2 class="text-title"><%= maintenance_history.maintenance_type %></h2>
+        <div class="row">
+          <div class="columns">
+            <h2 class="text-title"><%= maintenance_history.maintenance_type %></h2>
+          </div>
+          <% if maintenance_history.has_completed? %>
+            <div class="large-2">
+              <%= link_to "#", class: "hollow button general", disabled: true do %>
+                Completado
+              <% end %>
+            </div>
+          <% end %>
+        </div>
         <%= render 'form_last_maintenance', car: @car_selected, maintenance_history: maintenance_history, stay: true %>
       </div>
     </div>

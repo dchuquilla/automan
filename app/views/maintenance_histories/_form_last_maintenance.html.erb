@@ -1,66 +1,68 @@
-<% if ['new', 'create'].include?(params[:action]) %>
-  <% form_route = car_maintenance_histories_path(car) %>
-<% else %>
-  <% form_route = car_maintenance_history_path(car, maintenance_history) %>
-<% end %>
-<%= form_with(url: form_route, model: maintenance_history, local: true, html: { autocomplete: "off" }) do |form| %>
-  <%= hidden_field_tag "stay", stay %>
-  <% if car.errors.any? %>
-    <div id="error_explanation">
-      <h2 class="text-subhead">Se han presentado los siguientes errores:</h2>
-      <ul>
-      <% car.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<% unless maintenance_history.has_completed? %>
+  <% if ['new', 'create'].include?(params[:action]) %>
+    <% form_route = car_maintenance_histories_path(car) %>
+  <% else %>
+    <% form_route = car_maintenance_history_path(car, maintenance_history) %>
+  <% end %>
+  <%= form_with(url: form_route, model: maintenance_history, local: true, html: { autocomplete: "off" }) do |form| %>
+    <%= hidden_field_tag :stay, stay %>
+    <%= hidden_field_tag :last, true %>
+    <%= form.hidden_field :status, value: "Completado" %>
+    <%= form.hidden_field :provider, value: "Registro inicial" %>
+    <%= form.hidden_field :cost, value: "0" %>
+    <% if car.errors.any? %>
+      <div id="error_explanation">
+        <h2 class="text-subhead">Se han presentado los siguientes errores:</h2>
+        <ul>
+        <% car.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="row collapse align-middle">
+      <div class="columns">
+        <div class="field">
+          <%= form.label :review_km, "KM Revisión" %>
+          <%= form.number_field :review_km, step: 1, class: "current_km_calculated", value: maintenance_history.review_km.present? ? maintenance_history.review_km.round : car.current_km_estimated.round %>
+        </div>
+      </div>
+      <div class="columns small-4">
+        <div class="field">
+          <%= form.label :review_date %>
+          <%= form.text_field :review_date, value: DateTime.now.strftime(DATE_FORMAT), class: "date_pick" %>
+        </div>
+      </div>
+      <div class="columns small-4">
+        <div class="row collapse text-center">
+          <div class="columns">
+            <%= form.submit "Enviar", class: "button" %>
+          </div>
+          <br><br>
+        </div>
+      </div>
     </div>
   <% end %>
-  <div class="row">
-    <div class="columns">
-      <div class="field">
-        <%= form.label :review_km, "KM Revisión" %>
-        <%= form.number_field :review_km, step: 1, class: "current_km_calculated", value: car.current_km.present? ? car.current_km_estimated.round : '' %>
-      </div>
-    </div>
-    <div class="columns small-4">
-      <div class="field">
-        <%= form.label :review_date %>
-        <%= form.text_field :review_date, value: DateTime.now.strftime(DATE_FORMAT), class: "date_pick" %>
-      </div>
-    </div>
-    <div class="columns small-4">
-      <div class="row collapse text-center">
-        <div class="columns">
-          <% if maintenance_history.has_completed? %>
-            <%= form.submit "Registrado", class: "button success" %>
-          <% else %>
-            <%= form.submit "Enviar", class: "button" %>
-          <% end %>
-        </div>
-        <br><br>
-      </div>
-    </div>
-  </div>
-<% end %>
 
-<% content_for :late_javascripts do %>
-  <script type="text/javascript">
-    $(function() {
-      var car_current_km = <%= car.current_km %>;
-      $('#<%= "update_current_km_#{car.id}" %> .current_km_calculated').on('input',function(e){
-        current_km_val = $(this).val();
-        if (current_km_val < car_current_km) {
-          var alert_message = "El kilometraje ingresado es menor al último registrado.";
-          $('<%= ".callout.form-#{car.id}" %>').addClass('alert');
-          $('#<%= "update_current_km_#{car.id}" %> .current_km_message').html(alert_message);
-        } else {
-          $('<%= ".callout.form-#{car.id}" %>').removeClass('alert');
-          $('#<%= "update_current_km_#{car.id}" %> .current_km_message').html('');
-        }
+  <% content_for :late_javascripts do %>
+    <script type="text/javascript">
+      $(function() {
+        var car_current_km = <%= car.current_km %>;
+        $('#<%= "update_current_km_#{car.id}" %> .current_km_calculated').on('input',function(e){
+          current_km_val = $(this).val();
+          if (current_km_val < car_current_km) {
+            var alert_message = "El kilometraje ingresado es menor al último registrado.";
+            $('<%= ".callout.form-#{car.id}" %>').addClass('alert');
+            $('#<%= "update_current_km_#{car.id}" %> .current_km_message').html(alert_message);
+          } else {
+            $('<%= ".callout.form-#{car.id}" %>').removeClass('alert');
+            $('#<%= "update_current_km_#{car.id}" %> .current_km_message').html('');
+          }
+        });
+
       });
+    </script>
+  <% end %>
 
-    });
-  </script>
+  <%= render partial: 'shared/init_date_time_picker' %>
 <% end %>
-
-<%= render partial: 'shared/init_date_time_picker' %>

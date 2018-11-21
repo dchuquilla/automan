@@ -42,8 +42,8 @@ class MaintenanceHistoriesController < ApplicationController
   end
 
   def last_maintenance_dates
-    maintenance_types = ["Cambio de aceite y filtros", "Inspección de frenos", "ABC de Motor", "Cambiar Aceite de Caja", "Cambar Filtro de Combustible"]
-    @maintenance_histories = MaintenanceHistory.where("car_id = ? AND maintenance_type in (?)", @car_selected.id, maintenance_types).where("status = 'Pendiente'").order("priority, review_date DESC")
+    maintenance_types = ["Cambio de aceite y filtros", "Inspección de frenos", "ABC de Motor", "Cambiar Aceite de Caja", "Cambiar Filtro de Combustible"]
+    @maintenance_histories = MaintenanceHistory.where("car_id = ? AND maintenance_type in (?)", @car_selected.id, maintenance_types).where("status = 'Pendiente'").order("priority, maintenance_type DESC")
   end
 
   # GET /maintenance_histories/1/review
@@ -111,8 +111,13 @@ class MaintenanceHistoriesController < ApplicationController
     end
     respond_to do |format|
       if @maintenance_history.update(maintenance_history_params)
-        format.html { redirect_to car_maintenance_histories_url(@car_selected), notice: 'El mantenimiento fue modificado.' }
-        format.json { render :show, status: :ok, location: @maintenance_history }
+        if params[:last].present? && params[:last] == 'true'
+          format.html { redirect_to last_maintenance_dates_car_maintenance_histories_path(@car_selected), notice: 'Último mantenimiento registrado.' }
+          format.json { render :show, status: :ok, location: @maintenance_history }
+        else
+          format.html { redirect_to car_maintenance_histories_url(@car_selected), notice: 'El mantenimiento fue modificado.' }
+          format.json { render :show, status: :ok, location: @maintenance_history }
+        end
       else
         if params[:from_gas].present?
           format.html { render :gas }
